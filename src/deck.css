@@ -69,3 +69,16 @@ kbd { font: .82em var(--f-mono); border: 1px solid var(--rule); border-bottom-wi
 #blist .card { font-size: 15px; scroll-margin-top: 130px; }
 #blist .stem { font-size: 1.1em; }
 .qfoot { margin-top: 12px; display: flex; justify-content: flex-end; }
+
+/* Thai bullet explanations & concept key points */
+.ex-list { margin: 6px 0 0; padding-left: 1.25em; display: grid; gap: 5px; line-height: 1.55; }
+.ex-list li::marker { color: var(--ok); }
+.tpoints { margin-bottom: 14px; background: var(--ven-soft); border-left: 3px solid var(--ven); border-radius: 10px; padding: 10px 14px; }
+.tpoints .tp-head { font: 600 .75em var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--ven); margin-bottom: 4px; }
+.tpoints ul { margin: 0; padding-left: 1.25em; display: grid; gap: 4px; line-height: 1.5; }
+.traps-box { margin: 12px 0; background: var(--warn-soft); border-left: 3px solid var(--warn); border-radius: 10px; padding: 10px 14px; }
+.traps-box .tp-head { font: 600 .75em var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--warn); margin-bottom: 4px; }
+.traps-box ul { margin: 0; padding-left: 1.25em; display: grid; gap: 4px; line-height: 1.5; }
+.brand > div { min-width: 0; }
+.brand b { overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 640px) { .bar { grid-template-columns: minmax(0, 1fr); position: relative; } .ctrls { justify-content: flex-start; } }

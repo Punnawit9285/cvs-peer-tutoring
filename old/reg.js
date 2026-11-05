@@ -1,0 +1,418 @@
+/* SECTION R — Regulation of the cardiovascular system (lecture) */
+(function () {
+
+var SVG_CAROTID = '<svg viewBox="-56 0 416 250" role="img" aria-label="Carotid bifurcation: carotid sinus is a baroreceptor, carotid body is a chemoreceptor">' +
+  '<path d="M150,245 L150,150" class="v-out"/>' +
+  '<path d="M150,150 C142,120 118,100 112,12" class="v-out"/>' +
+  '<path d="M150,150 C160,120 182,100 192,12" class="v-out" style="stroke-width:24"/>' +
+  '<ellipse cx="127" cy="112" rx="22" ry="29" class="vb-out"/>' +
+  '<path d="M150,245 L150,150" class="v-in"/>' +
+  '<path d="M150,150 C142,120 118,100 112,12" class="v-in"/>' +
+  '<path d="M150,150 C160,120 182,100 192,12" class="v-in" style="stroke-width:18"/>' +
+  '<ellipse cx="127" cy="112" rx="17" ry="24" class="vb-in"/>' +
+  '<circle cx="152" cy="131" r="7" class="dot-ven" />' +
+  '<line x1="98" y1="104" x2="110" y2="108" class="ax"/>' +
+  '<text x="94" y="92" text-anchor="end" class="tb">Carotid sinus</text>' +
+  '<text x="94" y="108" text-anchor="end" class="ts">baroreceptor (stretch)</text>' +
+  '<text x="94" y="124" text-anchor="end" class="ts">Hering&#8217;s n. &#8594; CN IX</text>' +
+  '<line x1="159" y1="133" x2="206" y2="150" class="ax"/>' +
+  '<text x="210" y="146" class="tb tv">Carotid body</text>' +
+  '<text x="210" y="162" class="ts">chemoreceptor</text>' +
+  '<text x="210" y="178" class="ts">&#8595;PO&#8322; &#183; &#8593;PCO&#8322; &#183; &#8593;H&#8314;</text>' +
+  '<text x="70" y="24" text-anchor="end" class="ts">internal carotid</text>' +
+  '<text x="204" y="24" class="ts">external carotid</text>' +
+  '<text x="162" y="236" class="ts">common carotid</text>' +
+  '</svg>';
+
+/* Operating ranges of the nervous pressure-control mechanisms */
+var X = function (p) { return 40 + p * 2.7; };
+var ticks = '';
+for (var p = 0; p <= 200; p += 20) {
+  ticks += '<line x1="' + X(p) + '" y1="160" x2="' + X(p) + '" y2="165" class="ax"/>' +
+    '<text x="' + X(p) + '" y="180" text-anchor="middle" class="tm">' + p + '</text>';
+}
+var SVG_RANGES = '<svg viewBox="0 0 600 205" role="img" aria-label="Pressure ranges where each nervous mechanism works">' +
+  '<line x1="40" y1="160" x2="580" y2="160" class="ax"/>' + ticks +
+  '<text x="310" y="200" text-anchor="middle" class="ts">mean arterial pressure (mmHg)</text>' +
+  '<rect x="' + X(60) + '" y="26" width="' + (X(180) - X(60)) + '" height="28" rx="4" class="f-art"/>' +
+  '<line x1="' + X(100) + '" y1="20" x2="' + X(100) + '" y2="60" class="l-mut"/>' +
+  '<text x="' + (X(60) + 10) + '" y="45" class="t">Baroreceptors 60&#8211;180</text>' +
+  '<text x="' + (X(100) + 6) + '" y="16" class="ts">most sensitive near normal MAP &#8776; 100</text>' +
+  '<rect x="' + X(40) + '" y="70" width="' + (X(80) - X(40)) + '" height="28" rx="4" class="f-ven"/>' +
+  '<text x="' + (X(80) + 8) + '" y="89" class="t">Chemoreceptors: strong below 80</text>' +
+  '<rect x="' + X(0) + '" y="114" width="' + (X(60) - X(0)) + '" height="28" rx="4" class="f-mut"/>' +
+  '<text x="' + (X(60) + 8) + '" y="133" class="t">CNS ischemic response: below 60 (max at 15&#8211;20)</text>' +
+  '</svg>';
+
+/* Autoregulation curve */
+var AX = function (P) { return 60 + P * 1.84; }, AY = function (f) { return 262 - f * 110; };
+var acute = function (P) { return P < 70 ? 0.955 * Math.pow(P / 70, 1.4) : (P <= 175 ? 1 + 0.0015 * (P - 100) : 1.1125 + 0.012 * (P - 175)); };
+var dAcute = CVS.path(function (P) { return [AX(P), AY(acute(P))]; }, 0, 240, 60);
+var dLong = CVS.path(function (P) { return [AX(P), AY(1 + 0.0007 * (P - 100))]; }, 50, 210, 8);
+var xt = '', yt = '';
+[0, 50, 100, 150, 200, 250].forEach(function (P) { xt += '<line x1="' + AX(P) + '" y1="262" x2="' + AX(P) + '" y2="267" class="ax"/><text x="' + AX(P) + '" y="281" text-anchor="middle" class="tm">' + P + '</text>'; });
+[0, 0.5, 1, 1.5, 2].forEach(function (f) { yt += '<line x1="55" y1="' + AY(f) + '" x2="60" y2="' + AY(f) + '" class="ax"/><text x="50" y="' + (AY(f) + 4) + '" text-anchor="end" class="tm">' + f + '</text>'; });
+var SVG_AUTOREG = '<svg viewBox="0 0 560 305" role="img" aria-label="Autoregulation: blood flow stays near normal between about 70 and 175 mmHg">' +
+  '<rect x="' + AX(70) + '" y="24" width="' + (AX(175) - AX(70)) + '" height="238" class="band"/>' +
+  '<line x1="60" y1="262" x2="530" y2="262" class="ax"/><line x1="60" y1="262" x2="60" y2="20" class="ax"/>' + xt + yt +
+  '<line x1="60" y1="' + AY(1) + '" x2="530" y2="' + AY(1) + '" class="l-mut"/>' +
+  '<path d="' + dLong + '" class="l-ven" style="stroke-dasharray:7 5"/>' +
+  '<path d="' + dAcute + '" class="l-art"/>' +
+  '<text x="' + ((AX(70) + AX(175)) / 2) + '" y="250" text-anchor="middle" class="ts">autoregulatory range &#8776; 70&#8211;175 mmHg</text>' +
+  '<line x1="76" y1="38" x2="104" y2="38" class="l-art"/><text x="110" y="42" class="ts">acute autoregulation</text>' +
+  '<line x1="76" y1="58" x2="104" y2="58" class="l-ven" style="stroke-dasharray:7 5"/><text x="110" y="62" class="ts">long-term (days&#8211;weeks): flatter still</text>' +
+  '<text x="295" y="301" text-anchor="middle" class="ts">arterial pressure (mmHg)</text>' +
+  '<text x="14" y="150" text-anchor="middle" class="ts" transform="rotate(-90 14 150)">blood flow (&#215; normal)</text>' +
+  '</svg>';
+
+/* Pacemaker potential: normal vs sympathetic vs vagal */
+var SVG_PACER = '<svg viewBox="0 0 600 262" role="img" aria-label="SA node potential: sympathetic steepens phase 4, vagal hyperpolarizes and flattens it">' +
+  '<line x1="22" y1="160" x2="592" y2="160" class="l-mut"/>' +
+  '<text x="24" y="153" class="tm">threshold &#8776; &#8722;40 mV</text>' +
+  '<line x1="22" y1="80" x2="592" y2="80" class="grid-l"/><text x="24" y="74" class="tm">0 mV</text>' +
+  '<path d="M30,200 C90,190 150,175 190,160 C196,140 202,96 210,84 C222,86 250,150 270,200 C330,190 390,175 430,160 C436,140 442,96 450,84 C462,86 490,150 510,200 C540,195 570,188 590,180" class="l-ink"/>' +
+  '<path d="M30,200 C60,190 90,175 110,160 C116,140 122,96 128,84 C140,86 168,150 185,200 C215,190 245,175 265,160 C271,140 277,96 283,84 C295,86 323,150 340,200 C370,190 400,175 420,160 C426,140 432,96 438,84 C450,86 478,150 495,200 C525,190 555,175 575,160" class="l-art"/>' +
+  '<path d="M30,222 C120,212 220,186 300,160 C306,140 312,96 320,84 C332,86 360,160 380,222 C450,212 530,194 590,178" class="l-ven" style="stroke-dasharray:7 5"/>' +
+  '<line x1="30" y1="246" x2="56" y2="246" class="l-ink"/><text x="62" y="250" class="ts">normal</text>' +
+  '<line x1="130" y1="246" x2="156" y2="246" class="l-art"/><text x="162" y="250" class="ts">sympathetic (NE &#8594; &#946;1): steeper phase 4</text>' +
+  '<line x1="388" y1="246" x2="414" y2="246" class="l-ven" style="stroke-dasharray:7 5"/><text x="420" y="250" class="ts">vagal (ACh &#8594; M2)</text>' +
+  '<text x="200" y="232" class="ts">phase 4 = If (funny Na&#8314;) + T/L-type Ca&#178;&#8314;</text>' +
+  '</svg>';
+
+CVS.add({
+  id: 'R', short: 'Regulation', title: 'Regulation of the Cardiovascular System', kind: 'Lecture',
+  blurb: 'How the body holds arterial pressure and directs blood flow: nervous reflexes, hormones, local tissue control and the kidney.',
+  items: [
+
+{ t: 'c', id: 'R-C1', title: 'MAP = CO &#215; TPR: the equation behind every answer', html:
+'<div class="eqn">MAP = <span>HR</span> &#215; <span>SV</span> &#215; <span>TPR</span></div>' +
+'<div class="cols3">' +
+'<div class="mini"><h4>Heart rate</h4><p>SA-node firing rate. Sympathetic (&#946;1) speeds it up; the vagus (M2) slows it down.</p></div>' +
+'<div class="mini"><h4>Stroke volume</h4><p>Preload (EDV, set by venous return: Frank&#8211;Starling), contractility (inotropy) and afterload.</p></div>' +
+'<div class="mini"><h4>Total peripheral resistance</h4><p>Set mainly by <b>arterioles</b> (R &#8733; 1/r&#8308;), so arterioles are the main target of antihypertensive drugs.</p></div>' +
+'</div>' +
+'<p class="note">Every regulator in this topic acts on one of five handles: <b>heart rate</b>, <b>contractility</b>, <b>venous tone</b> (preload), <b>arteriolar tone</b> (TPR) or <b>blood volume</b> (kidney). When a question gives a stimulus, ask which handles it moves.</p>' },
+
+{ t: 'q', id: 'R1', src: 'AC77', core: true,
+  q: 'Which circulatory control is considered as an <b>immediate</b> response?',
+  o: ['Baroreceptor reflex', 'Capillary fluid shift', 'Chemoreceptor reflex', 'Release of angiotensin', 'Sympathetic stimulation'], a: 0,
+  ex: 'Nervous reflexes start within seconds, and the baroreceptor reflex is the classic immediate buffer. The chemoreceptor reflex is also nervous and fast, but it only becomes important when MAP falls below about 80 mmHg. Capillary fluid shift and angiotensin take minutes to hours. Sympathetic stimulation is the effector arm used by the reflexes, not a control mechanism of its own.' },
+
+{ t: 'c', id: 'R-C2', title: 'Three speeds of blood pressure control', src: 'Guyton', html:
+'<div class="speeds">' +
+'<div class="speed s1"><div class="sp-h"><span class="mono">seconds &#8594; minutes</span><b>Immediate (nervous)</b></div><ul><li>Baroreceptor reflex</li><li>Chemoreceptor reflex (MAP &lt; 80)</li><li>CNS ischemic response (MAP &lt; 60)</li></ul></div>' +
+'<div class="speed s2"><div class="sp-h"><span class="mono">minutes &#8594; hours</span><b>Intermediate</b></div><ul><li>Renin&#8211;angiotensin vasoconstriction (full in ~20 min)</li><li>Stress relaxation of vessels</li><li>Capillary fluid shift (interstitial fluid moves in or out)</li></ul></div>' +
+'<div class="speed s3"><div class="sp-h"><span class="mono">hours &#8594; days</span><b>Long-term (kidney, infinite gain)</b></div><ul><li>Renal&#8211;body fluid control (pressure natriuresis)</li><li>Aldosterone</li><li>ADH (vasopressin) and thirst</li></ul></div>' +
+'</div>' +
+'<p class="trap">The baroreflex <b>resets in 1&#8211;2 days</b>. It smooths minute-to-minute swings (posture, exertion) but cannot set long-term pressure. Long-term pressure is set by the kidney.</p>' },
+
+{ t: 'q', id: 'R2', src: 'AC80', core: true,
+  q: 'A 35-year-old man presents with acute watery diarrhea for the past <b>5 days</b>. Which of the following mechanisms has the greatest effect?',
+  o: ['Baroreceptor reflex', 'Capillary fluid shift', 'Chemoreceptor reflex', 'Salt and water reabsorption by the kidney', 'Angiotensin II-mediated vasoconstriction'], a: 3,
+  ex: 'After several days the long-term mechanisms dominate: renin&#8211;angiotensin&#8211;aldosterone, ADH and thirst make the kidney keep salt and water and rebuild blood volume. The baroreflex has largely reset by then. Capillary fluid shift and Ang II vasoconstriction belong to the intermediate window.' },
+
+{ t: 'q', id: 'R3', src: 'AC77',
+  q: 'Which one is <b>UNLIKELY</b> to be found in hypotension?',
+  o: ['Increased secretion of ADH', 'Increased secretion of aldosterone', 'Increased sympathetic stimulation', 'Stress relaxation', 'Tachycardia'], a: 3,
+  ex: 'Stress relaxation happens when vessels are suddenly filled with extra volume: the wall slowly gives way and pressure drifts back down. Hypotension produces the opposite (reverse stress relaxation: vessels tighten around the smaller volume). ADH, aldosterone, sympathetic activity and heart rate all rise.' },
+
+{ t: 'c', id: 'R-C3', title: 'Who gives the orders: medullary control centers', html:
+'<div class="tblwrap"><table class="tbl"><thead><tr><th>Center</th><th>Location</th><th>Job</th></tr></thead><tbody>' +
+'<tr><td><b>Vasoconstrictor area</b> (C-1)</td><td>Rostral ventrolateral medulla (RVLM)</td><td>Fires continuously (~0.5&#8211;2 Hz) to sympathetic neurons &#8594; <b>sympathetic vasoconstrictor tone</b>; also drives the heart (cardioaccelerator)</td></tr>' +
+'<tr><td><b>Vasodilator area</b> (A-1)</td><td>Caudal ventrolateral medulla</td><td>Inhibits C-1</td></tr>' +
+'<tr><td><b>Sensory area</b> (A-2)</td><td>Nucleus tractus solitarius (NTS)</td><td>Receives CN IX and X from baro- and chemoreceptors and steers the other areas</td></tr>' +
+'<tr><td><b>Cardioinhibitory</b></td><td>Dorsal motor nucleus of vagus, nucleus ambiguus</td><td>Vagus &#8594; SA and AV node: &#8595;HR, &#8595;AV conduction</td></tr>' +
+'<tr><td><b>Adrenal medulla</b></td><td>Sympathetic preganglionic fibers in the splanchnic nerves</td><td>Releases epinephrine (~80%) and norepinephrine into blood</td></tr>' +
+'</tbody></table></div>' +
+'<p class="note">Higher centers modulate the medulla: the hypothalamus (defense reaction, temperature) and the cortex (emotional fainting, vasovagal syncope).</p>' },
+
+{ t: 'c', id: 'R-C4', title: 'Baroreceptor reflex', html:
+'<div class="flow">' +
+'<div class="fbox start">&#8593; arterial pressure stretches the wall</div><div class="farrow">&#8594;</div>' +
+'<div class="fbox"><b>Carotid sinus</b> &#8594; Hering&#8217;s n. &#8594; <b>CN IX</b><br><b>Aortic arch</b> &#8594; aortic n. &#8594; <b>CN X</b></div><div class="farrow">&#8594;</div>' +
+'<div class="fbox"><b>NTS</b><br>(medulla)</div><div class="farrow">&#8594;</div>' +
+'<div class="fstack"><div class="fbox ven">(+) vagal center &#8594; <b>vagus</b> &#8594; SA/AV: &#8595;HR, &#8595;AV conduction</div>' +
+'<div class="fbox art">(&#8722;) RVLM &#8594; <b>&#8595;sympathetic</b>: &#8595;HR, &#8595;contractility, arteriolar dilation (&#8595;TPR), venodilation (&#8595;venous return), &#8595;adrenal catecholamines, &#8595;renin</div></div>' +
+'<div class="farrow">&#8594;</div><div class="fbox end">BP falls back toward normal</div>' +
+'</div>' +
+'<div class="two"><figure class="dg">' + SVG_CAROTID + '</figure><ul class="pts">' +
+'<li>Receptors are spray-type stretch endings lying between the tunica media and adventitia. They respond to pressure <b>and to how fast it changes</b>.</li>' +
+'<li>Carotid sinus range ~60&#8211;180 mmHg, most sensitive near normal MAP. The aortic arch has a higher threshold.</li>' +
+'<li>BP falls &#8594; <b>fewer</b> impulses &#8594; sympathetic up, vagus down &#8594; tachycardia, vasoconstriction, venoconstriction.</li>' +
+'<li>Carotid <b>sinus</b> = baroreceptor. Carotid <b>body</b> = chemoreceptor. Exams swap them on purpose.</li>' +
+'<li>In the anesthetized dog, strong baroreceptor stimulation also <b>slows breathing</b>.</li>' +
+'</ul></div>' },
+
+{ t: 'q', id: 'R4', src: 'AC75', core: true,
+  q: 'An increase in which of the following results in a <b>decrease</b> in sympathetic vasoconstrictor tone?',
+  o: ['Carotid body chemoreceptor', 'Medullary chemoreceptor', 'Aortic arch stretch receptor', 'Vasomotor center', 'Pain receptor'], a: 2,
+  ex: 'Stretch receptors (baroreceptors) in the aortic arch fire more when pressure rises. Through the NTS they inhibit the vasoconstrictor area, so sympathetic tone falls. Chemoreceptors (carotid body, medullary), the vasomotor center itself and pain all <b>raise</b> sympathetic output.' },
+
+{ t: 'q', id: 'R5', src: 'AC75', flag: 'Recalled wording says sympathetic &#8220;vasodilator&#8221; tone; the concept tested is the same as R4.',
+  q: 'อะไรทำให้เกิด decreased sympathetic vasodilator tone? <span class="muted">(Which stimulus decreases sympathetic tone?)</span>',
+  o: ['Vasomotor center stimulation', 'Carotid body stimulation', 'Medullary chemoreceptor stimulation', 'Pain receptor', 'Aortic arch stretch receptor stimulation'], a: 4,
+  ex: 'Only the baroreceptor input (aortic arch stretch) withdraws sympathetic drive. All the other options activate the vasomotor center.' },
+
+{ t: 'q', id: 'R6', src: 'AC76', core: true,
+  q: 'Which of the following is <b>NOT</b> a part of the reflex arc of the baroreceptor?',
+  o: ['SA node', 'CN IX', 'Vagus nerve', 'Splanchnic nerve', 'Baroreceptor at carotid bodies'], a: 4,
+  ex: 'The carotid <b>body</b> holds chemoreceptors. Baroreceptors sit in the carotid <b>sinus</b>. The rest are genuine parts of the arc: CN IX and X (afferent), vagus (efferent to the heart), splanchnic nerve (sympathetic efferent to the splanchnic vessels and adrenal medulla) and the SA node (effector).' },
+
+{ t: 'q', id: 'R7', src: 'AC77', core: true,
+  q: 'Which of the following would happen after blood pressure falls?',
+  o: ['Stimulation of the aortic sinus', 'Inhibition of central chemoreceptors', 'Increased sympathetic action', 'Increased peripheral perfusion pressure', 'Decreased peripheral resistance'], a: 2,
+  ex: 'A fall in BP unloads the baroreceptors (they fire <b>less</b>), which releases the vasoconstrictor center: sympathetic activity rises, so HR, contractility and TPR increase. Peripheral resistance goes up, not down.' },
+
+{ t: 'c', id: 'R-C5', title: 'Chemoreceptors and the CNS ischemic response', html:
+'<figure class="dg wide">' + SVG_RANGES + '</figure>' +
+'<div class="cols2"><div class="mini"><h4>Peripheral chemoreceptor reflex</h4><ul><li>Carotid bodies (CN IX via Hering&#8217;s n.) and aortic bodies (CN X).</li><li>Sense &#8595;PaO&#8322; (main), &#8593;PaCO&#8322;, &#8593;H&#8314;.</li><li>They have a huge blood flow. When MAP drops below ~80 mmHg, flow falls, the cells become hypoxic and fire &#8594; vasomotor center &#8594; &#8593;BP, plus &#8593;breathing.</li><li>Arc: stimulus &#8594; carotid/aortic body &#8594; IX/X &#8594; NTS &#8594; vasomotor &amp; respiratory centers &#8594; sympathetic (heart, vessels, adrenal medulla) and phrenic (diaphragm).</li></ul></div>' +
+'<div class="mini"><h4>CNS ischemic response</h4><ul><li>MAP &lt; 60 (strongest at 15&#8211;20 mmHg): the vasomotor center itself becomes ischemic and CO&#8322; builds up.</li><li>Result: massive sympathetic discharge, <b>systemic hypertension</b> up to ~250 mmHg. It is the body&#8217;s last-ditch response.</li><li><b>Cushing reaction</b>: raised intracranial pressure compresses cerebral arteries &#8594; same response. Cushing triad = hypertension, bradycardia (baroreflex), irregular breathing.</li></ul></div></div>' +
+'<p class="note">Central chemoreceptors (medulla) respond to CO&#8322;/H&#8314; in CSF and mainly drive breathing. CO&#8322; also excites the vasomotor center, but locally it dilates vessels (strongly in the brain).</p>' },
+
+{ t: 'q', id: 'R8', src: 'AC77', core: true,
+  q: 'Which clinical finding is most likely to be found in the <b>CNS ischemic reflex</b>?',
+  o: ['Decreased pulse pressure', 'Increased diastolic pressure', 'Systemic hypertension', 'Tachycardia'], a: 2,
+  ex: 'Ischemia of the vasomotor center triggers the strongest sympathetic vasoconstriction the body can make, so arterial pressure rises steeply. In the Cushing reaction the high pressure then causes a reflex <b>bradycardia</b>, so tachycardia is not the classic finding.' },
+
+{ t: 'q', id: 'R9', src: 'AC77', flag: 'Option d may have been &#8220;adrenal medulla&#8221; in the real exam. The adrenal cortex is not part of the reflex either.',
+  q: 'Which of the following isn&#8217;t one of the chemoreceptor reflex components?',
+  o: ['Nucleus tractus solitarius', 'Hering nerve', 'Aortic nerve', 'Adrenal cortex', 'Cerebellum'], a: 4,
+  ex: 'NTS is the integrating center, Hering&#8217;s nerve carries carotid body afferents (CN IX), and the aortic nerve carries aortic body afferents (CN X). The sympathetic output reaches the adrenal <b>medulla</b>. The cerebellum plays no part.' },
+
+{ t: 'c', id: 'R-C6', title: 'Hormones and local chemicals that change vessel tone', html:
+'<div class="cols2"><div class="mini art"><h4>Vasoconstrictors</h4><ul>' +
+'<li><b>Norepinephrine / epinephrine</b> on &#945;1 (epinephrine at high dose)</li>' +
+'<li><b>Angiotensin II</b>: powerful arteriolar constrictor</li>' +
+'<li><b>ADH (vasopressin, V1)</b>: the most potent constrictor; matters in severe hemorrhage</li>' +
+'<li><b>Endothelin-1</b>: from endothelium, especially when it is damaged; raises tone of systemic arteries and resistance vessels</li>' +
+'<li>Thromboxane A&#8322; (platelets), serotonin (mostly), PGF2&#945;, Ca&#178;&#8314;</li></ul></div>' +
+'<div class="mini ven"><h4>Vasodilators</h4><ul>' +
+'<li><b>NO</b> (EDRF): released by <b>shear stress</b>, ACh, bradykinin; acts through cGMP; also inhibits platelet aggregation</li>' +
+'<li>Prostacyclin (PGI&#8322;): dilator and anti-platelet</li>' +
+'<li><b>Histamine</b> (mast cells, tissue injury, allergy) and <b>bradykinin</b>: arteriolar dilation + &#8593;capillary permeability (edema)</li>' +
+'<li>ANP/BNP; low-dose epinephrine on &#946;2 (skeletal muscle, liver, coronary)</li>' +
+'<li>Metabolic: adenosine, CO&#8322;, H&#8314;, K&#8314;, lactate, &#8593;osmolality, &#8595;O&#8322;</li></ul></div></div>' },
+
+{ t: 'q', id: 'R10', src: 'AC77', core: true,
+  q: 'Which mediator causes vasoconstriction?',
+  o: ['Antidiuretic hormone', 'Adenosine', 'Bradykinin', 'Lactic acid', 'Nitric oxide'], a: 0,
+  ex: 'ADH acts on V1 receptors on vascular smooth muscle. Adenosine, bradykinin, lactic acid and NO are all vasodilators.' },
+{ t: 'q', id: 'R11', src: 'AC78',
+  q: 'Which substance enhances the vascular tone of systemic arteries and resistance vessels?',
+  o: ['Bradykinin', 'Endothelin-1', 'NO', 'Histamine', 'Local hypoxia'], a: 1,
+  ex: 'Endothelin-1 is the endothelium&#8217;s own potent, long-acting vasoconstrictor. The other options dilate.' },
+{ t: 'q', id: 'R12', src: 'AC78',
+  q: 'Which substance plays a key role in increasing vasoconstriction in the body&#8217;s blood vessels, thereby raising blood pressure?',
+  o: ['Antidiuretic hormone (ADH)', 'Atrial natriuretic peptide (ANP)', 'Nitric oxide (NO)', 'Prostaglandin E2', 'Histamine'], a: 0,
+  ex: 'ADH (V1) constricts vessels; ANP, NO, PGE2 and histamine dilate.' },
+{ t: 'q', id: 'R13', src: 'AC79',
+  q: 'BP ต่ำ ให้อะไรไปกระตุ้น vasoconstriction <span class="muted">(BP is low: which substance stimulates vasoconstriction?)</span>',
+  o: ['ADH', 'ANP', 'NO', 'Bradykinin'], a: 0,
+  ex: 'Low pressure and low volume (more than ~10% loss) release ADH, which constricts arterioles through V1 receptors and saves water through V2.' },
+
+{ t: 'q', id: 'R14', src: 'AC76', core: true,
+  q: 'Which of the following is an endothelial vasodilating substance released from <b>shear stress</b> on the vessel wall?',
+  o: ['NO', 'Endothelin', 'Bradykinin', 'Histamine', 'Prostacyclin'], a: 0,
+  ex: 'Faster flow drags on the endothelium (shear stress) &#8594; eNOS activity rises &#8594; NO diffuses to smooth muscle &#8594; cGMP &#8594; relaxation. This flow-mediated dilation lets upstream arteries widen when a downstream tissue is working. Endothelin constricts; bradykinin and histamine are not shear-released endothelial products. Prostacyclin is endothelial too, but NO is the classic answer.' },
+{ t: 'q', id: 'R15', src: 'AC77',
+  q: 'The release of which chemical mediator is regulated by shear stress?',
+  o: ['Adenosine', 'CO2', 'H+', 'Lactic acid', 'NO'], a: 4,
+  ex: 'Shear stress controls endothelial NO release. Adenosine, CO2, H+ and lactate are metabolic dilators from working tissue.' },
+{ t: 'q', id: 'R16', src: 'AC79',
+  q: 'Which is a key endothelium-derived factor primarily responsible for potent vasodilation, contributing to blood-flow regulation and prevention of platelet aggregation?',
+  o: ['Thromboxane A2', 'Endothelin-1', 'Prostaglandin F2&#945;', 'Nitric oxide (NO)', 'Angiotensin II'], a: 3,
+  ex: 'NO relaxes smooth muscle and inhibits platelet adhesion and aggregation. The other four constrict.' },
+{ t: 'q', id: 'R17', src: 'AC80',
+  q: 'Which of the following is an endothelium-mediated vasodilator?',
+  o: ['Adenosine', 'NO', 'Endothelin', 'CO2', 'Potassium'], a: 1,
+  ex: 'NO is made by endothelial cells. Adenosine, CO2 and K+ are metabolic dilators from tissue, and endothelin is an endothelial constrictor.' },
+{ t: 'q', id: 'R18', src: 'AC81', core: true,
+  q: 'Which of the following is a vasodilator secreted from <b>tissue injury</b>?',
+  o: ['Serotonin', 'Histamine', 'NO', 'Norepinephrine', 'Adenosine'], a: 1,
+  ex: 'Injured tissue makes mast cells release histamine: arterioles dilate and capillaries become leaky (redness, swelling). Serotonin and norepinephrine mainly constrict; NO comes from endothelium under shear stress; adenosine is a metabolic dilator.' },
+
+{ t: 'c', id: 'R-C7', title: 'Local control of blood flow and autoregulation', html:
+'<figure class="dg wide">' + SVG_AUTOREG + '</figure><ul class="pts">' +
+'<li><b>Metabolic (vasodilator) theory</b>: working tissue releases adenosine, CO&#8322;, H&#8314;, K&#8314;, lactate, histamine; O&#8322; lack relaxes precapillary sphincters. This gives <b>active hyperemia</b> (exercise) and <b>reactive hyperemia</b> (after occlusion).</li>' +
+'<li><b>Myogenic theory</b>: higher pressure stretches arteriolar smooth muscle &#8594; stretch-activated channels depolarize it &#8594; Ca&#178;&#8314; entry &#8594; <b>constriction</b>, so flow returns toward normal and capillaries are protected.</li>' +
+'<li><b>Autoregulation</b> = nearly constant flow despite changing arterial pressure (about 70&#8211;175 mmHg). Best in the kidney (myogenic + tubuloglomerular feedback), also brain and heart.</li>' +
+'<li><b>Long-term</b>: chronic high demand or hypoxia &#8594; angiogenesis (VEGF) = more vessels; chronic arterial blockage &#8594; <b>collateral circulation</b>.</li>' +
+'</ul>' },
+
+{ t: 'q', id: 'R19', src: 'AC75', core: true,
+  q: 'อะไรเพิ่ม tissue blood flow? <span class="muted">(What increases tissue blood flow?)</span>',
+  o: ['Increased PaCO2', 'Increased PaO2', 'Decreased plasma osmolality', 'Decreased K+', 'Decreased BP (or blood volume)'], a: 0,
+  ex: 'CO2 is a metabolic vasodilator (very strong in the brain). High O2, low osmolality and low K+ do not dilate; a fall in pressure lowers flow unless autoregulation compensates.' },
+{ t: 'q', id: 'R20', src: 'AC77',
+  q: 'Which one causes vasodilation?',
+  o: ['Decreased osmolarity', 'Decreased release of histamine', 'Increased release of serotonin', 'Increased PCO2', 'Increased PO2'], a: 3,
+  ex: 'A rise in PCO2 dilates arterioles. Osmolality must <b>rise</b> to dilate, less histamine means less dilation, serotonin mostly constricts and high PO2 constricts.' },
+{ t: 'q', id: 'R21', src: 'AC77',
+  q: 'Which of the following increases blood flow?',
+  o: ['Decreased arteriolar diameter', 'Decreased oxygen demand', 'Decreased tissue metabolism', 'Decreased vascular tone'], a: 3,
+  ex: 'Less smooth muscle tone means a wider radius, and resistance falls with r&#8308;. The other three all reduce flow.' },
+{ t: 'q', id: 'R22', src: 'AC77', core: true,
+  q: 'Which choice explains why exercise increases blood flow to skeletal muscles?',
+  o: ['Autoregulation', 'Baroreceptor reflex', 'Chemoreceptor reflex', 'Metabolic control', 'Neural control'], a: 3,
+  ex: 'Contracting muscle releases K+, adenosine, CO2, H+ and lactate and uses up O2. These metabolites dilate its arterioles: active hyperemia. Autoregulation keeps flow constant when <b>pressure</b> changes, which is a different situation.' },
+{ t: 'open', id: 'R23', src: 'AC75',
+  q: 'According to the <b>myogenic theory</b> of autoregulation, if intra-arteriolar pressure increases, what happens in the local tissue?',
+  ans: 'The arteriolar smooth muscle is stretched &#8594; stretch-activated cation channels open &#8594; the cell depolarizes &#8594; L-type Ca&#178;&#8314; channels open &#8594; the arteriole <b>constricts</b>. Resistance rises, so blood flow (and capillary pressure) returns toward normal despite the higher pressure.' },
+{ t: 'q', id: 'R24', src: 'AC75&#8211;79', core: true,
+  q: 'Which of the following best describes <b>autoregulation</b>?',
+  o: ['Constant flow despite changing blood pressure', 'Constant flow despite changing metabolic demand', 'Constant blood pressure despite changing blood flow', 'Constant vascular resistance despite changing blood pressure', 'Constant vascular resistance despite changing metabolic demand'], a: 0,
+  ex: 'Autoregulation keeps flow steady when perfusion pressure changes, by changing resistance. Flow is supposed to change with metabolic demand (that is metabolic control).' },
+{ t: 'q', id: 'R25', src: 'AC79',
+  q: 'When an organ encounters an increase or decrease in perfusion pressure, relatively constant blood flow is maintained. Which mechanism is responsible?',
+  o: ['Metabolic demands', 'Autoregulation', 'Production of vasodilators', 'Reactive hyperemia', 'Endothelial-mediated mechanism'], a: 1,
+  ex: 'That is the definition of autoregulation (myogenic + metabolic mechanisms, plus tubuloglomerular feedback in the kidney).' },
+{ t: 'q', id: 'R26', src: 'AC76', core: true,
+  q: 'Which is the adaptation of blood flow in an organ with <b>increased workload for several months</b>?',
+  o: ['Active hyperemia', 'Passive hyperemia', 'Reactive hyperemia', 'Hypervascularization', 'Collateral circulation'], a: 3,
+  ex: 'Months of high demand trigger long-term local control: angiogenesis (VEGF, FGF, angiogenin), so the tissue gains more vessels. Active and reactive hyperemia are acute. Collateral circulation answers a chronic <b>blockage</b>.' },
+{ t: 'q', id: 'R27', src: 'AC77',
+  q: 'What is most likely to develop if the patient has <b>chronic vascular obstruction</b>?',
+  o: ['Collateral circulation', 'Decreased release of epinephrine', 'Increased production of nitric oxide', 'Increased sympathetic nerve activity', 'Reactive hyperemia'], a: 0,
+  ex: 'With slow, chronic occlusion, small anastomotic channels enlarge over days to months and carry blood around the block.' },
+{ t: 'q', id: 'R28', src: 'AC79 &#183; AC80',
+  q: 'Which type of blood vessel is most significantly affected by medications used to reduce hypertension?',
+  o: ['Arteriole', 'Large elastic artery', 'Capillary', 'Venule', 'Large vein'], a: 0,
+  ex: 'Arterioles are the main resistance vessels (thick smooth muscle, sympathetic control). Dilating them lowers TPR and therefore MAP.' },
+{ t: 'q', id: 'R29', src: 'AC80 &#183; AC81',
+  q: 'A patient takes a drug that inhibits <b>&#946;1-adrenergic receptors</b>. Blood flow to which organ is most reduced?',
+  o: ['Renal', 'Coronary', 'Mesenteric', 'Skeletal muscle', 'Skin'], a: 1,
+  ex: '&#946;1 blockade lowers heart rate and contractility, so the heart needs less O2. Coronary flow follows myocardial metabolism (adenosine), so it falls. Vessels elsewhere are controlled mainly by &#945;1 and &#946;2, not &#946;1.' },
+
+{ t: 'c', id: 'R-C8', title: 'Long-term control: the kidney and RAAS', html:
+'<div class="flow col">' +
+'<div class="fbox">Triggers: &#8595;renal perfusion pressure &#183; &#8595;NaCl at the macula densa &#183; &#8593;renal sympathetic (&#946;1 on JG cells)</div><div class="farrow">&#8595;</div>' +
+'<div class="fbox art"><b>Renin</b> from juxtaglomerular cells</div><div class="farrow">&#8595; cleaves angiotensinogen (liver)</div>' +
+'<div class="fbox">Angiotensin I</div><div class="farrow">&#8595; ACE (lung endothelium), which also breaks down bradykinin</div>' +
+'<div class="fbox art"><b>Angiotensin II</b></div><div class="farrow">&#8595;</div>' +
+'<div class="fgrid"><div class="fbox">Arteriolar constriction &#8594; &#8593;TPR (minutes)</div><div class="fbox">Aldosterone &#8594; Na&#8314; and water kept (hours&#8211;days)</div><div class="fbox">Direct Na&#8314; reabsorption in the proximal tubule</div><div class="fbox">ADH release and thirst</div></div>' +
+'</div>' +
+'<ul class="pts">' +
+'<li><b>Pressure natriuresis</b>: higher BP &#8594; the kidney excretes more Na&#8314; and water &#8594; volume and BP fall. This loop has infinite gain, so it sets long-term BP.</li>' +
+'<li><b>CKD</b>: &#8595;GFR (fewer nephrons) &#8594; the kidney cannot excrete salt and water &#8594; volume-loading hypertension.</li>' +
+'<li><b>Heart failure</b>: &#8595;CO &#8594; &#8595;renal perfusion &#8594; &#8593;renin, Ang II, aldosterone (plus &#8593;sympathetic, &#8593;ADH) &#8594; salt and water retention, edema. ANP is <b>high</b> in heart failure but cannot win.</li>' +
+'<li><b>ADH</b>: released mainly by &#8593;plasma osmolality; also by large volume or pressure loss. V2 = water reabsorption (aquaporin-2), V1 = vasoconstriction.</li>' +
+'<li><b>ACE inhibitor</b> (enalapril): &#8595;Ang II &#8594; &#8595;aldosterone, &#8595;vasoconstriction; bradykinin builds up (dry cough).</li>' +
+'</ul>' },
+
+{ t: 'q', id: 'R30', src: 'AC78', core: true,
+  q: 'In a patient with chronic kidney disease, hypertension is explained by salt and water retention. What is the most likely underlying cause?',
+  o: ['Decreased aldosterone', 'Increased renin synthesis', 'Increased capillary hydrostatic pressure', 'Decreased glomerular filtration rate (GFR)', 'Increased sympathetic nervous activity'], a: 3,
+  ex: 'With fewer working nephrons, GFR falls and the kidney can no longer excrete the daily salt and water load at normal pressure. Volume expands and BP rises until pressure natriuresis restores balance at a higher pressure.' },
+{ t: 'q', id: 'R31', src: 'AC79', core: true,
+  q: 'A 68-year-old man has dyspnea, peripheral edema and orthopnea consistent with heart failure. What best describes the primary mechanism of increased salt and water retention?',
+  o: ['Directly decreased ANP release, leading to reduced sodium excretion', 'Increased renin secretion, leading to elevated angiotensin II levels', 'Decreased sympathetic activity, leading to reduced renal blood flow', 'Direct stimulation of the collecting ducts by ADH', 'Enhanced GFR that overwhelms reabsorptive capacity'], a: 1,
+  ex: 'Low cardiac output lowers renal perfusion and raises renal sympathetic activity, both of which release renin. Ang II and aldosterone then retain Na+ and water. ANP actually rises in HF, sympathetic activity rises (not falls) and GFR falls.' },
+{ t: 'q', id: 'R32', src: 'AC81', core: true,
+  q: 'A patient with hypertension is prescribed <b>enalapril</b>, an angiotensin-converting enzyme inhibitor. What is the most likely mechanism of this drug?',
+  o: ['Reduce aldosterone release', 'Increase renal filtration'], a: 0,
+  ex: 'Blocking ACE lowers angiotensin II, so arterioles relax and the adrenal cortex releases less aldosterone (less Na+ and water retention). ACE also degrades bradykinin, which explains the dry cough.' },
+{ t: 'q', id: 'R33', src: 'AC81', core: true,
+  q: 'A 35-year-old man has acute watery diarrhea for <b>2 days</b>. BP 100/50 mmHg, HR 100 bpm, RR 24/min, BT 37.8&#176;C (baseline 120/70, 65, 12). Which mechanism is employed to maintain arterial pressure?',
+  o: ['Angiotensinogen-mediated vasoconstriction', 'Increased free water reabsorption from aldosterone', 'Decreased sodium excretion from antidiuretic hormone', 'Increased heart rate from decreased baroreceptor stimulation'], a: 3,
+  ex: 'Read each option for its error. Angiotensinogen is inactive; Ang II constricts. Aldosterone retains Na+ (water follows); <b>free water</b> reabsorption is ADH&#8217;s job. ADH saves water, not Na+. The tachycardia from baroreceptor unloading is correct.' },
+
+{ t: 'c', id: 'R-C9', title: 'What sympathetic and vagal nerves do to the heart', html:
+'<figure class="dg wide">' + SVG_PACER + '</figure>' +
+'<div class="tblwrap"><table class="tbl"><thead><tr><th></th><th>Sympathetic: NE &#8594; &#946;1 (G<sub>s</sub>, cAMP)</th><th>Vagus: ACh &#8594; M2 (G<sub>i</sub>)</th></tr></thead><tbody>' +
+'<tr><td>SA node rate</td><td>&#8593;If and &#8593;ICa-L &#8594; steeper phase 4 &#8594; &#8593;HR</td><td>&#8593;K&#8314; efflux (IK-ACh) &#8594; hyperpolarized; &#8595;If, &#8595;ICa &#8594; flatter phase 4 &#8594; &#8595;HR</td></tr>' +
+'<tr><td>AV conduction</td><td>&#8593;ICa-L &#8594; faster (shorter PR)</td><td>Slower; strong vagal input can block</td></tr>' +
+'<tr><td>Contractility</td><td>&#8593;Ca&#178;&#8314; entry and SR release &#8594; &#8593;force; phospholamban phosphorylation &#8594; faster relaxation</td><td>Small decrease (mostly atria)</td></tr>' +
+'<tr><td>Volumes</td><td>EDV about unchanged, <b>ESV &#8595;</b>, SV &#8593;, EF &#8593;</td><td>&#8212;</td></tr>' +
+'</tbody></table></div>' +
+'<p class="note">An &#945;1 agonist constricts arterioles: TPR and afterload rise but contractility does not change directly.</p>' },
+
+{ t: 'q', id: 'R34', src: 'AC81', core: true,
+  q: 'A patient comes in with bradycardia. A &#946;1 agonist is given to increase heart rate. What is the electrophysiology of the increased heart rate?',
+  o: ['Increased Na+ influx through funny channels', 'Decreased Na+ influx through funny channels', 'Increased Na+ influx through voltage-gated Na+ channels', 'Increased Ca2+ influx through slow Ca2+ channels', 'Increased K+ efflux through K+ channels'], a: 0,
+  ex: '&#946;1 &#8594; cAMP binds HCN (funny) channels directly &#8594; more If &#8594; steeper diastolic depolarization &#8594; threshold reached sooner. More Ca2+ current helps too, but the funny current is the classic answer. SA node upstroke does not use fast Na+ channels.' },
+{ t: 'q', id: 'R35', src: 'AC80',
+  q: 'A 40-year-old woman received a &#946;-adrenergic agonist. HR 120 bpm, BP 140/70 (normal 120/80). What mechanism leads to the increased heart rate?',
+  o: ['Increased Na+ influx from voltage-gated Na+ channels', 'Increased K+ efflux from K+ channels', 'Increased Na+ influx from funny channels', 'Decreased Na+ influx from funny channels', 'Increased Ca2+ influx from L-type Ca2+ channels'], a: 2,
+  ex: 'Same principle as R34: cAMP increases If, which steepens phase 4.' },
+{ t: 'q', id: 'R36', src: 'AC80',
+  q: 'A man has congestive heart failure after myocardial infarction. A sympathomimetic drug increases heart rate and LV ejection fraction. What mechanism increases LVEF?',
+  o: ['Increased preload', 'Increased afterload', 'Increased intracellular Ca2+', 'Increased permeability of funny channels', 'Decreased permeability of L-type Ca2+ channels'], a: 2,
+  ex: '&#946;1 &#8594; PKA phosphorylates L-type Ca2+ channels and ryanodine receptors &#8594; more Ca2+ reaches troponin C &#8594; stronger contraction &#8594; ESV falls and EF rises. Funny channels affect rate, not ejection fraction.' },
+{ t: 'q', id: 'R37', src: 'AC80',
+  q: 'A sympathomimetic drug is prescribed. What is the effect of this drug on the patient?',
+  o: ['Increases parasympathetic activity', 'Causes peripheral vasodilation', 'This drug can bind to &#946;1 receptors', 'Decreases heart contractility'], a: 2,
+  ex: 'Sympathomimetics mimic norepinephrine or epinephrine and act on adrenergic receptors, including cardiac &#946;1 (&#8593;rate and force).' },
+{ t: 'q', id: 'R38', src: 'AC76', core: true,
+  q: 'How does sympathetic nerve stimulation primarily affect end-diastolic volume, end-systolic volume and stroke volume, respectively?',
+  o: ['Increased, decreased, increased', 'Unchanged, decreased, increased', 'Decreased, decreased, increased', 'Increased, increased, increased', 'Unchanged, increased, increased'], a: 1,
+  ex: 'The primary effect is on contractility: the ventricle empties further, so ESV falls and SV (= EDV &#8722; ESV) rises at roughly the same EDV.' },
+{ t: 'q', id: 'R39', src: 'AC81',
+  q: 'Which of the following increases LV afterload but does <b>NOT</b> affect contractility?',
+  o: ['Alpha agonist infusion', 'Venous bleeding', 'Aerobic exercise', 'High-dose adrenaline injection', 'Vagal stimulation'], a: 0,
+  ex: '&#945;1 agonists constrict arterioles, raising TPR and aortic pressure (afterload), with no direct inotropic action. High-dose adrenaline also stimulates &#946;1 (more force); bleeding lowers preload; exercise raises contractility; vagal stimulation slows the heart.' },
+{ t: 'q', id: 'R40', src: 'AC77',
+  q: 'During exercise, which of the following is true when reaching 85% of maximal heart rate?',
+  o: ['Ca2+ shifts into the cell during the plateau phase', 'Increased Ca2+ conductance', 'Decreased electrical firing rate', 'Decreased Ca2+ conductance', 'Decreased prepotential slope'], a: 1,
+  ex: 'Heavy exercise means strong sympathetic drive: &#946;1 increases Ca2+ conductance (L-type channels) in nodal and contractile cells, steepening the prepotential and strengthening contraction. Option A is true of every beat, not a change caused by exercise.' },
+
+{ t: 'c', id: 'R-C10', title: 'The denervated (transplanted) heart', html:
+'<ul class="pts">' +
+'<li>No sympathetic or vagal nerves reach it, so resting HR is the intrinsic SA rate (~90&#8211;110 bpm): there is no vagal tone to slow it.</li>' +
+'<li>During exercise HR still rises, but <b>slowly and less</b> (a blunted increase), driven by <b>circulating catecholamines</b> from the adrenal medulla.</li>' +
+'<li>Stroke volume rises through Frank&#8211;Starling (more venous return from the muscle pump) and lower afterload (muscle vasodilation), so EF can still rise and ESV can still fall.</li>' +
+'<li>Drugs: a direct &#946;-agonist works. Atropine does nothing because there is no vagal tone to block.</li>' +
+'</ul>' },
+
+{ t: 'q', id: 'R41', src: 'AC80', core: true,
+  q: 'A patient has impaired autonomic control of the heart. On exertion cardiac output still increases. Which is <b>NOT</b> responsible for the increase?',
+  o: ['Decreased parasympathetic tone', 'Circulating catecholamines', 'Increased venous return', 'Decreased afterload', 'Frank&#8211;Starling relationship'], a: 0,
+  ex: 'Withdrawal of vagal tone needs intact cardiac nerves, so it cannot happen here. Adrenal catecholamines in the blood, the muscle pump (venous return &#8594; Frank&#8211;Starling) and falling afterload still work.' },
+{ t: 'q', id: 'R42', src: 'AC79',
+  q: 'What is the primary mechanism responsible for the increase in heart rate in a <b>transplanted heart</b>?',
+  o: ['Direct stimulation by postganglionic sympathetic fibers from the cardiac plexus', 'Reflex inhibition of vagal activity', 'Enhanced sensitivity of myocardial cells to intracellular Ca2+', 'Increased circulating levels of catecholamines', 'Local stretch receptors triggering intrinsic pathways'], a: 3,
+  ex: 'The transplanted heart has no nerves, so neither sympathetic fibers nor vagal withdrawal can act. Epinephrine and norepinephrine in the blood reach its &#946;1 receptors.' },
+{ t: 'q', id: 'R43', src: 'AC78',
+  q: 'A 30-year-old man had a heart transplant 4 years ago; the heart is not innervated. Which agent can practically be given to increase HR?',
+  o: ['&#946;-adrenergic agonist', '&#946;-adrenergic antagonist', '&#945;-adrenergic agonist', 'Muscarinic agonist', 'Muscarinic antagonist'], a: 0,
+  ex: 'A &#946;-agonist acts directly on the SA-node receptors. A muscarinic antagonist (atropine) only works by removing vagal tone, which this heart does not have.' },
+{ t: 'q', id: 'R44', src: 'AC76',
+  q: 'คนที่หัวใจไม่ตอบสนองต่อ autonomic nervous system จะมีการตอบสนองของ heart rate อย่างไรเมื่อ progressive moderate-intensity exercise? <span class="muted">(Heart without autonomic response, progressive moderate exercise: HR response?)</span>',
+  o: ['Constant', 'Drop', 'Irregular response', 'Blunt increase', 'Profound increase'], a: 3,
+  ex: 'HR rises only as circulating catecholamines build up, so the increase is slower and smaller.' },
+
+{ t: 'c', id: 'R-C11', title: 'Putting it together: hypovolemia (diarrhea, hemorrhage)', html:
+'<div class="tblwrap"><table class="tbl"><thead><tr><th>Time</th><th>What happens</th><th>Signs</th></tr></thead><tbody>' +
+'<tr><td><b>Direct effect</b></td><td>&#8595;blood volume &#8594; &#8595;venous return &#8594; &#8595;EDV, &#8595;SV, &#8595;CO &#8594; &#8595;BP</td><td>Hypotension, weak (thready) pulse, narrow pulse pressure, &#8595;CVP</td></tr>' +
+'<tr><td><b>Seconds</b> (immediate compensation)</td><td>Baroreceptors fire <b>less</b> &#8594; fewer IX/X impulses to NTS &#8594; vasomotor center released &#8594; &#8593;sympathetic, &#8595;vagal. Chemoreceptors join when MAP &lt; 80; CNS ischemic response if &lt; 60</td><td>Tachycardia (&#8593;phase-4 slope), &#8593;contractility, &#8593;SVR, venoconstriction, cold pale skin, delayed capillary refill, tachypnea</td></tr>' +
+'<tr><td><b>Minutes&#8211;hours</b></td><td>Ang II vasoconstriction; capillary fluid shift (&#8595;capillary pressure &#8594; interstitial fluid moves in, so Hct falls); reverse stress relaxation</td><td>Hct drops a little within 15&#8211;30 min</td></tr>' +
+'<tr><td><b>Hours&#8211;days</b> (long-term)</td><td>Aldosterone, ADH, thirst &#8594; kidney keeps salt and water; erythropoietin restores red cells over weeks</td><td>Thirst, oliguria</td></tr>' +
+'</tbody></table></div>' },
+
+{ t: 'q', id: 'R45', src: 'AC79', core: true, group: 'Case: laxative diarrhea',
+  q: 'A 35-year-old man has acute watery diarrhea for 2 hours from laxative overuse. BP 90/50, HR 120, RR 24/min, BT 37.6&#176;C (baseline 120/70, 80, 12). Which electrophysiological change explains the altered heart rate?',
+  o: ['Depolarized resting membrane potential from &#8722;90 mV', 'Decreased plateau and rapid repolarizing phase', 'Increased slope of the depolarization phase', 'Increased slope of diastolic depolarization', 'Increased Na+ influx via fast Na+ channels'], a: 3,
+  ex: 'Sympathetic &#946;1 stimulation steepens phase 4 (diastolic depolarization) of the SA node, so threshold is reached sooner. SA cells have no &#8722;90 mV resting potential and no fast Na+ upstroke.' },
+{ t: 'q', id: 'R46', src: 'AC79', core: true, group: 'Case: laxative diarrhea',
+  q: 'Same patient. Which parameter is <b>increased</b> compared with baseline?',
+  o: ['Stroke volume', 'LV end-diastolic volume', 'Central venous pressure', 'Cardiac output', 'Systemic vascular resistance'], a: 4,
+  ex: 'Volume loss lowers venous return, CVP, EDV, SV and CO. MAP fell from ~87 to ~63 mmHg, and the sympathetic response raises SVR to limit the fall.' },
+{ t: 'q', id: 'R47', src: 'AC79', core: true, group: 'Case: laxative diarrhea',
+  q: 'Same patient. Which of the following does <b>NOT</b> occur in the response to the BP change?',
+  o: ['Increased afferent signals from the glossopharyngeal nerve to the NTS', 'Increased cardiac contractility via &#946;1-adrenergic receptors', 'Activation of the vasomotor center', 'Increased sympathetic signals to the ventricles', 'Decreased parasympathetic signals to the SA node'], a: 0,
+  ex: 'Low pressure means <b>less</b> stretch, so the carotid sinus sends <b>fewer</b> impulses up CN IX. That fall in afferent traffic is what releases the vasomotor center. The same question appears in AC79 Circulatory control with shuffled options.' },
+{ t: 'q', id: 'R48', src: 'AC81', core: true,
+  q: 'A 20-year-old comes to the ER after a motorcycle accident with his face soaked in blood. What is the <b>DIRECT</b> effect of massive blood loss?',
+  o: ['Tachypnea', 'Tachycardia', 'Cold extremities', 'Weak pulse', 'Delayed capillary refill time'], a: 3,
+  ex: 'Less blood &#8594; smaller stroke volume &#8594; small, weak pulse (and low BP). Tachycardia, tachypnea, cold extremities and slow capillary refill are the body&#8217;s compensations (sympathetic, chemoreceptor).' },
+{ t: 'q', id: 'R49', src: 'AC75',
+  q: 'A patient after a car accident has thready pulse, hypotension, tachycardia, tachypnea and restlessness. What causes the signs and symptoms?',
+  o: ['Direct effect of hemorrhage', 'Immediate compensation', 'Long-term compensation', 'Direct effect and immediate compensation', 'Direct effect, immediate and long-term compensation'], a: 3,
+  ex: 'Thready pulse and hypotension are direct effects of lost volume. Tachycardia and tachypnea are immediate (nervous) compensation. No long-term signs such as thirst or oliguria are described.' },
+{ t: 'q', id: 'R50', src: 'AC77',
+  q: 'Which is a <b>long-term</b> compensatory mechanism of hypovolemic shock?',
+  o: ['Thirst', 'Thready pulse', 'Increased heart rate', 'Increased heart rate and thready pulse', 'Increased heart rate, thready pulse and thirst'], a: 0,
+  ex: 'Thirst (with ADH and aldosterone) restores volume over hours to days. A thready pulse is a direct effect, and tachycardia is immediate compensation.' }
+
+  ]
+});
+})();

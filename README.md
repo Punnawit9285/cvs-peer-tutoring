@@ -23,3 +23,4 @@ node gen.js       # Apply patch.js (real figures + cloze markup) to old/ -> data
 node check.js     # Validate all IDs, answer keys, and templates
 node build.js all # Bundle dist/deck.html and dist/notes.html
 ```
+

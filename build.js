@@ -9,5 +9,16 @@ function page(title, cssFiles, body, appFile){
   return '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>'+title+'</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'+FONTS+'\n<style>\n'+cssFiles.map(rd).join('\n')+'\n</style>\n</head>\n<body>\n'+body+'\n<script>\n'+js+'\n</script>\n</body>\n</html>\n';
 }
 const which=process.argv[2]||'deck';
-if(which==='deck'||which==='all'){fs.writeFileSync('dist/deck.html',page('CVS Regulation &amp; Labs',['src/base.css','src/deck.css'],rd('src/deck-body.html'),'src/deck-app.js'));console.log('deck.html',fs.statSync('dist/deck.html').size,'bytes');}
-if((which==='notes'||which==='all')&&fs.existsSync('src/notes-app.js')){fs.writeFileSync('dist/notes.html',page('CVS Tutor Notes',['src/base.css','src/notes.css'],rd('src/notes-body.html'),'src/notes-app.js'));console.log('notes.html',fs.statSync('dist/notes.html').size,'bytes');}
+if(which==='deck'||which==='all'){
+  const deckHtml=page('CVS Regulation &amp; Labs',['src/base.css','src/deck.css'],rd('src/deck-body.html'),'src/deck-app.js');
+  fs.writeFileSync('dist/deck.html',deckHtml);
+  fs.writeFileSync('student.html',deckHtml);
+  fs.writeFileSync('index.html',deckHtml);
+  console.log('deck.html / student.html',fs.statSync('dist/deck.html').size,'bytes');
+}
+if((which==='notes'||which==='all')&&fs.existsSync('src/notes-app.js')){
+  const notesHtml=page('CVS Tutor Deck',['src/base.css','src/notes.css'],rd('src/notes-body.html'),'src/notes-app.js');
+  fs.writeFileSync('dist/notes.html',notesHtml);
+  fs.writeFileSync('tutor.html',notesHtml);
+  console.log('notes.html / tutor.html',fs.statSync('dist/notes.html').size,'bytes');
+}

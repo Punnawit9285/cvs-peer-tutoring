@@ -1129,8 +1129,8 @@
       var c = counts(s);
       return '<button type="button" class="station" data-sec="' + si + '"><span class="k">' + s.id + ' &#183; ' + s.kind + '</span><b>' + s.short + '</b><span>' + c.q + ' questions &#183; ' + c.core + ' core</span></button>';
     }).join('');
-    return '<article class="card secard"><div class="eyebrow"><span class="chip kind">Tutor Deck</span><span class="chip">All Answers Revealed &#183; คำอธิบายภาษาไทย</span></div>' +
-      '<h2>CVS Regulation &amp; Labs &#183; หน้าสำหรับผู้สอน (Tutor View)</h2>' +
+    return '<article class="card secard"><div class="eyebrow"><span class="chip kind">Peer support 82</span><span class="chip">All Answers Revealed &#183; คำอธิบายภาษาไทย</span></div>' +
+      '<h2>CVS I Regulation &amp; Lab &#183; หน้าสำหรับผู้สอน (Tutor View)</h2>' +
       '<p class="lede">หน้าตาและลำดับการ์ดตรงกับ Student Deck ทุกข้อ (' + tot + ' คำถาม, ' + core + ' ข้อหลักสำหรับอัดวิดีโอ และ 54 Concept Cards) โดยเปิดเฉลยคำตอบและช่องว่าง Cloze ทั้งหมดไว้ล่วงหน้า พร้อมคำอธิบายแบบกระชับเป็น Bullet ภาษาไทย (คงศัพท์การแพทย์ภาษาอังกฤษ)</p>' +
       '<div class="stations">' + st + '</div>' +
       '<div class="traps-box"><div class="tp-head">วิธีใช้งานคู่กับหน้า Student Deck</div><ul>' +

@@ -79,8 +79,8 @@
       var c = counts(s);
       return '<button type="button" class="station" data-sec="' + si + '"><span class="k">' + s.id + ' &#183; ' + s.kind + '</span><b>' + s.short + '</b><span>' + c.q + ' questions &#183; ' + c.core + ' core</span></button>';
     }).join('');
-    return '<article class="card secard"><div class="eyebrow"><span class="chip kind">Peer tutoring</span><span class="chip">AC75&#8211;81 + lab quizzes</span></div>' +
-      '<h2>CVS Regulation &amp; Labs</h2><p class="lede">Question first, concept second. ' + tot + ' past-exam and lab-quiz questions on the regulation lecture and every lab except ECG; ' + core + ' are marked core for the video.</p>' +
+    return '<article class="card secard"><div class="eyebrow"><span class="chip kind">Peer support 82</span><span class="chip">AC75&#8211;81 + lab quizzes</span></div>' +
+      '<h2>CVS I Regulation &amp; Lab</h2><p class="lede">Question first, concept second. ' + tot + ' past-exam and lab-quiz questions on the regulation lecture and every lab except ECG; ' + core + ' are marked core for the video.</p>' +
       '<div class="stations">' + st + '</div>' +
       '<div class="howto"><div><b>Ask</b>Read the stem, wait 10 seconds, click the option most people would pick.</div>' +
       '<div><b>Reveal</b>Press <kbd>Space</kbd>. Green is correct; red marks a wrong pick.</div>' +

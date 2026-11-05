@@ -1,6 +1,6 @@
-# CVS Regulation & Labs — Peer Tutoring Materials
+# CVS I Regulation & Lab — Peer support 82 deck
 
-Interactive question-first peer-tutoring deck and read-through tutor notes for **CVS Regulation and CVS I Labs (except ECG)**:
+Interactive question-first Peer support 82 deck and tutor guide for **CVS I Regulation & Lab (except ECG)**:
 
 - **R · Regulation**: Cardiovascular regulation lecture (baroreflex, chemoreceptors, CNS ischemic response, RAAS, local autoregulation, denervated heart, hypovolemia)
 - **F · Frog Heart Lab**: Cardiac action potentials, conduction velocity, refractory periods, extrasystole & compensatory pause, Stannius ligatures, all-or-none law

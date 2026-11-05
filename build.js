@@ -10,14 +10,14 @@ function page(title, cssFiles, body, appFile){
 }
 const which=process.argv[2]||'deck';
 if(which==='deck'||which==='all'){
-  const deckHtml=page('CVS Regulation &amp; Labs',['src/base.css','src/deck.css'],rd('src/deck-body.html'),'src/deck-app.js');
+  const deckHtml=page('CVS I Regulation &amp; Lab &#183; Peer support 82 deck',['src/base.css','src/deck.css'],rd('src/deck-body.html'),'src/deck-app.js');
   fs.writeFileSync('dist/deck.html',deckHtml);
   fs.writeFileSync('student.html',deckHtml);
   fs.writeFileSync('index.html',deckHtml);
   console.log('deck.html / student.html',fs.statSync('dist/deck.html').size,'bytes');
 }
 if((which==='notes'||which==='all')&&fs.existsSync('src/notes-app.js')){
-  const notesHtml=page('CVS Tutor Deck',['src/base.css','src/notes.css'],rd('src/notes-body.html'),'src/notes-app.js');
+  const notesHtml=page('CVS I Regulation &amp; Lab &#183; Peer support 82 deck (Tutor)',['src/base.css','src/notes.css'],rd('src/notes-body.html'),'src/notes-app.js');
   fs.writeFileSync('dist/notes.html',notesHtml);
   fs.writeFileSync('tutor.html',notesHtml);
   console.log('notes.html / tutor.html',fs.statSync('dist/notes.html').size,'bytes');

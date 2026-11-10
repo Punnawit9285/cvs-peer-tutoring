@@ -207,10 +207,11 @@ button, input { font: inherit; color: inherit; }
 .qrlink { display: grid; justify-items: end; gap: 6px; color: var(--ink2); text-decoration: none; }
 .qrlink img { width: 112px; height: 112px; display: block; }
 .qrlink span { font: .72em var(--f-mono); }
+.qrlink .qrcap { font: 600 .78em var(--f-display); color: var(--ink); letter-spacing: .01em; }
 .qrlink:hover span { color: var(--ven); text-decoration: underline; }
 .legend { margin: 14px 0 0; font: .8em var(--f-mono); color: var(--ink2); }
 .legend .chip { margin-right: 6px; }
-@media (max-width: 560px) { .qrlink img { display: none; } .qrlink { justify-items: start; } .counts b { font-size: 2.6em; } }
+@media (max-width: 560px) { .qrlink img, .qrlink .qrcap { display: none; } .qrlink { justify-items: start; } .counts b { font-size: 2.6em; } }
 
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--sheet); }
 .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--sheet); border-bottom: 1px solid var(--rule); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px 18px; align-items: center; }
@@ -2235,7 +2236,7 @@ window.THAI_EXPLAIN = {
     return '<article class="card secard"><div class="eyebrow"><span class="chip kind">Peer support 82</span><span class="chip">AC75&#8211;81 + lab quizzes</span></div>' +
       '<h2>CVS I Regulation &amp; Lab</h2>' +
       '<div class="coverline"><div class="counts"><div><b>' + nc + '</b><span>concepts</span></div><div><b>' + tot + '</b><span>questions</span></div></div>' +
-      '<a class="qrlink" href="https://punnawit9285.github.io/cvs-peer-tutoring/"><img src="img/qr-site.svg" width="112" height="112" alt="QR code for punnawit9285.github.io/cvs-peer-tutoring"><span>punnawit9285.github.io/cvs-peer-tutoring</span></a></div>' +
+      '<a class="qrlink" href="https://punnawit9285.github.io/cvs-peer-tutoring/"><span class="qrcap">Scan to open the interactive deck</span><img src="img/qr-site.svg" width="112" height="112" alt="QR code for punnawit9285.github.io/cvs-peer-tutoring"><span>punnawit9285.github.io/cvs-peer-tutoring</span></a></div>' +
       '<div class="stations">' + st + '</div>' +
       '<p class="legend"><span class="chip core">core</span> done in the video</p></article>';
   }

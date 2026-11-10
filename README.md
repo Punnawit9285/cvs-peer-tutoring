@@ -8,7 +8,7 @@ Interactive question-first Peer support 82 deck and tutor guide for **CVS I Regu
 |---|---|
 | **Student deck** (present to the audience) | https://punnawit9285.github.io/cvs-peer-tutoring/student.html |
 | **Tutor deck** (second screen: answers, Thai explanations, tutor notes, script) | https://punnawit9285.github.io/cvs-peer-tutoring/tutor.html |
-| **Student handout PDF** | https://punnawit9285.github.io/cvs-peer-tutoring/student.pdf?v=306dc89d |
+| **Student handout PDF** | https://punnawit9285.github.io/cvs-peer-tutoring/student.pdf?v=e2e7e2fa |
 
 Open the student and tutor decks in the same browser and tick *Follow student* in the tutor deck: it jumps to whatever card the student deck shows.
 

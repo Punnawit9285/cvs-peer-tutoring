@@ -1143,7 +1143,7 @@
     return '<article class="card secard"><div class="eyebrow"><span class="chip kind">Peer support 82</span><span class="chip">AC75&#8211;81 + lab quizzes</span></div>' +
       '<h2>CVS I Regulation &amp; Lab</h2>' +
       '<div class="coverline"><div class="counts"><div><b>' + nc + '</b><span>concepts</span></div><div><b>' + tot + '</b><span>questions</span></div></div>' +
-      '<a class="qrlink" href="https://punnawit9285.github.io/cvs-peer-tutoring/"><img src="img/qr-site.svg" width="112" height="112" alt="QR code for punnawit9285.github.io/cvs-peer-tutoring"><span>punnawit9285.github.io/cvs-peer-tutoring</span></a></div>' +
+      '<a class="qrlink" href="https://punnawit9285.github.io/cvs-peer-tutoring/"><span class="qrcap">Scan to open the interactive deck</span><img src="img/qr-site.svg" width="112" height="112" alt="QR code for punnawit9285.github.io/cvs-peer-tutoring"><span>punnawit9285.github.io/cvs-peer-tutoring</span></a></div>' +
       '<div class="stations">' + st + '</div>' +
       '<p class="legend"><span class="chip core">core</span> done in the video</p></article>';
   }

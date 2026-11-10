@@ -196,7 +196,8 @@ button, input { font: inherit; color: inherit; }
 .qrlink { display: grid; justify-items: end; gap: 6px; color: var(--ink2); text-decoration: none; }
 .qrlink img { width: 112px; height: 112px; display: block; }
 .qrlink span { font: .72em var(--f-mono); }
+.qrlink .qrcap { font: 600 .78em var(--f-display); color: var(--ink); letter-spacing: .01em; }
 .qrlink:hover span { color: var(--ven); text-decoration: underline; }
 .legend { margin: 14px 0 0; font: .8em var(--f-mono); color: var(--ink2); }
 .legend .chip { margin-right: 6px; }
-@media (max-width: 560px) { .qrlink img { display: none; } .qrlink { justify-items: start; } .counts b { font-size: 2.6em; } }
+@media (max-width: 560px) { .qrlink img, .qrlink .qrcap { display: none; } .qrlink { justify-items: start; } .counts b { font-size: 2.6em; } }

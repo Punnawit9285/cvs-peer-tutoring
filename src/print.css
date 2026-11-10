@@ -27,6 +27,7 @@ h1 { font: 600 2.6em/1.1 var(--f-display); margin: 4px 0 10px; letter-spacing: .
 .cover .counts span { font-size: .95em; }
 .cover .qrlink img { width: 36mm; height: 36mm; }
 .cover .qrlink span { font-size: .85em; }
+.cover .qrlink .qrcap { font-size: 1em; }
 table.toc { width: 100%; border-collapse: collapse; font-size: 1em; }
 table.toc th { text-align: left; font: 600 .78em var(--f-mono); text-transform: uppercase; letter-spacing: .05em; color: var(--ink2); border-bottom: 1.5px solid var(--ink); padding: 5px 6px; }
 table.toc td { border-bottom: 1px solid var(--rule); padding: 6px; white-space: nowrap; }

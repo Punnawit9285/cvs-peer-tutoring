@@ -53,7 +53,7 @@ let nB = 0;
 let h = '<section class="cover"><div class="eyebrow"><span class="chip kind">Peer support 82</span><span class="chip">AC75–81 + lab quizzes</span><span class="chip">Student handout</span></div>' +
   '<h1>CVS I Regulation &amp; Lab</h1>' +
   '<div class="coverline"><div class="counts"><div><b>' + nC + '</b><span>concepts</span></div><div><b>' + nQ + '</b><span>questions</span></div></div>' +
-  '<a class="qrlink" href="https://punnawit9285.github.io/cvs-peer-tutoring/"><img src="img/qr-site.svg" alt="QR code for punnawit9285.github.io/cvs-peer-tutoring"><span>punnawit9285.github.io/cvs-peer-tutoring</span></a></div>' +
+  '<a class="qrlink" href="https://punnawit9285.github.io/cvs-peer-tutoring/"><span class="qrcap">Scan to open the interactive deck</span><img src="img/qr-site.svg" alt="QR code for punnawit9285.github.io/cvs-peer-tutoring"><span>punnawit9285.github.io/cvs-peer-tutoring</span></a></div>' +
   '<h3 class="minih">Contents</h3><table class="toc"><thead><tr><th>Section</th><th>Starts</th><th>Concepts · questions</th><th>Quiz answers</th><th>Blank answers</th><th>Thai concept explanations</th></tr></thead><tbody>';
 S.forEach(s => {
   const qn = s.items.filter(isQ).length, cn = s.items.filter(it => it.t === 'c').length;

@@ -1118,7 +1118,7 @@
     var n = window.TUTOR_NOTES && window.TUTOR_NOTES[it.id];
     if (!n) return '';
     var esc = function (x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
-    return '<div class="tnotes"><div class="tn-head">Tutor notes &#183; beyond the slide</div>' +
+    return '<div class="tnotes"><div class="tn-head">โน้ตผู้สอน &#183; นอกเหนือจากสไลด์</div>' +
       (n.b && n.b.length ? '<ul>' + n.b.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' : '') +
       (n.d && n.d.length ? '<pre class="tdiag">' + n.d.map(esc).join('\n') + '</pre>' : '') + '</div>';
   }

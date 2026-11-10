@@ -22,4 +22,8 @@ node print.js "$TMP/pages.json"
 print student.pdf
 tools/pdftext student.pdf > "$TMP/final.txt"
 node tools/pages.js "$TMP/final.txt" --check "$TMP/pages.json"
+# stamp the live link with the PDF hash so browsers fetch the new file instead of a cached one
+V=$(shasum student.pdf | cut -c1-8)
+sed -i '' -E "s#(cvs-peer-tutoring/student\.pdf)(\?v=[0-9a-f]+)?#\1?v=$V#g" README.md
+echo "student.pdf version $V"
 rm -rf "$TMP"

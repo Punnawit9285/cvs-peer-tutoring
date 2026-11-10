@@ -10,6 +10,7 @@ const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const out = {};
 out.ans = phrase('Answer key', 2);
 out.thx = phrase('Concepts in Thai', 2);
+out.blk = phrase('Concept blanks', out.ans);
 CVS.sections.forEach(s => {
   const cs = s.items.filter(it => it.t === 'c');
   cs.forEach(it => {
@@ -20,10 +21,11 @@ CVS.sections.forEach(s => {
   });
   out['s-' + s.id] = out['k-' + cs[0].id];
   out['a-' + s.id] = phrase('Answer key · Section ' + s.id + ' ' + s.title.split(' ')[0]);
+  out['b-' + s.id] = phrase('Concept blanks · Section ' + s.id + ' ' + s.title.split(' ')[0]);
   out['x-' + s.id] = phrase('Thai explanations · Section ' + s.id + ' ' + s.title.split(' ')[0]);
 });
 /* every concept page must show the end of its card: a missing tail means the page clipped it */
-const plain = h => String(h).replace(/<[^>]+>/g, ' ').replace(/\{\{|\}\}/g, '').replace(/&#(\d+);/g, (m, n) => String.fromCharCode(+n)).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&[a-z]+;/g, '').replace(/\s+/g, '');
+const plain = h => String(h).replace(/<span class="cz">[\s\S]*?<\/span>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/\{\{|\}\}/g, '').replace(/&#(\d+);/g, (m, n) => String.fromCharCode(+n)).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&[a-z]+;/g, '').replace(/\s+/g, '');
 const clipped = [];
 CVS.sections.forEach(s => s.items.filter(it => it.t === 'c').forEach(it => {
   const tail = plain(it.html).replace(/[^A-Za-z0-9]/g, '').slice(-14), pgT = (lines.find(l => l.n === out['k-' + it.id]) || {}).t || '';

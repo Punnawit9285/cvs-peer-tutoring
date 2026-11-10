@@ -8,7 +8,7 @@ Interactive question-first Peer support 82 deck and tutor guide for **CVS I Regu
 |---|---|
 | **Student deck** (present to the audience) | https://punnawit9285.github.io/cvs-peer-tutoring/student.html |
 | **Tutor deck** (second screen: answers, Thai explanations, tutor notes, script) | https://punnawit9285.github.io/cvs-peer-tutoring/tutor.html |
-| **Student handout PDF** | https://punnawit9285.github.io/cvs-peer-tutoring/student.pdf |
+| **Student handout PDF** | https://punnawit9285.github.io/cvs-peer-tutoring/student.pdf?v=f9ba0160 |
 
 Open the student and tutor decks in the same browser and tick *Follow student* in the tutor deck: it jumps to whatever card the student deck shows.
 
@@ -26,8 +26,8 @@ Open the student and tutor decks in the same browser and tick *Follow student* i
 ## Pages
 
 - **[`dist/deck.html`](dist/deck.html)** — Present & Browse modes, **Core only** filter (106 core questions out of 223 total), 54 concept cards with **531 click-to-reveal cloze blanks**, keyboard navigation (`←`/`→`, `Space` to reveal next blank/answer, `Enter` to reveal all blanks, `A`–`F` / `T` / `F` to answer, `R` to reset, `L` to open the Thai explanation, `B` to toggle Browse), and click-to-zoom course figures. Clicking an option shows the answer at once. Every concept card has a collapsible Thai explanation (labelled **Explanation**) under it; it starts closed because it gives away the blanks.
-- **[`dist/notes.html`](dist/notes.html)** (also `tutor.html`): the tutor deck. Same cards and order as the student deck, with every answer and blank revealed, concise Thai bullet explanations, and the English recording script: the 5-video plan on the start card, an opening line and an "Understand it: the 80%" summary on each section card, and a **SAY** line on every concept card and core question. Each concept card also carries **tutor notes** (knowledge beyond the slide: short bullets, A → B chains, small text diagrams) and the Thai explanation, open.
-- **[`student.pdf`](student.pdf)**: the student handout (A4, 105 pages). Each concept gets one page, followed by the quiz on that concept (no answers, two columns; a short quiz sits under its concept when it fits). The answer key with Thai explanations, grouped by concept, and the Thai explanation of every concept are at the back. Cross-references give real page numbers.
+- **[`dist/notes.html`](dist/notes.html)** (also `tutor.html`): the tutor deck. Same cards and order as the student deck, with every answer and blank revealed, concise Thai bullet explanations, and the English recording script: the 5-video plan on the start card, an opening line and an "Understand it: the 80%" summary on each section card, and a **SAY** line on every concept card and core question. Each concept card also carries **tutor notes** in Thai (knowledge beyond the slide: short bullets, A → B chains, small text diagrams) and the Thai explanation, open.
+- **[`student.pdf`](student.pdf)**: the student handout (A4, 106 pages). Each concept gets one page with its cloze blanks left empty and numbered, followed by the quiz on that concept (no answers, two columns; a short quiz sits under its concept when it fits). At the back: the quiz answer key with Thai explanations (grouped by concept), the answers to every numbered blank, and each concept's Thai key points and explanation. Cross-references give real page numbers.
 - **Follow student**: open `student.html` and `tutor.html` in the same browser (two tabs or windows). With *Follow student* ticked, the tutor deck jumps to whatever card the student deck shows.
 
 ## Building

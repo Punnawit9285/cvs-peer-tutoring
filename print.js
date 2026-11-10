@@ -27,17 +27,39 @@ S.forEach(s => s.items.forEach(it => { if (it.t === 'c') nC++; else nQ++; }));
 const units = [];   /* {s, c, qs} in deck order: every question follows the concept it belongs to */
 S.forEach(s => { let cur = null; s.items.forEach(it => { if (it.t === 'c') { cur = { s: s, c: it, qs: [] }; units.push(cur); } else if (cur) cur.qs.push(it); else throw new Error(it.id + ' comes before any concept'); }); });
 
+/* Cloze blanks stay empty in the PDF: each becomes a numbered box sized to its answer (the answer text is not in the file).
+   The answers are listed at the back, per concept. */
+const BLANKS = {};
+function blankify(h, id) {
+  const open = '<span class="cz">', ans = [];
+  let out = '', i = 0, k;
+  while ((k = h.indexOf(open, i)) >= 0) {
+    const re = /<span\b|<\/span>/g; let d = 1, m; re.lastIndex = k + open.length;
+    while (d && (m = re.exec(h))) d += m[0] === '</span>' ? -1 : 1;
+    if (!m) throw new Error('unclosed blank in ' + id);
+    const inner = h.slice(k + open.length, m.index);
+    ans.push(inner);
+    const chars = inner.replace(/<[^>]+>/g, '').replace(/&[^;]+;/g, 'x').length;
+    const w = Math.min(16, Math.max(2.4, 0.52 * chars + 1.3)).toFixed(1);
+    out += h.slice(i, k) + '<span class="czb" style="width:' + w + 'em"><i>' + ans.length + '</i></span>';
+    i = m.index + 7;
+  }
+  BLANKS[id] = ans;
+  return out + h.slice(i);
+}
+let nB = 0;
+
 /* ---------- cover ---------- */
 let h = '<section class="cover"><div class="eyebrow"><span class="chip kind">Peer support 82</span><span class="chip">AC75–81 + lab quizzes</span><span class="chip">Student handout</span></div>' +
   '<h1>CVS I Regulation &amp; Lab</h1>' +
   '<p class="lede">' + nC + ' concept pages built from the real lab figures, each followed by a quiz on it: ' + nQ + ' past-exam and lab-quiz questions on the cardiovascular regulation lecture and every lab except ECG.</p>' +
-  '<div class="howuse"><div><b>1 · Learn</b>Read the concept page. Underlined terms are the key details.</div>' +
+  '<div class="howuse"><div><b>1 · Learn</b>Read the concept page and fill in its numbered blanks: they are the key details.</div>' +
   '<div><b>2 · Try</b>The quiz on that concept comes right after it. Nothing is answered there: circle your choice first.</div>' +
-  '<div><b>3 · Check</b>Answers and Thai explanations are all at the back, from page ' + pg('ans') + '. The Thai explanation of every concept follows them, from page ' + pg('thx') + '.</div></div>' +
-  '<h3 class="minih">Contents</h3><table class="toc"><thead><tr><th>Section</th><th>Starts</th><th>Concepts · questions</th><th>Answers</th><th>Thai concept explanations</th></tr></thead><tbody>';
+  '<div><b>3 · Check</b>Everything is at the back: quiz answers with Thai explanations from page ' + pg('ans') + ', blank answers from page ' + pg('blk') + ', and the Thai explanation of every concept from page ' + pg('thx') + '.</div></div>' +
+  '<h3 class="minih">Contents</h3><table class="toc"><thead><tr><th>Section</th><th>Starts</th><th>Concepts · questions</th><th>Quiz answers</th><th>Blank answers</th><th>Thai concept explanations</th></tr></thead><tbody>';
 S.forEach(s => {
   const qn = s.items.filter(isQ).length, cn = s.items.filter(it => it.t === 'c').length;
-  h += '<tr><td><span class="tid">' + s.id + '</span>' + s.title + '</td><td>p. ' + pg('s-' + s.id) + '</td><td>' + cn + ' · ' + qn + '</td><td>p. ' + pg('a-' + s.id) + '</td><td>p. ' + pg('x-' + s.id) + '</td></tr>';
+  h += '<tr><td><span class="tid">' + s.id + '</span>' + s.title + '</td><td>p. ' + pg('s-' + s.id) + '</td><td>' + cn + ' · ' + qn + '</td><td>p. ' + pg('a-' + s.id) + '</td><td>p. ' + pg('b-' + s.id) + '</td><td>p. ' + pg('x-' + s.id) + '</td></tr>';
 });
 h += '</tbody></table><p class="note"><span class="chip core">core</span> = done on the video. Question IDs (R1, F12, …) match the interactive deck and the answer key.</p></section>';
 
@@ -51,14 +73,14 @@ function qBlock(it) {
   return b + '</div>';
 }
 units.forEach(u => {
-  const s = u.s, it = u.c, kp = THAI_CONCEPT[it.id], first = s.items[0] === it;
+  const s = u.s, it = u.c, first = s.items[0] === it;
   h += '<section class="cpage" data-id="' + it.id + '"><div class="cfit concept">' +
     (first ? '<div class="secband"><span class="chip kind">' + s.kind + '</span><span class="id">Section ' + s.id + '</span><b>' + s.title + '</b><span class="muted">' + s.blurb + '</span></div>' : '') +
     '<div class="eyebrow"><span class="id">' + it.id + '</span><span class="chip kind">Concept</span>' + (it.src ? '<span class="chip">' + it.src + '</span>' : '') + '<span class="sp"></span><span>' + s.title + '</span></div>' +
     '<h2>' + it.title + '</h2>' +
-    (kp && kp.length ? '<div class="tpoints"><div class="tp-head">สรุปประเด็นสำคัญ (Key Points)</div><ul>' + kp.map(b => '<li>' + b + '</li>').join('') + '</ul></div>' : '') +
-    '<div class="cbody">' + eager(CVS.cloze(it.html)) + '</div>' +
-    '<p class="cfoot">Thai explanation of this concept: p. ' + pg('x-' + s.id) + '</p></div></section>';
+    '<div class="cbody">' + eager(blankify(it.html, it.id)) + '</div>' +
+    '<p class="cfoot">' + (BLANKS[it.id].length ? BLANKS[it.id].length + ' blanks · answers p. ' + pg('b-' + s.id) + ' · ' : '') + 'Thai explanation of this concept: p. ' + pg('x-' + s.id) + '</p></div></section>';
+  nB += BLANKS[it.id].length;
   if (u.qs.length) h += '<section class="quiz" data-for="' + it.id + '"><header class="quizh"><span class="id">Quiz · ' + it.id + ' ·</span><b>' + it.title + '</b><span class="sp"></span><span class="muted">' + u.qs.length + (u.qs.length === 1 ? ' question' : ' questions') + ' · answers p. ' + pg('a-' + s.id) + '</span></header><div class="qcols">' + u.qs.map(qBlock).join('') + '</div></section>';
 });
 
@@ -82,13 +104,26 @@ S.forEach(s => {
   h += '</div></section>';
 });
 
+/* ---------- answers to the concept blanks ---------- */
+h += '<section class="part"><div class="eyebrow"><span class="chip kind">Concept blanks</span></div><h1>เฉลยช่องว่างใน concept</h1><p class="lede">The ' + nB + ' numbered blanks on the concept pages, concept by concept.</p></section>';
+S.forEach(s => {
+  h += '<section class="bksec"><header class="akhead"><span class="id">Concept blanks · Section ' + s.id + '</span><b>' + s.title + '</b></header><div class="bkcols">';
+  s.items.filter(it => it.t === 'c' && BLANKS[it.id].length).forEach(it => {
+    h += '<div class="bk"><div class="bkh"><b>' + it.id + '</b>' + it.title + ' <span class="muted">· p. ' + pg('k-' + it.id) + '</span></div><p class="bkl">' +
+      BLANKS[it.id].map((a, i) => '<span class="bka"><i>' + (i + 1) + '</i>' + a + '</span>').join(' ') + '</p></div>';
+  });
+  h += '</div></section>';
+});
+
 /* ---------- Thai explanation of every concept ---------- */
-h += '<section class="part"><div class="eyebrow"><span class="chip kind">Concepts in Thai</span></div><h1>อธิบาย concept เป็นภาษาไทย</h1><p class="lede">The Thai explanation of each of the ' + nC + ' concept pages, in the same order.</p></section>';
+h += '<section class="part"><div class="eyebrow"><span class="chip kind">Concepts in Thai</span></div><h1>อธิบาย concept เป็นภาษาไทย</h1><p class="lede">The key points and Thai explanation of each of the ' + nC + ' concept pages, in the same order.</p></section>';
 S.forEach(s => {
   h += '<section class="xsec"><header class="akhead"><span class="id">Thai explanations · Section ' + s.id + '</span><b>' + s.title + '</b></header><div class="xcols">';
   s.items.filter(it => it.t === 'c').forEach(it => {
     const tx = window.THAI_EXPLAIN[it.id] || [];
-    h += '<div class="xc"><div class="xch"><b>' + it.id + '</b>' + it.title + ' <span class="muted">· p. ' + pg('k-' + it.id) + '</span></div>' + tx.map(p => '<p>' + p + '</p>').join('') + '</div>';
+    const kp = THAI_CONCEPT[it.id] || [];
+    h += '<div class="xc"><div class="xch"><b>' + it.id + '</b>' + it.title + ' <span class="muted">· p. ' + pg('k-' + it.id) + '</span></div>' +
+      (kp.length ? '<ul class="xkp">' + kp.map(b => '<li>' + b + '</li>').join('') + '</ul>' : '') + tx.map(p => '<p>' + p + '</p>').join('') + '</div>';
   });
   h += '</div></section>';
 });

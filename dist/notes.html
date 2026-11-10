@@ -1093,18 +1093,17 @@ window.THAI_EXPLAIN = {
   ]
 };
 
-/* Tutor-only teaching notes for each concept card: knowledge beyond the slide that helps explain it.
-   b = terse bullets (HTML allowed; write < as &lt;), d = optional plain-text diagram (lines, shown in monospace).
-   Items marked "possible" are candidate explanations, not settled answers. */
+/* Tutor-only teaching notes for each concept card, in Thai: knowledge beyond the slide that helps explain it.
+   b = short bullets (HTML allowed; write < as &lt;), d = optional plain-text diagram (lines, shown in monospace; kept in English so the columns line up).
+   Items marked "อาจเป็นเพราะ" are candidate explanations, not settled answers. */
 window.TUTOR_NOTES = {
-  /* ---------------- R · Regulation ---------------- */
   "R-C1": {
     b: [
-      "Ohm's law for blood: ΔP = Q × R → (MAP − RAP) = CO × TPR; RAP ≈ 0 → MAP ≈ CO × TPR",
-      "Poiseuille: R = 8ηL / πr⁴ → radius halves → R × 16",
-      "Viscosity counts too: Hct ↑ (polycythemia) → η ↑ → TPR ↑",
-      "Starling = moving <i>along</i> the curve (preload); contractility = shifting the curve up",
-      "Teaching move: stimulus → which handle? → which term? → MAP ↑ or ↓"
+      "ΔP = Q × R (เหมือนกฎของโอห์ม) → MAP − RAP = CO × TPR; RAP ≈ 0",
+      "Poiseuille: R ∝ 1/r⁴ → รัศมีลดครึ่ง → R เพิ่ม 16 เท่า",
+      "Hct ↑ → ความหนืด ↑ → TPR ↑",
+      "Starling = เลื่อน<i>ไปตาม</i>กราฟ (preload) · contractility = ยกกราฟทั้งเส้น",
+      "วิธีสอน: stimulus → ขยับตัวปรับไหน → MAP ขึ้นหรือลง"
     ],
     d: [
       "              MAP",
@@ -1119,11 +1118,11 @@ window.TUTOR_NOTES = {
   },
   "R-C2": {
     b: [
-      "Analogy: baroreflex = cruise control (fast, forgets in 1–2 days); kidney = sets the speed limit",
-      "Gain = correction ÷ error left: baroreflex ≈ 2 (fixes ~2/3); kidney ≈ ∞ (fixes all, given time)",
-      "Pressure natriuresis: BP ↑ → urine Na⁺ & H₂O ↑ → volume ↓ → BP back to set point",
-      "Chronic hypertension: baroreceptors reset upward → defend the high BP",
-      "Exam cue words: “standing up” → baroreflex · “minutes after bleeding” → Ang II, fluid shift · “5 days” → kidney"
+      "เปรียบ: baroreflex = cruise control (เร็ว แต่ลืมใน 1–2 วัน) · ไต = ตัวตั้งความเร็ว",
+      "Gain: baroreflex ≈ 2 (แก้ได้ ~2/3) · ไต ≈ ∞ (แก้หมดถ้าให้เวลา)",
+      "Pressure natriuresis: BP ↑ → ขับ Na⁺/น้ำ ↑ → volume ↓ → BP กลับ set point",
+      "HTN เรื้อรัง: baroreceptor reset ขึ้น → ปกป้องความดันสูงแทน",
+      "คำใบ้โจทย์: “ลุกยืน” → baroreflex · “นาทีหลังเสียเลือด” → Ang II, fluid shift · “5 วัน” → ไต"
     ],
     d: [
       "seconds  --> baroreflex | chemoreflex (<80) | CNS ischemic (<60)",
@@ -1133,11 +1132,10 @@ window.TUTOR_NOTES = {
   },
   "R-C3": {
     b: [
-      "RVLM = gas pedal (always pressed); CVLM = brake on RVLM; NTS = reception desk that decides",
-      "CVLM inhibits RVLM with GABA",
-      "RVLM → IML cell column (T1–L2) = spinal sympathetic preganglionic neurons",
-      "Adrenal medulla = a sympathetic ganglion whose “postganglionic neurons” are chromaffin cells secreting into blood",
-      "Vasovagal syncope: emotion/pain → cortex, hypothalamus → vagus ↑ + sympathetic ↓ → bradycardia + vasodilation → faint"
+      "RVLM = คันเร่ง (เหยียบตลอด) · CVLM = เบรก (GABA) · NTS = โต๊ะรับเรื่อง",
+      "RVLM → IML (T1–L2) = sympathetic preganglionic ในไขสันหลัง",
+      "Adrenal medulla = sympathetic ganglion ที่หลั่งฮอร์โมนเข้าเลือดแทน postganglionic fiber",
+      "Vasovagal syncope: อารมณ์/ปวด → vagus ↑ + sympathetic ↓ → หัวใจช้า + หลอดเลือดขยาย → เป็นลม"
     ],
     d: [
       "baro/chemo --IX, X--> NTS --+--> CVLM --(-)--> RVLM --> IML --> heart, vessels, adrenal",
@@ -1147,12 +1145,11 @@ window.TUTOR_NOTES = {
   },
   "R-C4": {
     b: [
-      "Mnemonic: carotid <b>S</b>inus = <b>S</b>tretch (baro) · carotid <b>B</b>ody = <b>B</b>lood gases (chemo)",
-      "Nerves: neck = IX (Hering's), arch = X (aortic nerve)",
-      "Fires to pressure AND to its rate of rise → pulsatile pressure drives it more than steady pressure",
-      "Buffer, not setter: after denervation, mean BP is about the same but swings widely",
-      "Clinic: carotid massage stops some SVTs · carotid sinus hypersensitivity in the elderly → syncope with a tight collar or head turn",
-      "Blunted reflex: diabetic autonomic neuropathy, old age, drugs → orthostatic hypotension"
+      "จำ: carotid <b>S</b>inus = <b>S</b>tretch · carotid <b>B</b>ody = <b>B</b>lood gases",
+      "ตอบทั้งระดับความดันและความเร็วที่ความดันขึ้น → ความดันเป็นจังหวะกระตุ้นได้มากกว่าความดันคงที่",
+      "เป็นตัว buffer ไม่ใช่ตัวตั้งค่า: ตัด baroreceptor แล้ว BP เฉลี่ยเท่าเดิมแต่แกว่งมาก",
+      "คลินิก: carotid massage หยุด SVT บางชนิด · carotid sinus hypersensitivity ในผู้สูงอายุ → เป็นลมเมื่อคอเสื้อแน่นหรือหันคอ",
+      "Reflex บกพร่อง (เบาหวาน สูงอายุ ยา) → orthostatic hypotension"
     ],
     d: [
       "BP up -> wall stretch up -> firing up -> NTS",
@@ -1163,11 +1160,11 @@ window.TUTOR_NOTES = {
   },
   "R-C5": {
     b: [
-      "Carotid body flow ≈ 2,000 mL/100 g/min (body's highest) → it samples arterial blood, so it fires only when flow itself falls",
-      "Senses PaO₂, not O₂ content → anemia and CO poisoning barely stimulate it",
-      "Cerebral perfusion pressure: CPP = MAP − ICP → ICP ↑ → CPP ↓ → medulla ischemic",
-      "Cushing: the BP surge is the brain buying back CPP; the bradycardia is the baroreflex answering that surge",
-      "Irregular breathing in Cushing = brainstem compression → herniation warning"
+      "Carotid body ได้เลือด ~2,000 mL/100 g/min (สูงสุดในร่างกาย) → ยิงเมื่อ flow ลดเท่านั้น",
+      "รับ PaO₂ ไม่ใช่ O₂ content → anemia, CO poisoning กระตุ้นน้อย",
+      "CPP = MAP − ICP → ICP ↑ → CPP ↓ → medulla ขาดเลือด",
+      "Cushing: BP พุ่ง = สมองดึง CPP กลับ · หัวใจช้า = baroreflex ตอบ BP ที่พุ่ง",
+      "หายใจผิดจังหวะ = ก้านสมองถูกกด → ใกล้ herniation"
     ],
     d: [
       "MAP (mmHg)",
@@ -1180,12 +1177,11 @@ window.TUTOR_NOTES = {
   },
   "R-C6": {
     b: [
-      "Constrictors mostly use Gq → IP₃ → Ca²⁺ ↑: α₁, AT1 (Ang II), V1 (ADH), ETA (endothelin)",
-      "β₂ uses Gs → cAMP ↑ → smooth muscle relaxes",
-      "Epinephrine dose switch: low → β₂ wins (muscle beds dilate, DBP ↓) · high → α₁ wins",
-      "ADH at normal levels acts on V2 (kidney); constrictor levels need a big stimulus such as severe hemorrhage",
-      "Low-dose aspirin blocks platelet TXA₂ for the platelet's life (no nucleus, no new COX) → antithrombotic",
-      "Drug links: nitrates = NO donors · sildenafil blocks PDE5 → cGMP ↑ · bosentan blocks endothelin (pulmonary HTN)"
+      "ตัวหดส่วนใหญ่ใช้ Gq → IP₃ → Ca²⁺ ↑ (α₁, AT1, V1, ETA) · β₂ ใช้ Gs → cAMP ↑ → คลาย",
+      "Epinephrine: ขนาดต่ำ β₂ ชนะ (DBP ↓) · ขนาดสูง α₁ ชนะ",
+      "ADH ระดับปกติทำงานที่ V2 (ไต) · ต้องเสียเลือดมากจึงสูงพอจะหดหลอดเลือด",
+      "Aspirin ขนาดต่ำ block TXA₂ ของเกล็ดเลือดตลอดอายุ (ไม่มี nucleus สร้าง COX ใหม่ไม่ได้)",
+      "ยา: nitrates = ให้ NO · sildenafil ยับยั้ง PDE5 → cGMP ↑ · bosentan ต้าน endothelin"
     ],
     d: [
       "ACh, bradykinin, shear -> eNOS -> NO -> guanylyl cyclase -> cGMP -> relax",
@@ -1194,11 +1190,11 @@ window.TUTOR_NOTES = {
   },
   "R-C7": {
     b: [
-      "Myogenic response = Bayliss effect; metabolic = demand signal",
-      "Brain: CO₂ rules → hyperventilation (PaCO₂ ↓) → cerebral constriction → ICP ↓ (short-term trick)",
-      "Heart: already extracts ~70–75% of O₂ at rest → only way to get more O₂ is more flow (adenosine)",
-      "Kidney TGF: GFR ↑ → NaCl ↑ at macula densa → afferent arteriole constricts → GFR back",
-      "Chronic hypertension shifts the autoregulation plateau right → lowering BP too fast → brain ischemia"
+      "Myogenic = Bayliss effect · metabolic = สัญญาณความต้องการ",
+      "สมอง: CO₂ เด่น → hyperventilate (PaCO₂ ↓) → หลอดเลือดสมองหด → ICP ↓ (ใช้ชั่วคราว)",
+      "หัวใจ: ดึง O₂ ~70–75% ตั้งแต่ตอนพัก → เพิ่ม O₂ ได้ทางเดียวคือเพิ่ม flow (adenosine)",
+      "ไต TGF: GFR ↑ → NaCl ที่ macula densa ↑ → afferent หด → GFR กลับ",
+      "HTN เรื้อรัง: plateau เลื่อนขวา → ลด BP เร็วเกิน → สมองขาดเลือด"
     ],
     d: [
       "pressure up -> stretch -> Ca2+ in -> constrict -> flow back to normal   (myogenic)",
@@ -1207,11 +1203,11 @@ window.TUTOR_NOTES = {
   },
   "R-C8": {
     b: [
-      "Aldosterone: principal cells → ENaC + Na⁺/K⁺-ATPase → Na⁺ kept, K⁺ lost → hyperaldosteronism = HTN + hypokalemia",
-      "Ang II constricts the efferent > afferent arteriole → props up GFR when renal flow is low",
-      "So ACE inhibitor in bilateral renal artery stenosis → GFR collapses (AKI)",
-      "ADH triggers: osmolality ~1–2% change vs blood volume ~5–10% loss",
-      "Heart failure drugs block this axis: ACEi/ARB, spironolactone, sacubitril–valsartan → longer survival"
+      "Aldosterone → ENaC + Na⁺/K⁺-ATPase ที่ principal cells → เก็บ Na⁺ เสีย K⁺ → hyperaldosteronism = HTN + K⁺ ต่ำ",
+      "Ang II หด efferent มากกว่า afferent → พยุง GFR ตอนเลือดไปไตน้อย",
+      "ดังนั้น ACEi ใน bilateral renal artery stenosis → GFR ตก (AKI)",
+      "ADH ไวต่อ osmolality ~1–2% แต่ต้องเสีย volume ~5–10%",
+      "ยา HF ที่ยืดชีวิต: ACEi/ARB, spironolactone, sacubitril–valsartan"
     ],
     d: [
       "angiotensinogen --renin--> Ang I --ACE--> Ang II --AT1--> constrict, aldosterone, ADH, thirst",
@@ -1221,11 +1217,11 @@ window.TUTOR_NOTES = {
   },
   "R-C9": {
     b: [
-      "Funny current = HCN channels: open on hyperpolarization, cAMP makes them open more",
-      "→ β₁ (cAMP ↑) speeds the SA node; ACh (cAMP ↓) slows it · ivabradine blocks I<sub>f</sub> → HR ↓ only",
-      "Three ways to change rate: phase-4 slope, threshold, starting (most negative) potential; the vagus changes slope AND start",
-      "Phospholamban brakes SERCA; PKA phosphorylation releases the brake → faster relaxation (lusitropy) + more Ca²⁺ stored for the next beat",
-      "β-blocker: HR ↓ + contractility ↓ → myocardial O₂ demand ↓ → angina relief"
+      "Funny current = HCN channel: เปิดเมื่อ hyperpolarize · cAMP ทำให้เปิดมากขึ้น",
+      "β₁ (cAMP ↑) เร่ง · ACh (cAMP ↓) ช้า · ivabradine block I<sub>f</sub> → ลด HR อย่างเดียว",
+      "เปลี่ยน HR ได้ 3 ทาง: ความชัน phase 4, threshold, จุดเริ่ม · vagus เปลี่ยนทั้งความชันและจุดเริ่ม",
+      "Phospholamban เบรก SERCA · PKA ปลดเบรก → คลายเร็ว (lusitropy) + Ca²⁺ ใน SR มากขึ้น",
+      "β-blocker: HR ↓ + contractility ↓ → O₂ demand ↓ → รักษา angina"
     ],
     d: [
       "sympathetic: steeper phase 4  -> reaches threshold sooner -> HR up",
@@ -1234,11 +1230,10 @@ window.TUTOR_NOTES = {
   },
   "R-C10": {
     b: [
-      "Resting HR 90–110 = what you see in a normal person after full atropine (vagal brake removed)",
-      "Exercise order: SV rises first (Starling, minutes 0–2), HR rises later as adrenal catecholamines arrive",
-      "→ transplant patients need longer warm-up and cool-down",
-      "Ischemia is often painless (sensory afferents cut too) → silent ischemia",
-      "Drugs acting through nerves fail (atropine, digoxin's vagal AV effect); drugs acting on receptors work (epinephrine, isoproterenol)"
+      "HR พัก 90–110 = HR ของคนปกติหลังให้ atropine เต็มที่",
+      "ออกกำลังกาย: SV ขึ้นก่อน (Starling) · HR ขึ้นทีหลังเมื่อ catecholamine มาถึง → ต้อง warm-up/cool-down นานขึ้น",
+      "ขาดเลือดมักไม่เจ็บ (afferent ถูกตัดด้วย) → silent ischemia",
+      "ยาที่ออกฤทธิ์ผ่านเส้นประสาทไม่ได้ผล (atropine) · ยาที่จับ receptor โดยตรงยังได้ผล (epinephrine, isoproterenol)"
     ],
     d: [
       "normal:     vagus --(-)--> SA (intrinsic ~100) -> rests at ~70",
@@ -1248,11 +1243,11 @@ window.TUTOR_NOTES = {
   },
   "R-C11": {
     b: [
-      "ATLS classes: I &lt;15% ~normal · II 15–30% HR ↑, PP narrow · III 30–40% BP falls, confused · IV >40% life-threatening",
-      "Narrow PP = SV ↓ (SBP ↓) with TPR ↑ holding DBP",
-      "Early Hct is normal: whole blood is lost → Hct falls only after fluid shifts in",
-      "Shock index = HR / SBP; > 1 suggests major loss",
-      "Past ~30–40%: compensation fails → coronary ischemia → heart weakens → BP falls more (vicious cycle)"
+      "ATLS: I &lt;15% ปกติ · II 15–30% HR ↑ PP แคบ · III 30–40% BP ตก สับสน · IV >40% อันตรายถึงชีวิต",
+      "PP แคบ = SV ↓ (SBP ↓) แต่ TPR ↑ พยุง DBP",
+      "Hct ช่วงแรกยังปกติ (เสียเลือดทั้งก้อน) → ลดเมื่อน้ำไหลเข้าหลอดเลือดแล้ว",
+      "Shock index = HR / SBP > 1 → เสียเลือดมาก",
+      "เสียเกิน ~30–40% → compensation ล้ม → หัวใจขาดเลือด → BP ตกต่อ (วงจรอุบาทว์)"
     ],
     d: [
       "0 s   --> baroreflex: HR up, TPR up, veins constrict",
@@ -1261,14 +1256,12 @@ window.TUTOR_NOTES = {
       "weeks --> EPO -> red cells back"
     ]
   },
-
-  /* ---------------- F · Frog heart ---------------- */
   "F-C1": {
     b: [
-      "Frog heart = 2 atria + 1 ventricle; sinus venosus = the frog's SA node",
-      "Spongy ventricle gets O₂ from blood inside the chamber → no coronaries → ligatures cause no ischemia",
-      "History: Sydney Ringer found the heart needs Ca²⁺ using frog hearts → Ringer's solution",
-      "Cold-blooded: rate depends on temperature, so rates differ between groups"
+      "หัวใจกบ = 2 atria + 1 ventricle · sinus venosus = SA node ของกบ",
+      "Ventricle เป็นฟองน้ำ ได้ O₂ จากเลือดในห้อง → ไม่มี coronary → ผูกแล้วไม่ ischemia",
+      "Sydney Ringer พบว่าหัวใจต้องการ Ca²⁺ จากหัวใจกบ → ที่มาของ Ringer’s solution",
+      "สัตว์เลือดเย็น: อัตราการเต้นขึ้นกับอุณหภูมิ แต่ละกลุ่มจึงได้ค่าต่างกัน"
     ],
     d: [
       "Exp 1 observe     -> pacemaker order: SV -> A -> V",
@@ -1279,11 +1272,11 @@ window.TUTOR_NOTES = {
   },
   "F-C2": {
     b: [
-      "AV node is slow on purpose: small cells, few gap junctions, Ca²⁺ upstroke → atria finish filling the ventricles first",
-      "Atrial kick ≈ 15–25% of ventricular filling at rest",
-      "Purkinje is fast: wide fibers, many gap junctions, Na⁺ upstroke → ventricles contract together",
-      "Long plateau → ventricular AP ~250–300 ms vs nerve ~1–2 ms",
-      "Drug links: class I antiarrhythmics block Na⁺ (fast tissue) · verapamil, adenosine slow the AV node"
+      "AV node ช้าโดยตั้งใจ: เซลล์เล็ก gap junction น้อย upstroke ด้วย Ca²⁺ → atria เติมเลือดให้เสร็จก่อน",
+      "Atrial kick ≈ 15–25% ของการเติมเลือดขณะพัก",
+      "Purkinje เร็ว: เส้นใยใหญ่ gap junction มาก upstroke ด้วย Na⁺ → ventricle บีบพร้อมกัน",
+      "Plateau ยาว → AP ของ ventricle ~250–300 ms (เส้นประสาท ~1–2 ms)",
+      "ยา: class I block Na⁺ · verapamil, adenosine ทำให้ AV node ช้า"
     ],
     d: [
       "fast response (Na+):   steep phase 0  -> fast conduction  (muscle, Purkinje)",
@@ -1292,10 +1285,10 @@ window.TUTOR_NOTES = {
   },
   "F-C3": {
     b: [
-      "Na⁺ channel has 2 gates: activation (m) opens fast; inactivation (h) shuts and reopens only after repolarization → ARP",
-      "Skeletal muscle: AP ~2–5 ms vs twitch ~10–100 ms → twitches can sum → tetanus",
-      "R-on-T: a stimulus in the vulnerable period (end of T wave ≈ RRP) can trigger VF",
-      "Defibrillation works by making every cell refractory at once → organized rhythm can restart"
+      "Na⁺ channel มี 2 gate: activation (m) เปิดเร็ว · inactivation (h) ปิดและเปิดใหม่หลัง repolarize เท่านั้น → ARP",
+      "กล้ามเนื้อลาย: AP ~2–5 ms แต่ twitch ~10–100 ms → รวมกันได้ → tetanus",
+      "R-on-T: กระตุ้นใน vulnerable period (ปลาย T ≈ RRP) → VF ได้",
+      "Defibrillation: ทำให้ทุกเซลล์ refractory พร้อมกัน → จังหวะปกติเริ่มใหม่ได้"
     ],
     d: [
       "AP      |~~~~~~~~\\__",
@@ -1306,10 +1299,10 @@ window.TUTOR_NOTES = {
   },
   "F-C4": {
     b: [
-      "Human version: PVC → full compensatory pause (SA node not reset) · PAC → usually not compensatory (SA node reset)",
-      "Patients feel the pause and the strong beat after it (“skipped beat, then a thump”), not the PVC itself",
-      "Post-extrasystolic potentiation: longer filling (Starling) + more Ca²⁺ in the SR",
-      "An early beat with little filling may not reach the wrist → pulse deficit"
+      "ในคน: PVC → compensatory pause เต็ม (SA ไม่ถูก reset) · PAC → มักไม่เต็ม (SA ถูก reset)",
+      "ผู้ป่วยรู้สึก “ใจหาย แล้วตุบแรง” = pause + beat ถัดไป ไม่ใช่ตัว PVC",
+      "Post-extrasystolic potentiation: เติมเลือดนานขึ้น (Starling) + Ca²⁺ ใน SR มากขึ้น",
+      "Beat ที่มาเร็ว เติมเลือดน้อย → ไปไม่ถึงข้อมือ → pulse deficit"
     ],
     d: [
       "normal: |----|----|----|----|",
@@ -1320,11 +1313,11 @@ window.TUTOR_NOTES = {
   },
   "F-C5": {
     b: [
-      "Overdrive suppression: a fast driver loads latent pacemakers with Na⁺ → Na⁺/K⁺ pump hyperpolarizes them → pause before escape",
-      "Same in patients: pause after a tachycardia stops or after cardioversion; sick sinus syndrome → junctional escape",
-      "Rule: the fastest surviving pacemaker below the block wins",
-      "Ventricle stayed at 0 after ligature II: its own escape was too slow or absent within the observation time",
-      "Slow escape in complete heart block → artificial pacemaker"
+      "Overdrive suppression: ตัวเร็วขับนาน → latent pacemaker มี Na⁺ สะสม → Na⁺/K⁺ pump ทำให้ hyperpolarize → หยุดก่อน escape",
+      "ในคน: pause หลัง tachycardia หยุดหรือหลัง cardioversion · sick sinus → junctional escape",
+      "กฎ: pacemaker ที่เร็วที่สุดใต้จุด block ชนะ",
+      "Ventricle ยัง 0 หลัง ligature II: escape ช้าเกินหรือไม่เกิดในเวลาที่สังเกต",
+      "Complete heart block ที่ escape ช้า → ใส่ pacemaker"
     ],
     d: [
       "SV --X-- A ------ V     ligature I:  SV 60 | A, V 0 -> 32 (escape)",
@@ -1333,25 +1326,23 @@ window.TUTOR_NOTES = {
   },
   "F-C6": {
     b: [
-      "Skeletal muscle grades force by recruiting motor units + summation; the heart cannot (every cell fires every beat)",
-      "So the heart grades force by Ca²⁺ and stretch instead",
-      "Treppe (Bowditch staircase): faster rate → stronger beats",
-      "Digoxin: blocks Na⁺/K⁺-ATPase → Na⁺ in ↑ → Na⁺/Ca²⁺ exchanger removes less Ca²⁺ → contractility ↑"
+      "กล้ามเนื้อลายเพิ่มแรงด้วยการเรียก motor unit + summation · หัวใจทำไม่ได้ (ทุกเซลล์ยิงทุก beat)",
+      "หัวใจจึงปรับแรงด้วย Ca²⁺ และการยืดแทน",
+      "Treppe (Bowditch): อัตราเร็วขึ้น → แรงบีบเพิ่ม",
+      "Digoxin: block Na⁺/K⁺-ATPase → Na⁺ ในเซลล์ ↑ → NCX ขับ Ca²⁺ ออกน้อยลง → contractility ↑"
     ],
     d: [
       "stimulus:  sub   threshold   x2    x4",
       "force:      0      ###       ###   ###    (same height)"
     ]
   },
-
-  /* ---------------- T · Turtle vagus ---------------- */
   "T-C1": {
     b: [
-      "Parasympathetic: long pre, short post (ganglion on the organ) · sympathetic: short pre, long post",
-      "Every autonomic ganglion is nicotinic (Nn); the targets differ: M2 vs β₁",
-      "Proof of vagal tone: atropine in a young adult → HR rises to ~100–120",
-      "Sinus arrhythmia: HR ↑ on inspiration (vagal withdrawal), normal in the young",
-      "Right-side nerves favour the SA node, left-side the AV node (both vagus and sympathetic)"
+      "Parasympathetic: pre ยาว post สั้น (ganglion อยู่บนอวัยวะ) · sympathetic: pre สั้น post ยาว",
+      "ทุก ganglion เป็น nicotinic (Nn) · ปลายทางต่างกัน: M2 vs β₁",
+      "หลักฐาน vagal tone: ให้ atropine คนหนุ่มสาว → HR ขึ้นเป็น ~100–120",
+      "Sinus arrhythmia: HR ↑ ตอนหายใจเข้า (vagus ลด) ปกติในคนอายุน้อย",
+      "ข้างขวาเน้น SA node · ข้างซ้ายเน้น AV node (ทั้ง vagus และ sympathetic)"
     ],
     d: [
       "PARA: medulla ==========(N)= M2  heart    long pre, short post",
@@ -1361,9 +1352,9 @@ window.TUTOR_NOTES = {
   },
   "T-C2": {
     b: [
-      "SA node sits in the right atrium near the SVC → right vagus; it is a preference, not exclusive",
-      "Vagal escape: keep stimulating and the ventricle restarts with escape beats",
-      "Vagal maneuvers (Valsalva, carotid massage) slow AV conduction → stop SVT or reveal flutter waves"
+      "SA node อยู่ที่ RA ใกล้ SVC → right vagus · เป็นความเด่น ไม่ได้แยกขาด",
+      "Vagal escape: กระตุ้นต่อเนื่องแล้ว ventricle กลับมาเต้นด้วย escape beat",
+      "Vagal maneuver (Valsalva, carotid massage) → AV ช้า → หยุด SVT หรือเผยให้เห็น flutter wave"
     ],
     d: [
       "right vagus -> SA node -> rate down -> arrest       (chronotropic)",
@@ -1372,10 +1363,10 @@ window.TUTOR_NOTES = {
   },
   "T-C3": {
     b: [
-      "Logic to locate a synapse: block a site; stimulating above fails, stimulating below works → the synapse is in between",
-      "Two-phase nicotine (stimulate, then depolarization block) = same idea as succinylcholine phase I block at the NMJ",
-      "Hexamethonium = ganglion blocker (old antihypertensive): blocks BOTH sympathetic and parasympathetic ganglia",
-      "Smokers: nicotine excites sympathetic ganglia + adrenal medulla → HR and BP ↑"
+      "หา synapse: block จุดหนึ่ง · กระตุ้นเหนือจุด → ไม่ผ่าน · ใต้จุด → ผ่าน → synapse อยู่ระหว่างนั้น",
+      "Nicotine 2 เฟส (กระตุ้นแล้ว block) = หลักเดียวกับ succinylcholine phase I ที่ NMJ",
+      "Hexamethonium = ganglion blocker (ยาลดความดันรุ่นเก่า) → block ทั้ง sympathetic และ parasympathetic",
+      "คนสูบบุหรี่: nicotine กระตุ้น sympathetic ganglia + adrenal → HR, BP ↑"
     ],
     d: [
       "vagus ==> [ganglion: Nn] ==> postganglionic ==> [SA node: M2]",
@@ -1386,10 +1377,10 @@ window.TUTOR_NOTES = {
   },
   "T-C4": {
     b: [
-      "Mobitz I (Wenckebach): usually in the AV node, often vagal, usually benign",
-      "Mobitz II: below the AV node (His–Purkinje) → can jump to complete block → pacemaker",
-      "Complete block signs: cannon a waves in the JVP, S1 loudness varies beat to beat",
-      "Rhyme: “If R is far from P → 1st degree · longer, longer, drop → Wenckebach · some P's don't get through → Mobitz II · P's and Q's don't agree → 3rd degree”"
+      "Mobitz I (Wenckebach): มักที่ AV node มาจาก vagus มักไม่อันตราย",
+      "Mobitz II: ใต้ AV node (His–Purkinje) → กลายเป็น complete block ได้ → pacemaker",
+      "Complete block: cannon a wave ใน JVP · S1 ดังไม่เท่ากันแต่ละ beat",
+      "จำ: R ห่าง P = 1st · ยาว ยาว หลุด = Wenckebach · P บางตัวไม่ผ่าน = Mobitz II · P กับ QRS ไม่สัมพันธ์ = 3rd"
     ],
     d: [
       "1st:   P--[long PR]--QRS   P--[long PR]--QRS",
@@ -1399,16 +1390,13 @@ window.TUTOR_NOTES = {
       "        QRS     QRS    (regular, slow, unrelated)"
     ]
   },
-
-  /* ---------------- B · Blood pressure ---------------- */
   "B-C1": {
     b: [
-      "Windkessel: elastic aorta stores energy in systole, recoils in diastole → keeps DBP up",
-      "Stiff aorta (elderly) → SBP ↑, DBP ↓ → isolated systolic hypertension",
-      "Fast HR: diastole shortens more than systole → MAP moves toward the simple average",
-      "Worked example: 120/80 → PP 40 → MAP ≈ 80 + 13 ≈ 93",
-      "Hypertension: ≥140/90 (Thai and ESC guidelines) · ACC/AHA uses ≥130/80",
-      "Oscillometric SBP/DBP come from an algorithm → unreliable in AF and other arrhythmias"
+      "Windkessel: aorta ยืดเก็บพลังงานตอน systole แล้วหดคืนตอน diastole → พยุง DBP",
+      "Aorta แข็ง (ผู้สูงอายุ) → SBP ↑ DBP ↓ → isolated systolic hypertension",
+      "ตัวอย่าง: 120/80 → PP 40 → MAP ≈ 80 + 13 ≈ 93",
+      "HTN: ≥140/90 (แนวทางไทย, ESC) · ACC/AHA ใช้ ≥130/80",
+      "Oscillometric คำนวณ SBP/DBP ด้วย algorithm → ไม่แม่นใน AF"
     ],
     d: [
       "SBP --+   <- stroke volume, aortic stiffness",
@@ -1419,10 +1407,10 @@ window.TUTOR_NOTES = {
   },
   "B-C2": {
     b: [
-      "Narrow bladder → cuff pressure does not reach the artery fully → overestimates",
-      "Every 10 cm the arm hangs below the heart → about +8 mmHg",
-      "Auscultatory gap is common in hypertension with stiff arteries → pump only to 140 and you may call 180 “130”",
-      "Good practice: ≥2 readings 1–2 min apart; first visit measure both arms and use the higher arm"
+      "Bladder แคบ → แรงกดส่งไม่ถึงหลอดเลือด → อ่านสูงเกิน",
+      "แขนต่ำกว่าหัวใจทุก 10 cm → +~8 mmHg",
+      "Auscultatory gap พบบ่อยใน HTN ที่หลอดเลือดแข็ง → บีบแค่ 140 อาจอ่านคนที่ 180 เป็น 130",
+      "ควรวัด ≥2 ครั้ง ห่าง 1–2 นาที · ครั้งแรกวัดสองแขน ใช้แขนที่สูงกว่า"
     ],
     d: [
       "step 1  palpate: inflate until pulse gone, +20-30 -> deflate -> pulse back = palpatory SBP",
@@ -1432,10 +1420,10 @@ window.TUTOR_NOTES = {
   },
   "B-C3": {
     b: [
-      "Turbulence ↑ with velocity ↑ and viscosity ↓ (Reynolds number) → flow murmurs in anemia, fever, pregnancy",
-      "Phase IV to V gap is normally ~5–10 mmHg; in high-output states sounds can run to 0",
-      "Phase memory: tap → swish → crisp tap → muffle → silence",
-      "History: Nikolai Korotkoff described the sounds in 1905"
+      "Turbulence ↑ เมื่อความเร็ว ↑ ความหนืด ↓ (Reynolds) → flow murmur ใน anemia ไข้ ตั้งครรภ์",
+      "Phase IV ถึง V ปกติห่าง ~5–10 mmHg · high output → เสียงลากถึง 0",
+      "จำ phase: เคาะ → ฟู่ → เคาะคม → อู้อี้ → เงียบ",
+      "Korotkoff บรรยายเสียงนี้ปี 1905"
     ],
     d: [
       "cuff > SBP       : artery shut all cycle      -> silent",
@@ -1445,18 +1433,18 @@ window.TUTOR_NOTES = {
   },
   "B-C4": {
     b: [
-      "Rule 1: the cuff transmits poorly (small, narrow, loose) → reads HIGH",
-      "Rule 2: anything that truly raises BP for a moment (talking, pain, cold, full bladder, white coat) → HIGH",
-      "Rule 3: deflating too fast → the needle passes the first sound before you hear it → SBP LOW",
-      "White-coat HTN: high in clinic, normal at home · masked HTN: the opposite → confirm with home or 24-h BP"
+      "กฎ 1: cuff ส่งแรงไม่ดี (เล็ก แคบ หลวม) → อ่าน<b>สูง</b>",
+      "กฎ 2: อะไรที่ทำให้ BP สูงจริงชั่วคราว (พูด ปวด หนาว ปวดปัสสาวะ white coat) → <b>สูง</b>",
+      "กฎ 3: ปล่อยลมเร็ว → เข็มผ่านเสียงแรกไปก่อนได้ยิน → SBP <b>ต่ำ</b>",
+      "White-coat HTN: สูงที่คลินิก ปกติที่บ้าน · masked HTN: ตรงข้าม → ยืนยันด้วย home BP หรือ 24-h BP"
     ]
   },
   "B-C5": {
     b: [
-      "Why SBP grows downstream: reflected waves add to the forward wave + arteries get smaller and stiffer",
-      "Coarctation clues: radio-femoral delay, rib notching (intercostal collaterals), hypertension in a young patient → check leg BP",
-      "ABI > 1.4 = calcified, non-compressible arteries (diabetes, CKD); the reading is unreliable",
-      "Hill's sign: in severe AR, leg SBP exceeds arm SBP by far more than normal"
+      "SBP สูงขึ้นที่ปลายทาง: คลื่นสะท้อนรวมกับคลื่นขาไป + หลอดเลือดเล็กและแข็งขึ้น",
+      "Coarctation: radio-femoral delay, rib notching, HTN ในคนอายุน้อย → วัด BP ที่ขา",
+      "ABI > 1.4 = หลอดเลือดมีหินปูน กดไม่ลง (เบาหวาน, CKD) → ค่าเชื่อไม่ได้",
+      "Hill’s sign: severe AR → SBP ขาสูงกว่าแขนมากผิดปกติ"
     ],
     d: [
       "aorta     peak  e.g. 120/80",
@@ -1467,10 +1455,10 @@ window.TUTOR_NOTES = {
   },
   "B-C6": {
     b: [
-      "Muscle pump + respiratory pump also push blood back up",
-      "SBP ↓ with SV ↓, DBP ↑ with TPR ↑ → PP narrows",
-      "Orthostatic hypotension causes: hypovolemia, drugs (α-blockers, diuretics, nitrates), autonomic failure (diabetes, Parkinson's), long bed rest",
-      "POTS: HR rises ≥30 bpm within 10 min of standing without hypotension"
+      "Muscle pump + respiratory pump ช่วยดันเลือดกลับ",
+      "SBP ↓ ตาม SV ↓ · DBP ↑ ตาม TPR ↑ → PP แคบ",
+      "สาเหตุ orthostatic hypotension: hypovolemia, ยา (α-blocker, diuretic, nitrate), autonomic failure (เบาหวาน, Parkinson), นอนนาน",
+      "POTS: HR ↑ ≥30 bpm ใน 10 นาทีหลังยืน โดย BP ไม่ตก"
     ],
     d: [
       "stand -> 500-800 mL to legs -> VR down -> SV down -> carotid BP down",
@@ -1480,24 +1468,22 @@ window.TUTOR_NOTES = {
   },
   "B-C7": {
     b: [
-      "Dynamic (running): muscle beds dilate → TPR ↓ → SBP ↑, DBP ≈",
-      "Static (isometric): contracted muscle squeezes its vessels → TPR ↑ → SBP and DBP ↑ (pressor response)",
-      "Lifting with breath-holding = Valsalva → intrathoracic pressure ↑ → BP spikes",
-      "CO 5 → 20–25 L/min in trained people; muscle flow up ~15–20×",
-      "Heart rate recovery &lt;12 bpm in the first minute after exercise = poor prognosis"
+      "Dynamic (วิ่ง): หลอดเลือดในกล้ามเนื้อขยาย → TPR ↓ → SBP ↑ DBP ≈",
+      "Static (isometric): กล้ามเนื้อเกร็งบีบหลอดเลือด → TPR ↑ → SBP และ DBP ↑",
+      "ยกของ + กลั้นหายใจ = Valsalva → BP พุ่ง",
+      "CO 5 → 20–25 L/min ในคนฟิต · เลือดไปกล้ามเนื้อเพิ่ม ~15–20 เท่า",
+      "HR ลด &lt;12 bpm ในนาทีแรกหลังออกกำลังกาย = พยากรณ์โรคไม่ดี"
     ],
     d: [
       "exercise -> SNS up -> HR up, SV up -> CO up -> SBP up",
       "         -> metabolites -> muscle arterioles dilate -> TPR down -> DBP ~ same"
     ]
   },
-
-  /* ---------------- M · Microcirculation ---------------- */
   "M-C1": {
     b: [
-      "Starling: filtration = Kf × [(Pc − Pi) − σ(πc − πi)] → most experiments change Pc",
-      "Arterial occlusion: Pc ↓ → no filtration · venous occlusion: Pc ↑ → filtration → swelling",
-      "AV anastomoses (glomus bodies) in fingers, toes, ears, nose → heat dump"
+      "Starling: filtration = Kf × [(Pc − Pi) − σ(πc − πi)] → การทดลองส่วนใหญ่เปลี่ยน Pc",
+      "กั้นเลือดแดง: Pc ↓ → ไม่กรอง · กั้นเลือดดำ: Pc ↑ → กรองมาก → บวม",
+      "AV anastomoses (glomus) ที่นิ้ว หู จมูก → ระบายความร้อน"
     ],
     d: [
       "experiment      what changes     principle",
@@ -1510,9 +1496,9 @@ window.TUTOR_NOTES = {
   },
   "M-C2": {
     b: [
-      "Same pain mediators as angina and claudication → ischemic pain",
-      "Bigger O₂ debt → bigger and longer hyperemia",
-      "Clinic: flow-mediated dilation test (5-min brachial cuff, then ultrasound) measures endothelial NO function"
+      "ตัวกลางความเจ็บเดียวกับ angina และ claudication → ischemic pain",
+      "O₂ debt มาก → hyperemia ใหญ่และนานขึ้น",
+      "คลินิก: flow-mediated dilation test (รัด brachial 5 นาที แล้วดู ultrasound) วัดการทำงาน NO ของ endothelium"
     ],
     d: [
       "flow",
@@ -1524,10 +1510,10 @@ window.TUTOR_NOTES = {
   },
   "M-C3": {
     b: [
-      "Visible cyanosis needs ~5 g/dL deoxyhemoglobin in the capillaries",
-      "Venous occlusion plethysmography (cuff ~40–50 mmHg) measures limb arterial inflow in research",
-      "DVT looks the same: outflow blocked → swollen, warm, dusky limb",
-      "Dengue tourniquet test: cuff at the midpoint of SBP and DBP for 5 min; positive ≥10 petechiae per square inch"
+      "เห็นเขียวได้เมื่อ deoxyhemoglobin ใน capillary ~5 g/dL",
+      "Venous occlusion plethysmography (cuff ~40–50 mmHg) ใช้วัด arterial inflow ในงานวิจัย",
+      "DVT หน้าตาเหมือนกัน: ทางออกอุด → ขาบวม อุ่น คล้ำ",
+      "Tourniquet test (ไข้เลือดออก): cuff ที่ค่ากลาง SBP–DBP 5 นาที · บวกเมื่อ petechiae ≥10 จุดต่อตารางนิ้ว"
     ],
     d: [
       "cuff 30-40 : art in yes   vein out no -> engorged, reddish",
@@ -1537,10 +1523,10 @@ window.TUTOR_NOTES = {
   },
   "M-C4": {
     b: [
-      "Named the Lewis triple response (Thomas Lewis, 1927)",
-      "Antihistamine shrinks wheal and flare; local anesthetic abolishes only the flare (nerve-dependent)",
-      "Dermographism: an exaggerated wheal after light stroking → a form of urticaria",
-      "Capsaicin depletes substance P → smaller flare"
+      "ชื่อ Lewis triple response (Thomas Lewis, 1927)",
+      "Antihistamine ลดทั้ง wheal และ flare · ยาชาเฉพาะที่ลบได้แค่ flare (ต้องอาศัยเส้นประสาท)",
+      "Dermographism: ขูดเบาแล้วเกิด wheal มากเกิน → urticaria ชนิดหนึ่ง",
+      "Capsaicin ทำให้ substance P หมด → flare เล็กลง"
     ],
     d: [
       "firm stroke -> mast cells -> histamine",
@@ -1551,10 +1537,10 @@ window.TUTOR_NOTES = {
   },
   "M-C5": {
     b: [
-      "Cold sensitizes α₂-adrenoceptors in skin vessels → stronger constriction",
-      "Hunting reaction protects fingers, ears and nose from cold injury",
-      "Raynaud's: exaggerated cold constriction → white → blue → red",
-      "Same left shift explains red ears and nose in the cold"
+      "ความเย็นทำให้ α₂-receptor ที่หลอดเลือดผิวหนังไวขึ้น → หดแรงขึ้น",
+      "Hunting reaction ปกป้องนิ้ว หู จมูกจาก cold injury",
+      "Raynaud: หดตัวมากเกินเมื่อเย็น → ขาว → เขียว → แดง",
+      "Left shift เดียวกันอธิบายหูและจมูกแดงตอนหนาว"
     ],
     d: [
       "warm -> SNS down + local heat -> arterioles, AV shunts, veins dilate -> heat out",
@@ -1564,11 +1550,11 @@ window.TUTOR_NOTES = {
   },
   "M-C6": {
     b: [
-      "Hydrostatic pressure = ρgh; 1 cmH₂O ≈ 0.74 mmHg",
-      "Varicose veins: leaky valves → long hydrostatic column → venous hypertension → edema, ulcers",
-      "JVP works because neck veins collapse above the blood column → the top of the column shows RA pressure",
-      "Central line insertion: head-down + Valsalva prevents air embolism (same negative-pressure risk)",
-      "Passive leg raise ≈ 150–300 mL autotransfusion → bedside fluid-responsiveness test"
+      "Hydrostatic pressure = ρgh · 1 cmH₂O ≈ 0.74 mmHg",
+      "Varicose vein: ลิ้นรั่ว → คอลัมน์เลือดยาว → venous HTN → บวม แผล",
+      "JVP ใช้หลักนี้: หลอดเลือดดำคอยุบเหนือระดับเลือด → ยอดคอลัมน์ = RA pressure",
+      "ใส่ central line: ให้ศีรษะต่ำ + Valsalva กัน air embolism",
+      "Passive leg raise ≈ เลือดคืน 150–300 mL → ทดสอบ fluid responsiveness ข้างเตียง"
     ],
     d: [
       "skull sinuses  ~ -10   rigid walls, cannot collapse",
@@ -1577,14 +1563,12 @@ window.TUTOR_NOTES = {
       "foot veins     ~ +90   standing still"
     ]
   },
-
-  /* ---------------- P · Physical examination ---------------- */
   "P-C1": {
     b: [
-      "Displaced apex = volume overload (MR, AR, dilated cardiomyopathy) · sustained heave = pressure overload (AS, hypertension)",
-      "Central cyanosis (lips, tongue: lung or shunt) vs peripheral (fingers: low flow, cold)",
-      "Edema causes: heart, liver, kidney, low albumin, veins, lymph",
-      "Commonest cause of right heart failure = left heart failure"
+      "Apex เลื่อน = volume overload (MR, AR, DCM) · heave ค้าง = pressure overload (AS, HTN)",
+      "Central cyanosis (ริมฝีปาก ลิ้น: ปอดหรือ shunt) vs peripheral (นิ้ว: flow ต่ำ เย็น)",
+      "บวม: หัวใจ ตับ ไต albumin ต่ำ หลอดเลือดดำ น้ำเหลือง",
+      "สาเหตุ right HF ที่พบบ่อยที่สุด = left HF"
     ],
     d: [
       "LV fails -> LA P up -> pulmonary veins up -> lung: dyspnea, orthopnea, PND, crackles",
@@ -1593,11 +1577,10 @@ window.TUTOR_NOTES = {
   },
   "P-C2": {
     b: [
-      "S1 loudest at the apex, S2 at the base",
-      "Rhythm words: S3 = “Ken-TUCK-y” (S1-S2-S3) · S4 = “TEN-nes-see” (S4-S1-S2)",
-      "Loud S1 in MS: valve still wide open when the ventricle contracts → slams shut",
-      "Soft S1: MR, first-degree AV block (leaflets already drifting closed)",
-      "Time it with the carotid: the sound just before the upstroke is S1"
+      "S1 ดังสุดที่ apex · S2 ดังสุดที่ base",
+      "จังหวะ: S3 = “Ken-TUCK-y” · S4 = “TEN-nes-see”",
+      "S1 ดังใน MS: ลิ้นยังเปิดกว้างตอน ventricle บีบ → ปิดกระแทก · S1 เบา: MR, 1st-degree AV block",
+      "จับ carotid ไปด้วย: เสียงที่มาก่อน upstroke คือ S1"
     ],
     d: [
       "         S4  S1               S2   S3",
@@ -1608,11 +1591,11 @@ window.TUTOR_NOTES = {
   },
   "P-C3": {
     b: [
-      "Area order: “All Physicians Take Money” → right 2nd ICS → left 2nd → left lower sternal border → apex",
-      "RILE: Right-sided murmurs louder on Inspiration, Left-sided on Expiration",
-      "Handgrip (afterload ↑) → MR and AR louder, AS softer",
-      "Valsalva softens most murmurs except HOCM and MVP",
-      "Levine grade 1–6; a palpable thrill means grade ≥4"
+      "ลำดับ area: “All Physicians Take Money” → right 2nd ICS → left 2nd → LLSB → apex",
+      "RILE: Right ดังตอน Inspiration · Left ดังตอน Expiration",
+      "Handgrip (afterload ↑) → MR, AR ดังขึ้น · AS เบาลง",
+      "Valsalva ทำให้ murmur เบาลง ยกเว้น HOCM และ MVP",
+      "Levine grade 1–6 · คลำ thrill ได้ = grade ≥4"
     ],
     d: [
       "         S1                S2",
@@ -1624,10 +1607,10 @@ window.TUTOR_NOTES = {
   },
   "P-C4": {
     b: [
-      "Pulsus paradoxus: fixed pericardial volume → RV fills on inspiration → septum bulges left → LV SV ↓",
-      "AR eponyms: Corrigan (water-hammer), de Musset (head bob), Quincke (nail-bed pulsation), Traube (pistol-shot femoral)",
-      "AS symptoms: angina, syncope, dyspnea (“SAD”)",
-      "Count a pulse deficit with two people over 1 min (apex and radial together)"
+      "Pulsus paradoxus: pericardium จำกัดปริมาตร → หายใจเข้า RV เติมมาก → septum ดันซ้าย → LV SV ↓",
+      "AR eponyms: Corrigan, de Musset (ผงกหัว), Quincke (เล็บเต้น), Traube (pistol-shot)",
+      "AS อาการ: angina, syncope, dyspnea (“SAD”)",
+      "นับ pulse deficit: สองคน apex กับ radial พร้อมกัน 1 นาที"
     ],
     d: [
       "normal        /\\__",
@@ -1638,11 +1621,10 @@ window.TUTOR_NOTES = {
   },
   "P-C5": {
     b: [
-      "RA pressure ≈ CVP ≈ RV end-diastolic pressure (if no tricuspid stenosis)",
-      "JVP ↑: right heart failure, fluid overload, tamponade, constriction (Kussmaul: JVP rises on inspiration), SVC obstruction (non-pulsatile)",
-      "Giant a wave: TS, pulmonary hypertension · cannon a: AV dissociation",
-      "Steep y descent: constrictive pericarditis · blunted y: tamponade",
-      "Wave memory: a = atrial contraction · c = closing tricuspid bulges · x = atrial relaxation · v = venous filling · y = emptying"
+      "RA pressure ≈ CVP ≈ RV EDP (ถ้าไม่มี TS)",
+      "JVP ↑: right HF, fluid overload, tamponade, constriction (Kussmaul: JVP ขึ้นตอนหายใจเข้า), SVC obstruction (ไม่เต้น)",
+      "Giant a: TS, pulmonary HTN · cannon a: AV dissociation",
+      "y ลึก: constrictive pericarditis · y หาย: tamponade"
     ],
     d: [
       "   a  c        v",
@@ -1653,9 +1635,9 @@ window.TUTOR_NOTES = {
   },
   "P-C6": {
     b: [
-      "On inspiration A2 also comes slightly earlier (less blood returns from the lungs to the LV for a moment)",
-      "ASD murmur = ejection systolic at the pulmonic area from extra flow across a normal pulmonary valve, not from the hole",
-      "Untreated large ASD → pulmonary hypertension → shunt reverses → cyanosis (Eisenmenger)"
+      "หายใจเข้า A2 มาเร็วขึ้นเล็กน้อยด้วย (เลือดจากปอดกลับ LV ลดชั่วขณะ)",
+      "Murmur ของ ASD = ejection systolic ที่ pulmonic area จาก flow ที่เพิ่ม ไม่ได้มาจากรู",
+      "ASD ใหญ่ไม่รักษา → pulmonary HTN → shunt กลับทิศ → เขียว (Eisenmenger)"
     ],
     d: [
       "             expiration     inspiration",
@@ -1665,14 +1647,12 @@ window.TUTOR_NOTES = {
       "paradoxical  P2 . A2        single          LBBB, AS"
     ]
   },
-
-  /* ---------------- D · Dog lab I ---------------- */
   "D-C1": {
     b: [
       "Pressor = BP ↑ · depressor = BP ↓",
-      "Large myelinated (A) fibers fire at low current; small (Aδ, C) need high current",
-      "Anesthesia blunts reflexes → lab traces can differ from textbook values",
-      "Habit: read the control values first, then the size and direction of each change"
+      "เส้นใยใหญ่มี myelin (A) ยิงที่กระแสต่ำ · เส้นใยเล็ก (Aδ, C) ต้องใช้กระแสสูง",
+      "ยาสลบกด reflex → กราฟอาจไม่ตรงตำรา",
+      "อ่านกราฟ: ดูค่า control ก่อน แล้วดูขนาดและทิศของการเปลี่ยน"
     ],
     d: [
       "brain <-- central end --X-- peripheral end --> organ",
@@ -1682,10 +1662,10 @@ window.TUTOR_NOTES = {
   },
   "D-C2": {
     b: [
-      "Always ask: is the sensor loaded or unloaded? The common carotid clamp sits BELOW the sinus",
-      "Hering–Breuer reflex: lung stretch afferents in the vagus stop inspiration → after vagotomy breaths are slow and deep",
-      "Asphyxia HR: first sympathetic surge (chemoreflex), then hypoxic heart + vagal → bradycardia",
-      "Vagal escape: keep stimulating the vagus and the ventricles restart with escape beats"
+      "ถามเสมอ: sensor ถูก load หรือ unload · จุดหนีบ common carotid อยู่<b>ใต้</b> sinus",
+      "Hering–Breuer reflex: stretch receptor ในปอด (ผ่าน vagus) หยุดการหายใจเข้า → ตัด vagus แล้วหายใจช้าและลึก",
+      "Asphyxia: HR ขึ้นก่อน (chemoreflex) แล้วตก (หัวใจขาด O₂ + vagus)",
+      "Vagal escape: กระตุ้น vagus ต่อเนื่องแล้ว ventricle กลับมาเต้นเอง"
     ],
     d: [
       "clamp common carotid -> sinus pressure down -> firing down -> BP up, HR up",
@@ -1694,17 +1674,17 @@ window.TUTOR_NOTES = {
   },
   "D-C3": {
     b: [
-      "Stronger pull → more stretch → more fibers recruited and faster firing → bigger fall",
-      "Electrical stimulation skips the stretch step → proves the nerve pathway, not the receptor",
-      "Clamping both carotids gives a bigger pressor response (no opposite-side buffer)",
-      "Carotid massage: avoid with a carotid bruit or recent stroke (plaque emboli)"
+      "ดึงแรงขึ้น → ยืดมาก → เส้นใยถูกเรียกมากและยิงถี่ → BP ตกมาก",
+      "กระตุ้นไฟฟ้าข้ามขั้นการยืด → พิสูจน์เส้นทางประสาท ไม่ใช่ตัวรับ",
+      "หนีบ carotid สองข้าง → pressor มากขึ้น (ไม่มีอีกข้างช่วย buffer)",
+      "Carotid massage: ห้ามถ้ามี carotid bruit หรือเพิ่งเป็น stroke (plaque หลุด)"
     ]
   },
   "D-C4": {
     b: [
-      "Two phases on every tilt trace: (A) physics = gravity moves blood · (B) physiology = reflex corrects",
-      "Clinical tilt-table test diagnoses vasovagal syncope and POTS",
-      "A dog's hydrostatic column is shorter than a standing human's → smaller swings"
+      "ทุกกราฟ tilt มี 2 ช่วง: (A) ฟิสิกส์ = แรงโน้มถ่วงย้ายเลือด · (B) สรีรวิทยา = reflex แก้",
+      "Tilt-table test ในคลินิกใช้วินิจฉัย vasovagal syncope และ POTS",
+      "สุนัขมีคอลัมน์เลือดสั้นกว่าคนยืน → การเปลี่ยนแปลงน้อยกว่า"
     ],
     d: [
       "head-down: VR up   -> BP up (A)   -> baro up   -> HR down, TPR down -> BP settles (B)",
@@ -1713,8 +1693,8 @@ window.TUTOR_NOTES = {
   },
   "D-C5": {
     b: [
-      "General rule: cut an efferent arm → only that output disappears; the other arms still answer",
-      "Slow deep breathing after vagotomy = Hering–Breuer reflex lost"
+      "กฎ: ตัดขา efferent ไหน → output นั้นหายไปอย่างเดียว ขาอื่นยังตอบ",
+      "หายใจช้าและลึกหลังตัด vagus = เสีย Hering–Breuer reflex"
     ],
     d: [
       "sinus --IX--> NTS --+--> vagus  X (cut)  -> HR cannot fall",
@@ -1724,9 +1704,9 @@ window.TUTOR_NOTES = {
   },
   "D-C6": {
     b: [
-      "Somatosympathetic reflex: surgical pain under light anesthesia → hypertension, tachycardia",
-      "Pain can go either way in people: pressor response, or a vasovagal faint at a needle",
-      "Phrenic → diaphragm is a skeletal-muscle synapse (nicotinic ACh)"
+      "Somatosympathetic reflex: เจ็บระหว่างผ่าตัดที่ยาสลบตื้น → HTN, tachycardia",
+      "ในคนความเจ็บไปได้สองทาง: pressor หรือเป็นลมตอนเห็นเข็ม (vasovagal)",
+      "Phrenic → กะบังลม = synapse ของกล้ามเนื้อลาย (nicotinic ACh)"
     ],
     d: [
       "low current  -> large afferents        -> depressor: vagus up, SNS down -> BP down, HR down",
@@ -1735,10 +1715,10 @@ window.TUTOR_NOTES = {
   },
   "D-C7": {
     b: [
-      "The splanchnic bed holds ~20–25% of blood volume → constricting it is an autotransfusion",
-      "Epinephrine reversal: after an α-blocker, epinephrine lowers BP (β₂ unmasked)",
-      "Clinic: norepinephrine = first vasopressor in septic shock · phenylephrine = anesthesia hypotension · isoproterenol = bridge for bradycardia or heart block",
-      "Nitroglycerin: preload ↓ → wall stress and O₂ demand ↓ → angina relief; headache from meningeal dilation; never with PDE5 inhibitors"
+      "Splanchnic bed เก็บเลือด ~20–25% ของ volume → หดตัว = เติมเลือดคืนระบบ",
+      "Epinephrine reversal: หลังให้ α-blocker, epinephrine ทำให้ BP ตก (เหลือแต่ β₂)",
+      "คลินิก: NE = vasopressor ตัวแรกใน septic shock · phenylephrine = BP ต่ำจากยาสลบ · isoproterenol = ประคอง bradycardia/heart block",
+      "Nitroglycerin: preload ↓ → wall stress และ O₂ demand ↓ → angina ดีขึ้น · ปวดหัว · ห้ามใช้กับ PDE5 inhibitor"
     ],
     d: [
       "            a1    b1    b2",
@@ -1749,13 +1729,11 @@ window.TUTOR_NOTES = {
       "iso         -     +++   +++   BP down, HR up up"
     ]
   },
-
-  /* ---------------- H · Dog lab II ---------------- */
   "H-C1": {
     b: [
-      "Sort every maneuver: a filling problem (saline, bleeding, caval clamp, NTG, tamponade) or an outflow problem (AR, AS, coarctation)",
+      "แยกทุกการทดลอง: ปัญหาการเติม (saline, เสียเลือด, หนีบ cava, NTG, tamponade) หรือปัญหาทางออก (AR, AS, coarctation)",
       "Venous return = (mean systemic filling pressure − RA pressure) ÷ venous resistance",
-      "Bainbridge reflex: atrial stretch → HR ↑ (opposes the baroreflex after a fluid load)"
+      "Bainbridge reflex: atria ถูกยืด → HR ↑ (สู้กับ baroreflex หลังให้น้ำ)"
     ],
     d: [
       "             CVP down              CVP up",
@@ -1766,19 +1744,19 @@ window.TUTOR_NOTES = {
   },
   "H-C2": {
     b: [
-      "IVC brings ~2/3 of venous return, SVC ~1/3",
-      "Late pregnancy lying supine: uterus compresses the IVC → supine hypotension → tilt to the left",
-      "SVC syndrome (lung cancer, lymphoma): swollen face and arms, distended neck veins",
-      "PV loop: the end-diastolic corner moves left → narrower loop (SV ↓) → lower peak pressure"
+      "IVC นำเลือดกลับ ~2/3 · SVC ~1/3",
+      "ตั้งครรภ์ไตรมาสสามนอนหงาย: มดลูกกด IVC → BP ตก → ให้ตะแคงซ้าย",
+      "SVC syndrome (มะเร็งปอด, lymphoma): หน้าและแขนบวม หลอดเลือดดำคอโป่ง",
+      "PV loop: มุม end-diastolic เลื่อนซ้าย → loop แคบ (SV ↓) → ความดันยอดต่ำลง"
     ]
   },
   "H-C3": {
     b: [
-      "Diastolic pressures in all four chambers equalize ≈ pericardial pressure",
-      "Speed matters: 100–200 mL suddenly can kill; a slow effusion can reach >1 L",
-      "Also look for electrical alternans on the ECG",
-      "Temporize with IV fluid (raise filling pressure); avoid diuretics and vasodilators",
-      "HR fell in the lab, possible reasons: lower coronary perfusion pressure → ischemic bradycardia, an inhibitory cardiac reflex, anesthesia"
+      "ความดัน diastolic ทั้ง 4 ห้องเท่ากัน ≈ ความดันใน pericardium",
+      "ความเร็วสำคัญ: 100–200 mL ทันทีถึงตายได้ · สะสมช้าได้ >1 L",
+      "ECG อาจเห็น electrical alternans",
+      "ประคองด้วย IV fluid (เพิ่ม filling pressure) · ห้าม diuretic, vasodilator",
+      "HR ลดในแล็บ อาจเป็นเพราะ: coronary perfusion ↓ → หัวใจช้าจากขาดเลือด, reflex ยับยั้งจากหัวใจ, ยาสลบ"
     ],
     d: [
       "fluid in sac -> pericardial P up -> diastolic filling blocked",
@@ -1789,10 +1767,10 @@ window.TUTOR_NOTES = {
   },
   "H-C4": {
     b: [
-      "Chronic AR: LV dilates slowly (eccentric hypertrophy) → huge SV, wide PP, well tolerated for years",
-      "Acute AR (endocarditis, dissection): no time to dilate → pulmonary edema, shock",
-      "Low DBP → poor coronary filling (coronaries fill in diastole) → angina",
-      "Austin Flint murmur: the regurgitant jet hits the mitral leaflet → mid-diastolic rumble at the apex"
+      "AR เรื้อรัง: LV ขยายช้าๆ (eccentric hypertrophy) → SV มาก PP กว้าง ทนได้หลายปี",
+      "AR เฉียบพลัน (endocarditis, dissection): ขยายไม่ทัน → pulmonary edema, shock",
+      "DBP ต่ำ → coronary เติมเลือดไม่ดี (เติมตอน diastole) → angina",
+      "Austin Flint murmur: เลือดที่รั่วกระแทก mitral leaflet → rumble กลาง diastole ที่ apex"
     ],
     d: [
       "normal loop: B (EDV) -> C -> D -> E -> A -> back to B",
@@ -1802,10 +1780,10 @@ window.TUTOR_NOTES = {
   },
   "H-C5": {
     b: [
-      "Teaching key: where is the sensor relative to the block? That decides the reflex",
-      "Coarctation clues: radio-femoral delay, rib notching, “3 sign” on CXR; associated with bicuspid aortic valve and Turner syndrome",
-      "AS → concentric LV hypertrophy → angina, syncope, dyspnea",
-      "HR fell with the ascending clamp, possible reasons: LV pressure overload triggering an inhibitory ventricular reflex, or a failing LV"
+      "หัวใจของการสอน: sensor อยู่ก่อนหรือหลังจุดอุด → ตัดสินทิศของ reflex",
+      "Coarctation: radio-femoral delay, rib notching, “3 sign” บน CXR · สัมพันธ์กับ bicuspid aortic valve และ Turner",
+      "AS → LV หนาแบบ concentric → angina, syncope, dyspnea",
+      "HR ลดตอนหนีบ ascending aorta อาจเป็นเพราะ: LV pressure overload กระตุ้น reflex ยับยั้งจาก ventricle หรือ LV ล้ม"
     ],
     d: [
       "LV -> [clamp] -> arch -> carotids             carotid sees LOW   (AS model)",
@@ -1814,9 +1792,9 @@ window.TUTOR_NOTES = {
   },
   "H-C6": {
     b: [
-      "In the rabbit the aortic depressor nerve runs on its own (Ludwig and Cyon's nerve); in the dog it joins the vagosympathetic trunk",
-      "Same principle as the sciatic experiment: low current = big fibers, high current = small fibers",
-      "Prolonged right-vagus stimulation → vagal escape after a few seconds"
+      "ในกระต่าย aortic depressor nerve แยกเป็นเส้นเดี่ยว (Ludwig และ Cyon) · ในสุนัขรวมอยู่ใน vagosympathetic trunk",
+      "หลักเดียวกับแล็บ sciatic: กระแสต่ำ = เส้นใยใหญ่ · กระแสสูง = เส้นใยเล็ก",
+      "กระตุ้น right vagus นาน → vagal escape ในไม่กี่วินาที"
     ],
     d: [
       "aortic nerve  low current  -> baro fibers         -> depressor (BP down, HR down)",
@@ -1826,11 +1804,11 @@ window.TUTOR_NOTES = {
   },
   "H-C7": {
     b: [
-      "AF: atria fire ~350–600/min; the AV node filters → irregular ventricular rate",
-      "Atrial kick lost (~15–25% of filling) → CO ↓, worse with a stiff ventricle",
-      "Stasis in the left atrial appendage → clot → embolic stroke → anticoagulate by CHA₂DS₂-VASc",
-      "Wide PP in the dog's AF, possible reason: long pauses → more filling (bigger SV) and more aortic run-off (DBP ↓)",
-      "VF: no output = cardiac arrest → CPR + unsynchronized shock; AF gets synchronized cardioversion"
+      "AF: atria ยิง ~350–600/min · AV node กรอง → ventricle เต้นไม่สม่ำเสมอ",
+      "เสีย atrial kick (~15–25%) → CO ↓ ยิ่งแย่ถ้า ventricle แข็ง",
+      "เลือดค้างใน left atrial appendage → clot → embolic stroke → ให้ anticoagulant ตาม CHA₂DS₂-VASc",
+      "PP กว้างใน AF ของสุนัข อาจเป็นเพราะ: pause ยาว → เติมมาก (SV ↑) และเลือดไหลออกจาก aorta นาน (DBP ↓)",
+      "VF: ไม่มี output = cardiac arrest → CPR + shock แบบ unsynchronized · AF ใช้ synchronized cardioversion"
     ],
     d: [
       "AF: ~~v~~|~~v~|~~~~v~~~|~|   no P waves, irregular narrow QRS",
@@ -3303,7 +3281,7 @@ window.TUTOR_SCRIPT = {
     var n = window.TUTOR_NOTES && window.TUTOR_NOTES[it.id];
     if (!n) return '';
     var esc = function (x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
-    return '<div class="tnotes"><div class="tn-head">Tutor notes &#183; beyond the slide</div>' +
+    return '<div class="tnotes"><div class="tn-head">โน้ตผู้สอน &#183; นอกเหนือจากสไลด์</div>' +
       (n.b && n.b.length ? '<ul>' + n.b.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' : '') +
       (n.d && n.d.length ? '<pre class="tdiag">' + n.d.map(esc).join('\n') + '</pre>' : '') + '</div>';
   }

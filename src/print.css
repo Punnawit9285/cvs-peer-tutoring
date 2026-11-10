@@ -68,8 +68,8 @@ table.toc td:first-child { white-space: normal; }
 .cfit .tpoints .tp-head { font: 600 .75em var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--ven); margin-bottom: 2px; }
 .cfit .tpoints ul { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; line-height: 1.45; }
 .cfit .cbody { gap: 12px; }
-.cfit .cz { color: inherit; background: none; cursor: default; }
-.cfit .cz * { color: inherit !important; }
+.czb { display: inline-block; vertical-align: -0.28em; height: 1.3em; max-width: 100%; border-bottom: 1.5px solid var(--art); background: #fbf3f4; border-radius: 3px 3px 0 0; margin: 0 1px; position: relative; }
+.czb i { position: absolute; left: 2px; top: -1px; font: 600 .62em var(--f-mono); font-style: normal; color: var(--art); }
 .cfoot { margin: 10px 0 0; font: .8em var(--f-mono); color: var(--ink2); }
 
 /* answer key and Thai concept explanations */
@@ -105,3 +105,15 @@ table.toc td:first-child { white-space: normal; }
 .cfit .figpair { grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); }
 .cfit .scan img { max-height: 440px; }
 .cfit .scan.tall img { max-height: 480px; }
+
+/* answers to the concept blanks */
+.bkcols { columns: 2; column-gap: 7mm; column-rule: 1px solid var(--rule); }
+.bk { break-inside: avoid; margin: 0 0 8px; }
+.bkh { font: 600 1em var(--f-display); margin-bottom: 2px; }
+.bkh b { font-family: var(--f-mono); color: var(--art); margin-right: 6px; font-size: .9em; }
+.bkl { margin: 0; line-height: 1.6; }
+.bka { margin-right: 8px; }
+.bka i { font: 600 .78em var(--f-mono); font-style: normal; color: #fff; background: var(--art); border-radius: 999px; padding: 0 5px; margin-right: 3px; }
+.bksec { margin-top: 10px; }
+.part + .bksec { margin-top: 18px; }
+.xkp { margin: 2px 0 6px; padding: 5px 10px 5px 1.6em; background: var(--ven-soft); border-left: 3px solid var(--ven); border-radius: 6px; line-height: 1.5; font-family: "IBM Plex Sans Thai", var(--f-body); break-inside: avoid; }

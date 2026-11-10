@@ -1,6 +1,18 @@
 # CVS I Regulation & Lab — Peer support 82 deck
 
-Interactive question-first Peer support 82 deck and tutor guide for **CVS I Regulation & Lab (except ECG)**:
+Interactive question-first Peer support 82 deck and tutor guide for **CVS I Regulation & Lab (except ECG)**.
+
+## Open it
+
+| | Link |
+|---|---|
+| **Student deck** (present to the audience) | https://punnawit9285.github.io/cvs-peer-tutoring/student.html |
+| **Tutor deck** (second screen: answers, Thai explanations, tutor notes, script) | https://punnawit9285.github.io/cvs-peer-tutoring/tutor.html |
+| **Student handout PDF** | https://punnawit9285.github.io/cvs-peer-tutoring/student.pdf |
+
+Open the student and tutor decks in the same browser and tick *Follow student* in the tutor deck: it jumps to whatever card the student deck shows.
+
+## Sections
 
 - **R · Regulation**: Cardiovascular regulation lecture (baroreflex, chemoreceptors, CNS ischemic response, RAAS, local autoregulation, denervated heart, hypovolemia)
 - **F · Frog Heart Lab**: Cardiac action potentials, conduction velocity, refractory periods, extrasystole & compensatory pause, Stannius ligatures, all-or-none law
@@ -13,9 +25,9 @@ Interactive question-first Peer support 82 deck and tutor guide for **CVS I Regu
 
 ## Pages
 
-- **[`dist/deck.html`](dist/deck.html)** — Present & Browse modes, **Core only** filter (106 core questions out of 223 total), 54 concept cards with **531 click-to-reveal cloze blanks**, keyboard navigation (`←`/`→`, `Space` to reveal next blank/answer, `Enter` to reveal all blanks, `A`–`F` / `T` / `F` to answer, `R` to reset, `L` to open the Thai explanation, `B` to toggle Browse), and click-to-zoom course figures. Clicking an option shows the answer at once. Every concept card has a collapsible Thai explanation (อธิบายเป็นภาษาไทย) under it; it starts closed because it gives away the blanks.
+- **[`dist/deck.html`](dist/deck.html)** — Present & Browse modes, **Core only** filter (106 core questions out of 223 total), 54 concept cards with **531 click-to-reveal cloze blanks**, keyboard navigation (`←`/`→`, `Space` to reveal next blank/answer, `Enter` to reveal all blanks, `A`–`F` / `T` / `F` to answer, `R` to reset, `L` to open the Thai explanation, `B` to toggle Browse), and click-to-zoom course figures. Clicking an option shows the answer at once. Every concept card has a collapsible Thai explanation (labelled **Explanation**) under it; it starts closed because it gives away the blanks.
 - **[`dist/notes.html`](dist/notes.html)** (also `tutor.html`): the tutor deck. Same cards and order as the student deck, with every answer and blank revealed, concise Thai bullet explanations, and the English recording script: the 5-video plan on the start card, an opening line and an "Understand it: the 80%" summary on each section card, and a **SAY** line on every concept card and core question. Each concept card also carries **tutor notes** (knowledge beyond the slide: short bullets, A → B chains, small text diagrams) and the Thai explanation, open.
-- **[`student.pdf`](student.pdf)**: the student handout (A4, 98 pages). Per section: the questions with no answers (two columns, about 10–20 per page), then one page per concept card. The answer key with Thai explanations, and the Thai explanation of every concept, are at the back. Cross-references give real page numbers.
+- **[`student.pdf`](student.pdf)**: the student handout (A4, 105 pages). Each concept gets one page, followed by the quiz on that concept (no answers, two columns; a short quiz sits under its concept when it fits). The answer key with Thai explanations, grouped by concept, and the Thai explanation of every concept are at the back. Cross-references give real page numbers.
 - **Follow student**: open `student.html` and `tutor.html` in the same browser (two tabs or windows). With *Follow student* ticked, the tutor deck jumps to whatever card the student deck shows.
 
 ## Building

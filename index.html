@@ -2193,7 +2193,7 @@ window.THAI_EXPLAIN = {
   function thxHtml(it, open) {
     var tx = window.THAI_EXPLAIN && window.THAI_EXPLAIN[it.id];
     if (!tx || !tx.length) return '';
-    return '<details class="thx"' + (open ? ' open' : '') + '><summary><span class="thx-h">อธิบายเป็นภาษาไทย</span><span class="thx-s">Thai explanation &#183; click or press L</span></summary><div class="thx-body">' + tx.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div></details>';
+    return '<details class="thx"' + (open ? ' open' : '') + '><summary><span class="thx-h">Explanation</span><span class="thx-s">ภาษาไทย &#183; click or press L</span></summary><div class="thx-body">' + tx.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div></details>';
   }
   function renderC(it) {
     var kp = THAI_CONCEPT[it.id];
@@ -2224,7 +2224,7 @@ window.THAI_EXPLAIN = {
       '<div><b>Reveal</b>Clicking an option shows the answer at once. Green is correct; red marks a wrong pick. A letter key only selects; press <kbd>Space</kbd> to reveal.</div>' +
       '<div><b>Explain</b>Concept cards carry the real lab figures, tables and traps behind the answers. Click a figure to enlarge it.</div>' +
       '<div><b>Blanks</b>Key details on concept cards are hidden. <kbd>Space</kbd> fills the next blank, <kbd>Enter</kbd> fills them all, <kbd>R</kbd> hides them again; click any blank to flip it.</div>' +
-      '<div><b>Thai</b>Every concept card has a Thai explanation under it. Click <i>อธิบายเป็นภาษาไทย</i> or press <kbd>L</kbd>; it stays open on the next cards until you close it.</div>' +
+      '<div><b>Thai</b>Every concept card has a Thai explanation under it. Click <i>Explanation</i> or press <kbd>L</kbd>; it stays open on the next cards until you close it.</div>' +
       '<div><b>Keys</b><kbd>&#8592;</kbd> <kbd>&#8594;</kbd> move, <kbd>A</kbd>&#8211;<kbd>F</kbd> choose, <kbd>T</kbd>/<kbd>F</kbd> true-false, <kbd>R</kbd> reset, <kbd>B</kbd> browse</div></div>' +
       '<p class="note"><span class="chip core">core</span> = do it on the video. A <b>recall note</b> appears after some answers when the exam wording was remembered imperfectly: teach the principle. <b>Lab quiz</b> items are the true/false lab checks with their official answers.</p></article>';
   }

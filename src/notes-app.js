@@ -8,6 +8,11 @@
   var byId = {}, secOf = {};
   S.forEach(function (s, si) { s.items.forEach(function (it) { byId[it.id] = it; secOf[it.id] = si; }); });
 
+  /* English recording script (src/tutor-script.js): plan, 80% summary, one SAY line per card */
+  var SCRIPT = window.TUTOR_SCRIPT || { plan: [], sec: {} };
+  function sayLine(id) { var s = S[secOf[id]], sc = s && SCRIPT.sec[s.id]; return sc && sc.say ? sc.say[id] || '' : ''; }
+  function sayBox(text, label) { return text ? '<div class="saybox"><div class="tp-head">' + (label || 'พูดในวิดีโอ &#183; SAY') + '</div><p>' + text + '</p></div>' : ''; }
+
   var THAI_Q = {
   "R1": [
     "<b>Baroreceptor reflex</b> เป็น neural control ที่ทำงานเร็วที่สุด (ระดับวินาที) เพื่อประคอง BP ทันที",
@@ -644,7 +649,8 @@
     "การกระตุ้นด้าน central end ของ sciatic nerve ด้วย <b>กระแสไฟต่ำ (low current)</b> ทำให้เกิด <b>depressor reflex</b> → เพิ่มการทำงานของ vagus nerve ไปหลั่ง ACh จับกับ <b>Muscarinic receptor (M2) ที่ SA node</b>"
   ],
   "D12": [
-    "การกระตุ้นด้าน central end ของ sciatic nerve ด้วย <b>low current</b> กระตุ้น depressor reflex ทำให้ <b>BP, HR และ RR ลดลง (Decreased, decreased, decreased)</b>",
+    "การกระตุ้นด้าน central end ของ sciatic nerve ด้วย <b>low current</b> กระตุ้น depressor reflex ทำให้ <b>BP และ HR ลดลง</b> ซึ่งมีแค่ข้อ C ที่ BP และ HR ลดทั้งคู่ (เฉลย AC81: Decreased, decreased, decreased)",
+    "ในกราฟจริงของแล็บ (D-C6) RR แทบไม่เปลี่ยน (12 → 12) จึงไม่ต้องเถียงค่าที่สาม",
     "ในทางกลับกัน ถ้าใช้ high current จะกระตุ้น pain fibers เกิด pressor reflex ทำให้ทั้งสามค่าเพิ่มขึ้น"
   ],
   "D13": [
@@ -948,7 +954,7 @@
   ],
   "D-C7": [
     "กระตุ้น <b>splanchnic nerve</b>: BP พุ่งขึ้น 2 จังหวะ (หลอดเลือดช่องท้องหดตัว + หลั่ง adrenal epinephrine) และเมื่อหยุดกระตุ้น BP จะลดต่ำกว่า baseline จากฤทธิ์ <b>β₂ vasodilation</b>",
-    "<b>Low-dose epinephrine</b>: デ่นที่ β₂ (↓BP, ↓CVP) ร่วมกับ β₁ (↑HR) | <b>High-dose epinephrine</b>: ↑↑BP จนเกิด reflex ↓RR (adrenaline apnea)"
+    "<b>Low-dose epinephrine</b>: เด่นที่ β₂ (↓BP, ↓CVP) ร่วมกับ β₁ (↑HR) | <b>High-dose epinephrine</b>: ↑↑BP จนเกิด reflex ↓RR (adrenaline apnea)"
   ],
   "H-C1": [
     "สรุปภาพรวมแล็บ Dog II: เปรียบเทียบผลต่อ CVP, BP, HR และ PP เมื่อเปลี่ยนการเติมเลือด (IV fluid, hemorrhage, caval clamp, nitroglycerin, tamponade) หรือเปลี่ยนทางออก (AR, AS, coarctation)"
@@ -1105,22 +1111,46 @@
       }).join('') + '</div>';
     }
     h += '<div class="explain"><div class="ans">' + answerText(it) + '</div>' + renderExplainBullets(it) + (it.flag ? '<div class="flag"><b>Recall note:</b> ' + it.flag + '</div>' : '') + '</div>';
+    h += sayBox(sayLine(it.id));
     return h + '</article>';
+  }
+  function notesHtml(it) {
+    var n = window.TUTOR_NOTES && window.TUTOR_NOTES[it.id];
+    if (!n) return '';
+    var esc = function (x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+    return '<div class="tnotes"><div class="tn-head">Tutor notes &#183; beyond the slide</div>' +
+      (n.b && n.b.length ? '<ul>' + n.b.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' : '') +
+      (n.d && n.d.length ? '<pre class="tdiag">' + n.d.map(esc).join('\n') + '</pre>' : '') + '</div>';
+  }
+  function thxHtml(it) {
+    var tx = window.THAI_EXPLAIN && window.THAI_EXPLAIN[it.id];
+    if (!tx || !tx.length) return '';
+    return '<details class="thx" open><summary><span class="thx-h">อธิบายเป็นภาษาไทย</span><span class="thx-s">Thai explanation &#183; ' + tx.length + ' ย่อหน้า</span></summary><div class="thx-body">' + tx.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div></details>';
   }
   function renderC(it) {
     var kp = THAI_CONCEPT[it.id];
     var kpHtml = kp && kp.length ? '<div class="tpoints"><div class="tp-head">สรุปประเด็นสำคัญ (Key Points)</div><ul>' + kp.map(function (b) { return '<li>' + b + '</li>'; }).join('') + '</ul></div>' : '';
-    return '<article class="card concept" data-id="' + it.id + '">' + eyebrow(it) + '<h2>' + it.title + '</h2>' + kpHtml + '<div class="cbody">' + it.html + '</div></article>';
+    return '<article class="card concept" data-id="' + it.id + '">' + eyebrow(it) + '<h2>' + it.title + '</h2>' + kpHtml + sayBox(sayLine(it.id)) + notesHtml(it) + thxHtml(it) + '<div class="cbody">' + it.html + '</div></article>';
   }
   function renderSec(si) {
-    var s = S[si], c = counts(s), ts = THAI_SEC[s.id] || {};
+    var s = S[si], c = counts(s), ts = THAI_SEC[s.id] || {}, sc = SCRIPT.sec[s.id] || {};
+    var u80 = sc.u && sc.u.length ? '<details class="u80"><summary>Understand it: the 80% <span>English summary &#183; ' + sc.u.length + ' points</span></summary><ol>' + sc.u.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol></details>' : '';
     var toc = s.items.filter(function (it) { return it.t === 'c'; }).map(function (it) { return '<li><span class="tid">' + it.id + '</span>' + it.title + '</li>'; }).join('');
     var trapsHtml = ts.traps && ts.traps.length ? '<div class="traps-box"><div class="tp-head">จุดหลอกข้อสอบที่พบบ่อย (Exam Traps)</div><ul>' + ts.traps.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul></div>' : '';
-    return '<article class="card secard"><div class="eyebrow"><span class="chip kind">' + s.kind + '</span><span class="id">Section ' + s.id + '</span><span class="chip">' + (si + 1) + ' of ' + S.length + '</span></div>' +
-      '<h2>' + s.title + '</h2><p class="lede">' + (ts.big || s.blurb) + '</p>' +
+    return '<article class="card secard"><div class="eyebrow"><span class="chip kind">' + s.kind + '</span><span class="id">Section ' + s.id + '</span><span class="chip">' + (si + 1) + ' of ' + S.length + '</span>' + (sc.part ? '<span class="chip core">' + sc.part + ' &#183; ' + sc.time + '</span>' : '') + '</div>' +
+      '<h2>' + s.title + '</h2><p class="lede">' + (ts.big || s.blurb) + '</p>' + sayBox(sc.open, 'เปิด Section &#183; SAY') +
       '<div class="stats"><span><b>' + c.c + '</b>concept cards</span><span><b>' + c.q + '</b>questions</span><span><b>' + c.core + '</b>core, for the video</span></div>' +
-      trapsHtml +
+      trapsHtml + u80 +
       '<h3 class="minih">Concept cards in this section</h3><ol class="toc">' + toc + '</ol></article>';
+  }
+  function planTable() {
+    var bySec = {}; S.forEach(function (s) { bySec[s.id] = s; });
+    var rows = (SCRIPT.plan || []).map(function (p) {
+      var core = 0, names = [];
+      p[1].forEach(function (id) { if (bySec[id]) { core += counts(bySec[id]).core; names.push('<b>' + id + '</b> ' + bySec[id].short); } });
+      return '<tr><td>' + p[0] + '</td><td>' + names.join('<br>') + '</td><td class="num">' + core + '</td><td>' + p[2] + '</td><td class="num">' + p[3] + '</td></tr>';
+    }).join('');
+    return rows ? '<h3 class="minih">แผนการอัดวิดีโอ &#183; Recording plan</h3><div class="tblwrap"><table class="tbl compact plan"><thead><tr><th>Video</th><th>Sections</th><th>Core Qs</th><th>Covers</th><th>Length</th></tr></thead><tbody>' + rows + '</tbody></table></div>' : '';
   }
   function renderIntro() {
     var tot = 0, core = 0;
@@ -1132,11 +1162,13 @@
     return '<article class="card secard"><div class="eyebrow"><span class="chip kind">Peer support 82</span><span class="chip">All Answers Revealed &#183; คำอธิบายภาษาไทย</span></div>' +
       '<h2>CVS I Regulation &amp; Lab &#183; หน้าสำหรับผู้สอน (Tutor View)</h2>' +
       '<p class="lede">หน้าตาและลำดับการ์ดตรงกับ Student Deck ทุกข้อ (' + tot + ' คำถาม, ' + core + ' ข้อหลักสำหรับอัดวิดีโอ และ 54 Concept Cards) โดยเปิดเฉลยคำตอบและช่องว่าง Cloze ทั้งหมดไว้ล่วงหน้า พร้อมคำอธิบายแบบกระชับเป็น Bullet ภาษาไทย (คงศัพท์การแพทย์ภาษาอังกฤษ)</p>' +
-      '<div class="stations">' + st + '</div>' +
+      '<div class="stations">' + st + '</div>' + planTable() +
       '<div class="traps-box"><div class="tp-head">วิธีใช้งานคู่กับหน้า Student Deck</div><ul>' +
       '<li>เปิด <b>Student Deck</b> ในหน้าจอที่ใช้อัดวิดีโอ และเปิดหน้า <b>Tutor Deck</b> นี้ไว้ดูโพยคำอธิบายควบคู่กัน (รหัสการ์ด เช่น <code>R12</code>, <code>F-C2</code>, <code>D-C3</code> ตรงกันทั้งหมด)</li>' +
+      '<li>เปิด Student Deck กับหน้านี้ใน<b>เบราว์เซอร์เดียวกัน</b> (คนละแท็บหรือคนละหน้าต่าง) แล้วเปิด <b>Follow student</b> ไว้ เมื่อเลื่อนการ์ดในหน้า Student หน้านี้จะเลื่อนตามไปการ์ดเดียวกันเอง</li>' +
+      '<li>กล่อง <b>SAY</b> คือประโยคภาษาอังกฤษสั้นๆ สำหรับพูดตอนอัด ส่วน bullet ภาษาไทยไว้อ่านทำความเข้าใจก่อนพูด</li>' +
       '<li>กดปุ่ม <kbd>&#8592;</kbd> <kbd>&#8594;</kbd> หรือ <kbd>Space</kbd> เพื่อเลื่อนการ์ดทีละข้อในโหมด <b>Present</b> หรือกด <kbd>B</kbd> เพื่อดูรายการทั้งหมดแบบ <b>Browse</b></li>' +
-      '<li>ติ๊ก <b>Core only</b> เพื่อกรองเฉพาะข้อหลัก (106 ข้อ) ที่คัดมาสำหรับอัดวิดีโอสรุป</li>' +
+      '<li>ติ๊ก <b>Core only</b> เพื่อกรองเฉพาะข้อหลัก (' + core + ' ข้อ) ที่คัดมาสำหรับอัดวิดีโอสรุป</li>' +
       '</ul></div></article>';
   }
 
@@ -1313,6 +1345,19 @@
   }, { passive: true });
   window.addEventListener('hashchange', function () { jumpTo(location.hash.slice(1)); });
 
+  /* ---------- follow the student deck (same browser, another tab or window) ---------- */
+  var follow = LS.get('follow', true);
+  function readDeckPos() { try { var v = localStorage.getItem('cvsdeck:pos'); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
+  function followTo(id) {
+    if (!follow || !id || (view === 'present' && seq[idx] && seq[idx].id === id)) return;
+    if (view === 'browse') { var el = document.querySelector('#blist [data-id="' + id + '"]'); if (el) { el.scrollIntoView({ block: 'start' }); return; } }
+    if (jumpTo(id)) { try { window.scrollTo(0, 0); } catch (e) { } }
+  }
+  window.addEventListener('storage', function (e) { if (e.key === 'cvsdeck:pos' && e.newValue) { try { followTo(JSON.parse(e.newValue)); } catch (err) { } } });
+  try { var bc = new BroadcastChannel('cvs-peer-82'); bc.onmessage = function (e) { if (e.data && e.data.pos) followTo(e.data.pos); }; } catch (e) { }
+  $('follow').checked = follow;
+  $('follow').addEventListener('change', function () { follow = this.checked; LS.set('follow', follow); if (follow) followTo(readDeckPos()); });
+
   /* ---------- start ---------- */
   $('tabs').innerHTML = S.map(function (s, si) { return '<button type="button" class="tab" data-sec="' + si + '"><span class="k">' + s.id + '</span>' + s.short + '</button>'; }).join('');
   var th = LS.get('theme', null); if (th === 'dark' || th === 'light') document.documentElement.setAttribute('data-theme', th);
@@ -1323,7 +1368,7 @@
     coreOnly = typeof data.coreOnly === 'boolean' ? data.coreOnly : !!LS.get('core', false);
     $('coreOnly').checked = coreOnly;
     buildSeq();
-    var want = location.hash ? location.hash.slice(1) : (data.pos || LS.get('pos', 'start'));
+    var want = location.hash ? location.hash.slice(1) : (data.pos || (follow && readDeckPos()) || LS.get('pos', 'start'));
     var k = find(want); idx = k >= 0 ? k : 0;
     setView(data.view || LS.get('view', 'present'));
   }

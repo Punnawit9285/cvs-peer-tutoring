@@ -13,14 +13,20 @@ Interactive question-first Peer support 82 deck and tutor guide for **CVS I Regu
 
 ## Pages
 
-- **[`dist/deck.html`](dist/deck.html)** — Present & Browse modes, **Core only** filter (106 core questions out of 223 total), 54 concept cards with **531 click-to-reveal cloze blanks**, keyboard navigation (`←`/`→`, `Space` to reveal next blank/answer, `Enter` to reveal all blanks, `A`–`F` / `T` / `F` to answer, `R` to reset, `B` to toggle Browse), and click-to-zoom course figures.
-- **[`dist/notes.html`](dist/notes.html)** — 5-part video recording plan, section summaries, common exam traps, read-through `SAY` scripts synced by card ID, and open cloze concept cards.
+- **[`dist/deck.html`](dist/deck.html)** — Present & Browse modes, **Core only** filter (106 core questions out of 223 total), 54 concept cards with **531 click-to-reveal cloze blanks**, keyboard navigation (`←`/`→`, `Space` to reveal next blank/answer, `Enter` to reveal all blanks, `A`–`F` / `T` / `F` to answer, `R` to reset, `L` to open the Thai explanation, `B` to toggle Browse), and click-to-zoom course figures. Clicking an option shows the answer at once. Every concept card has a collapsible Thai explanation (อธิบายเป็นภาษาไทย) under it; it starts closed because it gives away the blanks.
+- **[`dist/notes.html`](dist/notes.html)** (also `tutor.html`): the tutor deck. Same cards and order as the student deck, with every answer and blank revealed, concise Thai bullet explanations, and the English recording script: the 5-video plan on the start card, an opening line and an "Understand it: the 80%" summary on each section card, and a **SAY** line on every concept card and core question. Each concept card also carries **tutor notes** (knowledge beyond the slide: short bullets, A → B chains, small text diagrams) and the Thai explanation, open.
+- **[`student.pdf`](student.pdf)**: the student handout (A4, 98 pages). Per section: the questions with no answers (two columns, about 10–20 per page), then one page per concept card. The answer key with Thai explanations, and the Thai explanation of every concept, are at the back. Cross-references give real page numbers.
+- **Follow student**: open `student.html` and `tutor.html` in the same browser (two tabs or windows). With *Follow student* ticked, the tutor deck jumps to whatever card the student deck shows.
 
 ## Building
 
 ```bash
 node gen.js       # Apply patch.js (real figures + cloze markup) to old/ -> data/*.js
 node check.js     # Validate all IDs, answer keys, and templates
-node build.js all # Bundle dist/deck.html and dist/notes.html
+node build.js all # Bundle dist/deck.html + student.html/index.html and dist/notes.html + tutor.html
+tools/pdf.sh      # Build student.pdf (print.js -> dist/print.html -> headless Chrome; set CHROME=... if Chrome is not in /Applications)
 ```
 
+`tools/pdf.sh` prints twice: the first pass finds where each part landed, the second fills in the page numbers. It stops if a cross-reference moved or a concept page looks clipped.
+
+`src/tutor-script.js` holds the English recording script (plan, 80% summaries, SAY lines keyed by card ID). The Thai bullets live in `src/notes-app.js` and `src/deck-app.js` (`THAI_Q`, `THAI_CONCEPT`, `THAI_SEC`; keep both copies in step). `src/thai-explain.js` holds the full Thai explanation of every concept card (both decks and the PDF). `src/tutor-notes.js` holds the tutor-only notes.

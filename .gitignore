@@ -8,3 +8,5 @@ dist/harness.html
 dist/shot.png
 dist/smoke*.html
 
+tools/pdftext
+dist/print.html

@@ -1,0 +1,37 @@
+/* Find where each part of the handout landed. node tools/pages.js <pdftext.txt> [--check pages.json] */
+const fs = require('fs');
+global.window = global;
+['lib', 'reg', 'heart', 'bp', 'micro', 'pe', 'dog'].forEach(f => eval(fs.readFileSync('data/' + f + '.js', 'utf8')));
+const lines = fs.readFileSync(process.argv[2], 'utf8').split('\n').filter(Boolean).map(l => { const i = l.indexOf('\t'); return { n: +l.slice(0, i), t: l.slice(i + 1) }; });
+const first = (re, from) => { const p = lines.find(l => l.n >= (from || 1) && re.test(l.t)); return p ? p.n : 0; };
+/* PDF text extraction can split words ("a n d"), so phrases are matched with all spaces removed */
+const phrase = (str, from) => { const k = str.replace(/\s+/g, ''); const p = lines.find(l => l.n >= (from || 1) && l.t.replace(/\s+/g, '').includes(k)); return p ? p.n : 0; };
+const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const out = {};
+out.ans = phrase('Answer key', 2);
+out.thx = phrase('Concepts in Thai', 2);
+CVS.sections.forEach(s => {
+  out['q-' + s.id] = phrase('Section ' + s.id + ' · Questions');
+  const cs = s.items.filter(it => it.t === 'c');
+  cs.forEach(it => { out['k-' + it.id] = first(new RegExp('(^|[^\\w-])' + esc(it.id) + '(?![\\w])'), out['q-' + s.id]); });
+  out['c-' + s.id] = out['k-' + cs[0].id];
+  out['a-' + s.id] = phrase('Answer key · Section ' + s.id + ' ' + s.title.split(' ')[0]);
+  out['x-' + s.id] = phrase('Thai explanations · Section ' + s.id + ' ' + s.title.split(' ')[0]);
+});
+/* every concept page must show the end of its card: a missing tail means the page clipped it */
+const plain = h => String(h).replace(/<[^>]+>/g, ' ').replace(/\{\{|\}\}/g, '').replace(/&#(\d+);/g, (m, n) => String.fromCharCode(+n)).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&[a-z]+;/g, '').replace(/\s+/g, '');
+const clipped = [];
+CVS.sections.forEach(s => s.items.filter(it => it.t === 'c').forEach(it => {
+  const tail = plain(it.html).replace(/[^A-Za-z0-9]/g, '').slice(-14), pgT = (lines.find(l => l.n === out['k-' + it.id]) || {}).t || '';
+  if (tail && !pgT.replace(/[^A-Za-z0-9]/g, '').includes(tail)) clipped.push(it.id);
+}));
+if (clipped.length) { console.error('concept pages that may be clipped:', clipped.join(' ')); process.exitCode = 3; }
+const missing = Object.keys(out).filter(k => !out[k]);
+if (missing.length) { console.error('not found:', missing.join(' ')); process.exit(1); }
+const ci = process.argv.indexOf('--check');
+if (ci > 0) {
+  const want = JSON.parse(fs.readFileSync(process.argv[ci + 1], 'utf8'));
+  const bad = Object.keys(out).filter(k => out[k] !== want[k]);
+  console.log('pages:', lines.length, '· cross-references', bad.length ? 'MOVED: ' + bad.map(k => k + ' ' + want[k] + '→' + out[k]).join(', ') : 'all correct');
+  if (bad.length) process.exit(2);
+} else console.log(JSON.stringify(out));

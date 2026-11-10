@@ -158,8 +158,9 @@ button, input { font: inherit; color: inherit; }
 .stack { display: grid; gap: 12px; align-content: start; min-width: 0; }
 .scan { margin: 0; min-width: 0; display: grid; gap: 6px; align-content: start; }
 .paperimg { background: var(--scanbg); border: 1px solid var(--rule); border-radius: 10px; padding: 8px; isolation: isolate; }
-.scan img { display: block; width: 100%; height: auto; mix-blend-mode: multiply; cursor: zoom-in; border-radius: 4px; }
-.scan.tall img { width: auto; max-width: 100%; max-height: 480px; margin: 0 auto; }
+.scan img { display: block; width: auto; max-width: 100%; height: auto; max-height: min(440px, 62vh); margin: 0 auto; mix-blend-mode: multiply; cursor: zoom-in; border-radius: 4px; }
+.scan.tall img { max-height: min(480px, 66vh); }
+.scanrow .scan img { max-height: 360px; }
 .scan figcaption { font-size: .84em; line-height: 1.4; color: var(--ink2); text-wrap: pretty; }
 .scan figcaption .src { font-family: var(--f-mono); font-size: .88em; white-space: nowrap; opacity: .9; }
 .scan figcaption .src::before { content: "\00B7  "; }
@@ -185,6 +186,17 @@ button, input { font: inherit; color: inherit; }
 .zoom .zpaper { background: #fff; border-radius: 10px; padding: 10px; max-width: min(1700px, 100%); }
 .zoom img { display: block; max-width: 100%; max-height: calc(100vh - 120px); width: auto; height: auto; }
 .zoom .zcap { color: #e5e8ef; font-size: .92em; text-align: center; max-width: 900px; margin: 0; }
+
+/* Thai explanation under each concept card (student deck: collapsible; tutor deck: open) */
+.thx { margin-top: 16px; border: 1px solid var(--rule); border-left: 3px solid var(--ok); border-radius: 10px; background: var(--sheet); padding: 0 14px; }
+.thx summary { cursor: pointer; padding: 10px 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+.thx summary::marker, .thx summary::-webkit-details-marker { color: var(--ok); }
+.thx-h { font: 600 1.02em var(--f-display); color: var(--ok); }
+.thx-s { font: .74em var(--f-mono); color: var(--ink2); }
+.thx[open] summary { border-bottom: 1px dashed var(--rule); margin-bottom: 10px; }
+.thx-body { display: grid; gap: 9px; padding-bottom: 14px; line-height: 1.7; font-family: "IBM Plex Sans Thai", var(--f-body); }
+.thx-body p { margin: 0; }
+.thx-body b { font-weight: 600; color: var(--ink); }
 
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--sheet); }
 .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--sheet); border-bottom: 1px solid var(--rule); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px 18px; align-items: center; }
@@ -265,6 +277,29 @@ main { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: m
 #blist .card { font-size: 15px; scroll-margin-top: 130px; }
 #blist .stem { font-size: 1.1em; }
 
+/* recording script: SAY lines, 80% summary, video plan */
+.saybox { margin: 12px 0 0; background: var(--sheet2); border-left: 3px solid var(--art); border-radius: 10px; padding: 10px 14px; }
+.concept .saybox, .secard .saybox { margin: 0 0 14px; }
+.saybox .tp-head { font: 600 .75em var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--art); margin-bottom: 4px; }
+.saybox p { margin: 0; line-height: 1.55; }
+.u80 { margin: 12px 0; border: 1px solid var(--rule); border-radius: 10px; padding: 0 14px; background: var(--sheet); }
+.u80 summary { cursor: pointer; padding: 10px 0; font: 600 .95em var(--f-display); }
+.u80 summary span { font: 400 .78em var(--f-mono); color: var(--ink2); margin-left: 8px; }
+.u80[open] summary { border-bottom: 1px dashed var(--rule); margin-bottom: 10px; }
+.u80 ol { margin: 0 0 12px; padding-left: 1.3em; display: grid; gap: 7px; line-height: 1.5; }
+.plan td:nth-child(4) { min-width: 15em; }
+.plan td:first-child { white-space: nowrap; font-weight: 600; }
+/* phone: controls get their own row so the header never widens the page */
+@media (max-width: 640px) { .bar { grid-template-columns: minmax(0, 1fr); position: relative; } .ctrls { justify-content: flex-start; } }
+.brand > div { min-width: 0; }
+.brand b { overflow: hidden; text-overflow: ellipsis; }
+
+/* tutor-only teaching notes: knowledge beyond the slide (src/tutor-notes.js) */
+.tnotes { margin: 12px 0; background: var(--art-soft); border-left: 3px solid var(--art); border-radius: 10px; padding: 10px 14px; }
+.tn-head { font: 600 .75em var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--art); margin-bottom: 4px; }
+.tnotes ul { margin: 0; padding-left: 1.2em; display: grid; gap: 3px; line-height: 1.45; }
+.tdiag { margin: 8px 0 0; padding: 8px 10px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; font: .8em/1.45 var(--f-mono); white-space: pre; overflow-x: auto; color: var(--ink); }
+
 </style>
 </head>
 <body>
@@ -281,6 +316,8 @@ main { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: m
       <button type="button" id="vBrowse" aria-pressed="false">Browse</button>
     </div>
     <label class="chk" for="coreOnly"><input type="checkbox" id="coreOnly"> Core only</label>
+    <label class="chk" for="follow" title="Jump to the card the student deck is showing (same browser)"><input type="checkbox" id="follow"> Follow student</label>
+    <a class="decklink" href="student.html" target="_blank" rel="noopener">Student deck &#8599;</a>
     <button type="button" class="icon" id="themeBtn" aria-label="Switch between light and dark"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8,1.5 A6.5,6.5 0 0 1 8,14.5 Z" fill="currentColor"/></svg></button>
     <button type="button" class="icon" id="fsBtn" aria-label="Full screen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5,5.5 V1.5 H5.5 M10.5,1.5 H14.5 V5.5 M14.5,10.5 V14.5 H10.5 M5.5,14.5 H1.5 V10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   </div>
@@ -293,7 +330,7 @@ main { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: m
       <div class="pos" id="pos" aria-live="polite"></div>
       <button type="button" class="btn primary" id="next">Next &#8594;</button>
       <div class="prog"><i id="progBar"></i></div>
-      <div class="keys">&#8592; &#8594; หรือ Space เลื่อนสไลด์ &#183; B สลับโหมด Browse &#183; คลิกที่ตัวเลือกเพื่อเทียบคำตอบ &#183; คลิกที่รูปเพื่อขยาย</div>
+      <div class="keys">&#8592; &#8594; หรือ Space เลื่อนสไลด์ &#183; B สลับโหมด Browse &#183; คลิกที่ตัวเลือกเพื่อเทียบคำตอบ &#183; คลิกที่รูปเพื่อขยาย &#183; Follow student = เลื่อนตาม Student Deck</div>
     </div>
   </section>
   <section id="browse" aria-label="Browse mode" hidden>
@@ -629,6 +666,1523 @@ CVS.add({"id":"H","short":"Dog lab II","title":"Lab: Disturbance of CVS II (dog)
 {"t":"tf","id":"H28","src":"Lab quiz","q":"The radial pulse can still be palpated in ventricular fibrillation, but with less intensity.","a":false,"ex":"In VF there is no coordinated contraction and no stroke volume, so there is no pulse at all."}
 ]});
 
+/* Thai explanation of every concept card, shared by the student deck and the tutor deck.
+   One array of paragraphs per concept-card ID. Each paragraph opens with a bold lead.
+   Faithful to the English card: it explains the same content, it does not add new exam facts. */
+window.THAI_EXPLAIN = {
+  /* ---------------- R · Regulation ---------------- */
+  "R-C1": [
+    "<b>สมการตั้งต้น</b> ความดันเลือดแดงเฉลี่ย (MAP) เท่ากับปริมาณเลือดที่หัวใจบีบออกต่อนาที (CO) คูณแรงต้านของหลอดเลือดทั้งระบบ (TPR) และ CO = HR × SV ดังนั้นอะไรก็ตามที่เปลี่ยน BP ต้องไปเปลี่ยนตัวใดตัวหนึ่งในสมการนี้",
+    "<b>Heart rate</b> ถูกกำหนดโดยอัตราการยิงสัญญาณของ SA node: sympathetic ผ่าน β₁ เร่งให้เร็วขึ้น ส่วน vagus ผ่าน M2 ทำให้ช้าลง",
+    "<b>Stroke volume</b> ขึ้นกับสามอย่าง คือ preload (EDV ซึ่งมาจาก venous return ตามกลไก Frank–Starling: ยิ่งเติมเลือดมาก ยิ่งบีบออกมาก), contractility (แรงบีบของกล้ามเนื้อหัวใจเอง) และ afterload (แรงต้านที่หัวใจต้องบีบสู้)",
+    "<b>TPR</b> ถูกกำหนดที่ arterioles เป็นหลัก เพราะแรงต้านแปรผกผันกับรัศมียกกำลังสี่ (R ∝ 1/r⁴) รัศมีเปลี่ยนนิดเดียวแรงต้านก็เปลี่ยนมาก arterioles จึงเป็นเป้าหมายหลักของยาลดความดัน",
+    "<b>ตัวปรับ 5 ตัว</b> ทุกกลไกในบทนี้ออกฤทธิ์ผ่าน heart rate, contractility, venous tone (preload), arteriolar tone (TPR) หรือ blood volume (ไต) เวลาเจอโจทย์ ให้ถามว่า stimulus นี้ขยับตัวปรับตัวไหน แล้วจะรู้ว่า BP ไปทางไหน"
+  ],
+  "R-C2": [
+    "<b>ระดับวินาที (ระบบประสาท)</b> baroreceptor reflex คุมอยู่ตลอดในช่วงความดันปกติ chemoreceptor reflex เข้ามาช่วยเมื่อ MAP ต่ำกว่า 80 mmHg และ CNS ischemic response เป็นด่านสุดท้ายเมื่อ MAP ต่ำกว่า 60 mmHg ทั้งหมดเร็วเพราะสั่งการผ่านเส้นประสาทโดยตรง",
+    "<b>ระดับนาที–ชั่วโมง (ระยะกลาง)</b> renin–angiotensin ทำให้หลอดเลือดหดตัว (เต็มที่ในราว 20 นาที), stress relaxation ของหลอดเลือด (ผนังค่อยๆ ปรับตัวตามปริมาตรที่เปลี่ยน) และ capillary fluid shift (น้ำในช่องว่างระหว่างเซลล์ไหลเข้าหรือออกจากหลอดเลือดตามความดันใน capillary)",
+    "<b>ระดับชั่วโมง–วัน (ระยะยาว โดยไต)</b> renal–body fluid control ผ่าน pressure natriuresis, aldosterone, ADH และความกระหาย ปรับปริมาตรเลือดของร่างกาย ระบบนี้มี infinite gain คือทำงานไปเรื่อยๆ จนความดันกลับมาเท่าค่าตั้งต้นพอดี",
+    "<b>ทำไม baroreflex คุมระยะยาวไม่ได้</b> baroreceptor จะ reset ภายใน 1–2 วัน และถือว่าความดันใหม่เป็นค่าปกติ จึงเหมาะกับการเกลี่ยความดันที่แกว่งจากนาทีต่อนาที (เปลี่ยนท่า ออกแรง) ส่วนความดันระยะยาวถูกกำหนดโดยไต"
+  ],
+  "R-C3": [
+    "<b>Vasoconstrictor area (C-1) ที่ RVLM</b> ยิงสัญญาณต่อเนื่องตลอดเวลา (ประมาณ 0.5–2 Hz) ไปยัง sympathetic neurons เกิดเป็น sympathetic vasoconstrictor tone ซึ่งเป็นแรงตึงพื้นฐานของหลอดเลือด และยังกระตุ้นหัวใจ (cardioaccelerator) ด้วย",
+    "<b>Vasodilator area (A-1) ที่ caudal ventrolateral medulla</b> ไม่ได้สั่งหลอดเลือดให้ขยายโดยตรง แต่ทำงานโดยยับยั้ง C-1 ทำให้ sympathetic tone ลดลง",
+    "<b>Sensory area (A-2) คือ NTS</b> เป็นสถานีรับข้อมูลจาก baroreceptor และ chemoreceptor ผ่าน CN IX และ X แล้วสั่งการศูนย์อื่นต่อ เช่น เมื่อ BP สูง NTS จะลด sympathetic และเพิ่ม vagus",
+    "<b>Cardioinhibitory center</b> คือ dorsal motor nucleus of vagus และ nucleus ambiguus ส่งสัญญาณผ่าน vagus ไปที่ SA และ AV node ทำให้ HR ช้าลงและการนำไฟฟ้าผ่าน AV node ช้าลง",
+    "<b>Adrenal medulla</b> รับ sympathetic preganglionic fibers ผ่าน splanchnic nerves แล้วหลั่ง epinephrine (~80%) และ norepinephrine เข้ากระแสเลือด",
+    "<b>ศูนย์ที่สูงกว่า</b> hypothalamus (defense reaction, การคุมอุณหภูมิ) และ cortex (เช่น เป็นลมจากอารมณ์หรือ vasovagal syncope) ปรับการทำงานของ medulla ได้"
+  ],
+  "R-C4": [
+    "<b>ตัวรับและทางขาเข้า</b> baroreceptor เป็น stretch receptor ปลายประสาทแตกแขนง (spray-type) อยู่ระหว่างชั้น tunica media กับ adventitia ของ carotid sinus (ส่งผ่าน Hering’s nerve → CN IX) และ aortic arch (ผ่าน aortic nerve → CN X) ไปที่ NTS ใน medulla มันตอบสนองทั้งระดับความดันและความเร็วที่ความดันเปลี่ยน",
+    "<b>เมื่อ BP สูง</b> ผนังหลอดเลือดถูกยืดมากขึ้น → baroreceptor ยิงมากขึ้น → NTS กระตุ้นศูนย์ vagus (HR ลด, AV conduction ช้าลง) และกด RVLM (sympathetic ลด) → HR และ contractility ลด, arteriole ขยาย (TPR ลด), หลอดเลือดดำขยาย (venous return ลด), catecholamines จาก adrenal และ renin ลด → BP กลับลงหาค่าปกติ",
+    "<b>เมื่อ BP ตก</b> ทุกอย่างกลับทิศ: baroreceptor ยิงน้อยลง → sympathetic เพิ่ม vagus ลด → tachycardia, vasoconstriction และ venoconstriction",
+    "<b>ช่วงทำงาน</b> carotid sinus ทำงานในช่วงประมาณ 60–180 mmHg และไวที่สุดใกล้ MAP ปกติ ส่วน aortic arch มี threshold สูงกว่า",
+    "<b>วงจรตามสไลด์แล็บ</b> (1) sensory fibers จาก baroreceptor และ chemoreceptor ไป medulla (2) parasympathetic fibers ไปหัวใจ (3) sympathetic fibers ไปหัวใจ (4) sympathetic fibers ไป adrenal medulla",
+    "<b>จุดหลอกข้อสอบ</b> carotid sinus = baroreceptor ส่วน carotid body = chemoreceptor ทั้งสองอยู่ตรงจุดแยกของ carotid เหมือนกัน ข้อสอบจึงชอบสลับกัน และในสุนัขที่ดมยาสลบ การกระตุ้น baroreceptor แรงๆ ทำให้หายใจช้าลงด้วย"
+  ],
+  "R-C5": [
+    "<b>สามด่านตามระดับ MAP</b> baroreceptor reflex ทำงานที่ 60–180 mmHg (ไวที่สุดราว 100 mmHg), chemoreceptor reflex เด่นเมื่อ MAP ต่ำกว่า 80 mmHg และ CNS ischemic response เมื่อ MAP ต่ำกว่า 60 mmHg โดยแรงที่สุดที่ 15–20 mmHg",
+    "<b>Peripheral chemoreceptor</b> คือ carotid bodies (CN IX ผ่าน Hering’s nerve) และ aortic bodies (CN X) รับรู้ PaO₂ เป็นหลัก รวมถึง PaCO₂ และ H⁺ ปกติมีเลือดไหลผ่านมากจึงไม่ขาด O₂ แต่เมื่อ MAP ต่ำกว่า ~80 mmHg เลือดที่ไปเลี้ยงลดลง เซลล์จึงขาด O₂ เองและยิงสัญญาณ → กระตุ้น vasomotor center ให้ BP สูงขึ้น และกระตุ้นการหายใจ",
+    "<b>เส้นทาง</b> carotid/aortic body → CN IX/X → NTS → vasomotor และ respiratory centers → sympathetic (หัวใจ หลอดเลือด adrenal medulla) และ phrenic nerve (กะบังลม)",
+    "<b>CNS ischemic response</b> เมื่อ MAP ต่ำกว่า 60 mmHg ตัว vasomotor center เองขาดเลือดและมี CO₂ คั่ง → sympathetic discharge รุนแรงมาก ความดันพุ่งได้ถึงราว 250 mmHg",
+    "<b>Cushing reaction</b> ความดันในกะโหลก (ICP) สูงจนกดหลอดเลือดสมอง → เกิดกลไกเดียวกัน Cushing triad คือ hypertension, bradycardia และหายใจไม่สม่ำเสมอ",
+    "<b>Central chemoreceptor</b> อยู่ใน medulla ตอบสนองต่อ CO₂/H⁺ ใน CSF และคุมการหายใจเป็นหลัก CO₂ กระตุ้น vasomotor center ได้ แต่ที่เนื้อเยื่อเฉพาะที่ CO₂ ทำให้หลอดเลือดขยาย (ชัดมากในสมอง)"
+  ],
+  "R-C6": [
+    "<b>Norepinephrine / epinephrine ผ่าน α₁</b> ทำให้หลอดเลือดหด (epinephrine จะเด่นที่ α₁ เมื่อขนาดสูงเท่านั้น)",
+    "<b>Angiotensin II</b> หด arteriole อย่างแรง ส่วน <b>ADH (vasopressin) ผ่าน V1</b> เป็นตัวหดหลอดเลือดที่แรงที่สุด และมีบทบาทเมื่อเสียเลือดรุนแรง",
+    "<b>Endothelin-1</b> หลั่งจาก endothelium โดยเฉพาะเมื่อ endothelium ถูกทำลาย เพิ่ม tone ของหลอดเลือดแดงและ resistance vessels ตัวหดอื่นๆ ได้แก่ thromboxane A₂ (จากเกล็ดเลือด), serotonin (ส่วนใหญ่), PGF2α และ Ca²⁺",
+    "<b>NO (EDRF)</b> หลั่งจาก endothelium เมื่อมี shear stress, ACh หรือ bradykinin ออกฤทธิ์ผ่าน cGMP ใน smooth muscle ทำให้หลอดเลือดขยาย และยังยับยั้งการเกาะกลุ่มของเกล็ดเลือด <b>Prostacyclin (PGI₂)</b> ก็ขยายหลอดเลือดและต้านเกล็ดเลือดเช่นกัน",
+    "<b>Histamine และ bradykinin</b> histamine มาจาก mast cell เมื่อเนื้อเยื่อบาดเจ็บหรือแพ้ ทั้งสองตัวทำให้ arteriole ขยายและเพิ่ม capillary permeability จึงเกิดบวม",
+    "<b>ตัวขยายอื่นๆ</b> ANP/BNP, epinephrine ขนาดต่ำผ่าน β₂ (กล้ามเนื้อลาย ตับ หลอดเลือดหัวใจ) และ metabolites ได้แก่ adenosine, CO₂, H⁺, K⁺, lactate, osmolality ที่สูงขึ้น และ O₂ ที่ลดลง"
+  ],
+  "R-C7": [
+    "<b>Metabolic (vasodilator) theory</b> เนื้อเยื่อที่ทำงานหนักปล่อย adenosine, CO₂, H⁺, K⁺, lactate และ histamine ส่วนการขาด O₂ ทำให้ precapillary sphincter คลาย เลือดจึงไหลเพิ่มตามความต้องการ เกิดเป็น active hyperemia (ขณะออกกำลังกาย) และ reactive hyperemia (หลังปล่อยการกั้นเลือดซึ่ง metabolites คั่งไว้)",
+    "<b>Myogenic theory</b> เมื่อความดันสูงขึ้น smooth muscle ของ arteriole ถูกยืด → stretch-activated channels เปิด → depolarize → Ca²⁺ ไหลเข้า → หดตัว flow จึงกลับมาใกล้ปกติ และ capillaries ได้รับการปกป้องจากความดันสูง",
+    "<b>Autoregulation</b> คือการรักษา flow ให้เกือบคงที่แม้ความดันเลือดแดงจะเปลี่ยน (ประมาณ 70–175 mmHg) ทำได้ดีที่สุดที่ไต (myogenic ร่วมกับ tubuloglomerular feedback) รองลงมาคือสมองและหัวใจ",
+    "<b>การปรับตัวระยะยาว</b> ถ้าความต้องการสูงหรือขาด O₂ เรื้อรัง → angiogenesis ผ่าน VEGF (มีหลอดเลือดมากขึ้น) ถ้าหลอดเลือดแดงอุดตันเรื้อรัง → collateral circulation",
+    "<b>แยกให้ออก</b> autoregulation คือความดันเปลี่ยนแต่ flow คงที่ ส่วนเมื่อความต้องการเพิ่มแล้ว flow เพิ่มตาม นั่นคือ active hyperemia (metabolic control) ไม่ใช่ autoregulation"
+  ],
+  "R-C8": [
+    "<b>ตัวกระตุ้นการหลั่ง renin</b> renal perfusion pressure ลดลง, NaCl ที่ macula densa ลดลง และ renal sympathetic เพิ่มขึ้น (ผ่าน β₁ บน JG cells)",
+    "<b>ลำดับของ RAAS</b> renin จาก juxtaglomerular cells ตัด angiotensinogen (สร้างจากตับ) เป็น angiotensin I → ACE (ส่วนใหญ่ที่ endothelium ของปอด) เปลี่ยนเป็น angiotensin II ซึ่ง ACE ตัวเดียวกันนี้ก็สลาย bradykinin ด้วย",
+    "<b>ฤทธิ์ของ angiotensin II</b> หด arteriole ทำให้ TPR เพิ่ม (ระดับนาที), กระตุ้น aldosterone ให้เก็บ Na⁺ และน้ำ (ระดับชั่วโมง–วัน), เพิ่มการดูดกลับ Na⁺ ที่ proximal tubule โดยตรง และกระตุ้น ADH กับความกระหาย",
+    "<b>Pressure natriuresis</b> เมื่อ BP สูง ไตขับ Na⁺ และน้ำมากขึ้น ปริมาตรและ BP จึงลดลง วงจรนี้มี infinite gain จึงเป็นตัวกำหนด BP ระยะยาว",
+    "<b>CKD และ heart failure</b> ใน CKD nephron น้อยลง GFR ลด ไตขับเกลือและน้ำไม่ได้ → volume-loading hypertension ใน heart failure CO ลด ไตได้เลือดน้อย → renin, Ang II, aldosterone (รวมทั้ง sympathetic และ ADH) เพิ่ม → คั่งเกลือและน้ำ บวม แม้ ANP จะสูงในภาวะนี้ก็สู้ไม่ได้",
+    "<b>ADH</b> หลั่งจาก plasma osmolality ที่สูงเป็นหลัก และเมื่อเสียปริมาตรหรือความดันมาก V2 ทำให้ดูดกลับน้ำ (aquaporin-2) ส่วน V1 ทำให้หลอดเลือดหด",
+    "<b>ACE inhibitor (enalapril)</b> ลด Ang II จึงลด aldosterone และ vasoconstriction แต่ bradykinin คั่งเพราะไม่ถูกสลาย ทำให้ไอแห้ง"
+  ],
+  "R-C9": [
+    "<b>Action potential ของ SA node</b> phase 4 คือ slow diastolic depolarization จาก funny current (I<sub>f</sub>) ที่ค่อยๆ ไต่ขึ้นจนถึง threshold แล้ว phase 0 เป็น upstroke จาก Ca²⁺ ยิ่ง phase 4 ชัน ยิ่งถึง threshold เร็ว HR ก็ยิ่งเร็ว",
+    "<b>Sympathetic (NE → β₁ → Gs → cAMP)</b> เพิ่ม I<sub>f</sub> และ I<sub>Ca-L</sub> → phase 4 ชันขึ้น → HR เพิ่ม; AV conduction เร็วขึ้น (PR สั้นลง); Ca²⁺ ไหลเข้าและปล่อยจาก SR มากขึ้น → แรงบีบเพิ่ม; phospholamban ถูก phosphorylate → คลายตัวเร็วขึ้น",
+    "<b>Vagus (ACh → M2 → Gi)</b> เปิด K⁺ channel (I<sub>K-ACh</sub>) ให้ K⁺ ออก → membrane hyperpolarized ร่วมกับลด I<sub>f</sub> และ I<sub>Ca</sub> → phase 4 แบนลง → HR ลด; AV conduction ช้าลง และถ้ากระตุ้นแรงอาจ block ได้; contractility ลดเล็กน้อย (ส่วนใหญ่ที่ atria)",
+    "<b>ผลต่อปริมาตรเมื่อกระตุ้น sympathetic</b> EDV แทบไม่เปลี่ยน แต่ ESV ลด SV และ EF เพิ่ม เพราะหัวใจบีบแรงขึ้นจนเลือดเหลือค้างน้อยลง",
+    "<b>α₁ agonist</b> หด arteriole ทำให้ TPR และ afterload เพิ่ม แต่ไม่ได้เปลี่ยน contractility โดยตรง"
+  ],
+  "R-C10": [
+    "<b>ไม่มีเส้นประสาทมาเลี้ยง</b> หัวใจที่ปลูกถ่ายไม่มีทั้ง sympathetic และ vagus resting HR จึงเท่ากับ intrinsic rate ของ SA node (~90–110 bpm) ซึ่งสูงกว่าคนปกติ เพราะไม่มี vagal tone คอยกดไว้",
+    "<b>ขณะออกกำลังกาย HR ยังเพิ่มได้</b> แต่เพิ่มช้าและน้อยกว่าปกติ (blunted) เพราะต้องรอ catecholamines ที่หลั่งจาก adrenal medulla มาตามกระแสเลือด",
+    "<b>SV ยังเพิ่มได้</b> ผ่าน Frank–Starling (muscle pump ส่งเลือดกลับมากขึ้น EDV เพิ่ม) และ afterload ที่ลดลง (หลอดเลือดในกล้ามเนื้อขยาย) EF จึงยังเพิ่มและ ESV ยังลดได้",
+    "<b>ยา</b> β-agonist ที่ออกฤทธิ์ตรงที่หัวใจยังได้ผล แต่ atropine ไม่มีผล เพราะไม่มี vagal tone ให้ block"
+  ],
+  "R-C11": [
+    "<b>ผลโดยตรง</b> ปริมาตรเลือดลด → venous return ลด → EDV, SV และ CO ลด → BP ตก อาการคือความดันต่ำ ชีพจรเบา (thready), pulse pressure แคบ และ CVP ต่ำ",
+    "<b>ระดับวินาที</b> baroreceptor ยิงน้อยลง → สัญญาณผ่าน CN IX/X ไป NTS ลดลง → vasomotor center ถูกปลดการยับยั้ง → sympathetic เพิ่ม vagus ลด chemoreceptor เข้าร่วมเมื่อ MAP ต่ำกว่า 80 และ CNS ischemic response เมื่อต่ำกว่า 60 อาการที่เห็นคือ tachycardia (phase 4 ชันขึ้น), contractility เพิ่ม, SVR เพิ่ม, venoconstriction, ผิวเย็นซีด, capillary refill ช้า และหายใจเร็ว",
+    "<b>ระดับนาที–ชั่วโมง</b> Ang II หดหลอดเลือด; capillary fluid shift คือความดันใน capillary ลด น้ำจาก interstitium จึงไหลเข้าหลอดเลือด เลือดเจือจางลง Hct ลดเล็กน้อยใน 15–30 นาที; และ reverse stress relaxation คือหลอดเลือดหดกระชับรอบปริมาตรที่น้อยลง",
+    "<b>ระดับชั่วโมง–วัน</b> aldosterone, ADH และความกระหาย ทำให้ไตเก็บเกลือและน้ำ ผู้ป่วยกระหายน้ำและปัสสาวะน้อย (oliguria) ส่วน erythropoietin ค่อยๆ ฟื้นเม็ดเลือดแดงในหลายสัปดาห์",
+    "<b>วิธีคิด</b> ไล่ตามเวลาเสมอ ถามว่าโจทย์อยู่ที่วินาที นาที–ชั่วโมง หรือวัน แล้วเลือกกลไกที่เด่นในช่วงนั้น"
+  ],
+
+  /* ---------------- F · Frog heart ---------------- */
+  "F-C1": [
+    "<b>วิธีอ่านกราฟในแล็บนี้</b> เส้นขาลง (A) = diastole และเส้นขาขึ้น (B) = systole ส่วนฐานราบด้านล่างคือ ventricle ที่คลายตัวและเติมเลือดเต็มแล้ว (Fig 9-2 ระบุ early systole ที่ฐานของขาขึ้น และ early diastole ที่ยอด) อ่านทุกกราฟในแล็บนี้แบบเดียวกัน",
+    "<b>Exp 1 สังเกตการเต้น</b> อัตรา 56 ครั้งต่อนาที ช่วง systole หัวใจดูซีดเพราะบีบเลือดออก ช่วง diastole ดูเข้มขึ้นเพราะเลือดเติมกลับ ลำดับการเต้นคือ sinus venosus → atria → ventricle",
+    "<b>Exp 2 extrasystole</b> ช็อตไฟฟ้าที่ ventricle ในจังหวะต่างๆ ของการเต้น ดูว่าจังหวะไหนเกิด beat แทรก",
+    "<b>Exp 3 Stannius ligatures</b> ผูกที่รอยต่อ sinus venosus กับ atria (crescentic line) ก่อน แล้วผูกที่รอยต่อ atria กับ ventricle",
+    "<b>Exp 4 all-or-none</b> กระตุ้น ventricle ที่หยุดเต้นด้วยกระแสที่เพิ่มขึ้นเรื่อยๆ",
+    "<b>ทำไมผูกได้โดยไม่ขาดเลือด</b> หัวใจกบและเต่าไม่มี coronary circulation การผูกจึงไม่ทำให้เกิด ischemia"
+  ],
+  "F-C2": [
+    "<b>เซลล์สามชนิด</b> pacemaker cells (SA node, AV node) สร้างสัญญาณได้เอง (automaticity); conducting cells (internodal pathways, bundle of His, bundle branches, Purkinje) ส่งสัญญาณ; contractile cells (กล้ามเนื้อ atria และ ventricle) เชื่อมกันด้วย intercalated discs ที่มี gap junctions จึงทำงานเป็น functional syncytium กระตุ้นจุดเดียวแล้วไฟฟ้าลามไปทั้งก้อน",
+    "<b>Fast response AP</b> (กล้ามเนื้อ atria/ventricle และ Purkinje) resting ใกล้ −90 mV; phase 0 คือ Na⁺ ไหลเข้าอย่างรวดเร็ว; phase 2 เป็น plateau ที่ K⁺ ไหลออกสมดุลกับ Ca²⁺ ไหลเข้า",
+    "<b>Slow response AP</b> (SA และ AV node) ไม่มี resting potential ที่คงที่ phase 4 ค่อยๆ ไต่ขึ้นด้วย funny current และ phase 0 อาศัย Ca²⁺",
+    "<b>เส้นทางการนำไฟฟ้า</b> SA node → internodal/interatrial pathway → AV node → bundle of His → right และ left bundle branches → Purkinje fibers → ventricles",
+    "<b>ความเร็วการนำ</b> ขึ้นกับความชันของ phase 0 เร็วที่สุดคือ His–Purkinje ช้าที่สุดคือ AV node (และ SA node) ค่าตามสไลด์แล็บ: SA node 0.05 m/s, atrial muscle 1.0, AV node 0.1 m/s (หน่วงไว้ 0.1 s), bundle branches/Purkinje 2.0/1.0 (ตำราว่า Purkinje 2–4) และ ventricular muscle 0.4 m/s",
+    "<b>ทำไม SA node เป็น primary pacemaker</b> เพราะยิงเร็วที่สุด (70–80 ครั้งต่อนาที = sinus rhythm) ไม่ใช่เพราะตำแหน่ง ถ้า SA node หยุด ตัวสำรองคือ AV node 40–60 ครั้งต่อนาที (nodal rhythm) และ ventricle 20–40 ครั้งต่อนาที (ventricular rhythm)"
+  ],
+  "F-C3": [
+    "<b>Excitability</b> คือความสามารถของเซลล์ในการสร้าง action potential เมื่อได้รับกระแส depolarizing",
+    "<b>Absolute refractory period (ARP)</b> ตั้งแต่ phase 0 ถึงกลาง phase 3 (ราว −50 mV) Na⁺ channels อยู่ในสภาพ inactivated กระตุ้นแรงแค่ไหนก็สร้าง AP ใหม่ไม่ได้",
+    "<b>Relative refractory period (RRP)</b> สร้าง AP ได้แล้ว แต่ต้องใช้กระแสมากกว่าปกติ ต่อด้วย supranormal period (SNP) สั้นๆ",
+    "<b>เทียบกับการหดตัว</b> ARP ยาวเกือบเท่าช่วงที่กล้ามเนื้อหดตัว กว่าจะกระตุ้นใหม่ได้ กล้ามเนื้อก็เกือบคลายตัวแล้ว การหดตัวครั้งที่สองจึงซ้อนกับครั้งแรกไม่ได้ ไม่เกิด tetanus หัวใจจึงได้คลายตัวและเติมเลือดทุกรอบ"
+  ],
+  "F-C4": [
+    "<b>การทดลอง</b> ช็อต ventricle ใน 6 จังหวะตาม Fig 9-2: (1) early systole (2) late systole (3) mid systole (4) late diastole (5) early diastole (6) mid diastole",
+    "<b>ช็อตช่วง systole (1, 2, 3)</b> ไม่เกิด extrasystole ไม่ว่าแรงแค่ไหน เพราะตกอยู่ใน ARP ของ myocyte",
+    "<b>ช็อตช่วง diastole (4, 5, 6)</b> เกิด extrasystole ตามด้วย compensatory pause",
+    "<b>ทำไมมี compensatory pause</b> สัญญาณปกติรอบถัดไปจาก sinus venosus มาถึง ventricle ตอนที่ยังอยู่ใน refractory period ของ extrasystole จึงสูญหายไป ventricle ต้องรอสัญญาณรอบถัดไปอีกรอบ อัตราโดยรวมจึงไม่เปลี่ยน บนกราฟเห็นเป็นเส้นราบยาวหลัง extra beat แต่ละครั้ง",
+    "<b>ทำไมขนาดต่างกัน</b> เพราะ preload ต่างกัน ยิ่งช็อตช้าใน diastole เลือดยิ่งเติมมาก extrasystole ยิ่งใหญ่ และ beat แรกหลัง pause แรงที่สุด",
+    "<b>ทางคลินิก</b> extrasystole พบได้ทั้งในโรคหัวใจ (เช่น myocardial infarction) และในคนปกติ (อดนอน สูบบุหรี่จัด เครียด คาเฟอีน)"
+  ],
+  "F-C5": [
+    "<b>Ligature I ที่รอยต่อ sinus venosus กับ atria</b> ก่อนผูกทุกส่วนเต้น 60 ทันทีหลังผูก sinus venosus ยังเต้น 60 แต่ atria และ ventricle หยุด (0) เพราะสัญญาณข้ามจุดผูกไม่ได้ ต่อมา atria และ ventricle กลับมาเต้นเองที่ 32",
+    "<b>ทำไมหยุดก่อนแล้วค่อยเต้น</b> latent pacemaker ที่อยู่ใต้จุด block ถูก pacemaker ที่เร็วกว่ากดไว้ตลอด (overdrive suppression) เมื่อหลุดจากการกด ต้องใช้เวลาสักพักก่อนจะแสดง automaticity ของตัวเองในอัตราที่ช้ากว่า",
+    "<b>Ligature II ที่รอยต่อ atria กับ ventricle</b> sinus venosus 60 และ atria 32 เท่าเดิม แต่ ventricle หยุด (0) และในการทดลองนี้ยังคงเป็น 0",
+    "<b>หลักการ</b> ligature แต่ละเส้นคือ heart block สัญญาณข้ามไม่ได้ และ latent pacemaker ที่ยิงเร็วที่สุดจะเป็นผู้ชนะ",
+    "<b>ในคน</b> ถ้า SA node เสีย AV node มักรับหน้าที่แทน (junctional rhythm 40–60 ครั้งต่อนาที, QRS แคบ) ถ้า block อยู่ต่ำกว่านั้น Purkinje fibers จะรับหน้าที่แทน (20–40 ครั้งต่อนาที)"
+  ],
+  "F-C6": [
+    "<b>การทดลอง (Fig 9-3)</b> กระตุ้น ventricle ที่หยุดเต้นด้วยกระแสที่เพิ่มขึ้นทีละขั้น",
+    "<b>ผล</b> ต่ำกว่า threshold ไม่หดตัว ถึง threshold หดตัวเต็มที่ทันที และ submaximal, maximal, supramaximal ได้การหดตัวขนาดเท่ากับที่ threshold",
+    "<b>ทำไม</b> AP ของหัวใจเป็นแบบ all-or-none และกล้ามเนื้อหัวใจทั้งก้อนเป็น syncytium เมื่อเซลล์หนึ่งยิง ทั้งก้อนก็ยิงพร้อมกัน ช็อตแรงขึ้นจึงไม่ได้ beat ที่ใหญ่ขึ้น",
+    "<b>Stimulus ที่เล็กที่สุดที่ได้ผล</b> คือกระแสที่ทำให้ membrane ถึง threshold potential พอดี",
+    "<b>แรงบีบเปลี่ยนได้ทางอื่น</b> ผ่าน preload (Frank–Starling), contractility (catecholamines, Ca²⁺, digitalis), อุณหภูมิ, pH และ ions ไม่ใช่ผ่านความแรงของ stimulus"
+  ],
+
+  /* ---------------- T · Turtle vagus ---------------- */
+  "T-C1": [
+    "<b>Parasympathetic</b> เริ่มจาก dorsal motor nucleus of vagus / nucleus ambiguus → preganglionic fiber ยาวใน vagus → หลั่ง ACh จับ nicotinic receptor ที่ปมประสาทบนหัวใจ (ในเต่าคือที่ crescentic line) → postganglionic fiber สั้น → หลั่ง ACh จับ M2 ที่ SA node (ส่วนใหญ่จาก right vagus) และ AV node (ส่วนใหญ่จาก left vagus)",
+    "<b>Sympathetic</b> เริ่มจาก RVLM (cardioaccelerator) → spinal cord T1–T4 → ไซแนปส์แบบ nicotinic ที่ cervical/stellate ganglia → postganglionic fiber ยาว → NE จับ β₁ ที่ SA node, AV node และ ventricles ส่วน adrenal medulla เสริมด้วย epinephrine ในกระแสเลือด",
+    "<b>ผลต่อหัวใจ</b> sympathetic เพิ่ม rate (chronotropic), แรงบีบ (inotropic) และการนำไฟฟ้า (dromotropic) และทำให้ AP สั้นลง ส่วน parasympathetic ลด rate และการนำไฟฟ้าอย่างชัดเจน แต่ลดแรงบีบเพียงเล็กน้อย",
+    "<b>Vagal tone</b> vagus ทำงานอยู่แม้ขณะพัก intrinsic rate ของ SA node ราว 100 ครั้งต่อนาที แต่ HR ขณะพักราว 70 เพราะ vagus กดไว้",
+    "<b>การกระจายของเส้นใย</b> vagus ไปเลี้ยง atria และ nodes เป็นหลัก ส่วน ventricles ได้ sympathetic เป็นส่วนใหญ่",
+    "<b>กลไกของ ACh</b> K⁺ ออกจากเซลล์มากขึ้น → membrane ติดลบมากขึ้น (hyperpolarized) และ phase 4 แบนลง → rate ช้าลง"
+  ],
+  "T-C2": [
+    "<b>การทดลอง</b> กระตุ้นปลาย peripheral (ด้านหัวใจ) ของ vagus แต่ละข้างด้วยกระแสอ่อน ปานกลาง และแรง ก่อนกระตุ้น หลังผูก และหลังตัดเส้นประสาท หัวใจเต้น 60 แรงปกติ A:V 1:1 การตัดเส้นประสาทไม่เปลี่ยนอะไรในเต่า",
+    "<b>Right vagus → SA node (chronotropic)</b> กระแสอ่อน rate และแรงบีบลดลงแต่ A:V ยัง 1:1 กระแสปานกลางขึ้นไปหัวใจหยุด (arrest) เพราะ right vagus ส่งเส้นใยไปที่ SA node เป็นหลัก จึงลดอัตราการสร้างสัญญาณของทั้งหัวใจ",
+    "<b>Left vagus → AV node (dromotropic)</b> กระแสอ่อน rate และแรงลดลง และ A:V มากกว่า 1:1 (ventricle เต้นตกหล่น) กระแสปานกลางลดลงมากและ A:V ยังมากกว่า 1:1 คือ atria ยังเต้นเร็วกว่า ventricle = AV block กระแสแรงจึงหยุดทั้งหมด",
+    "<b>ทำไมต่างกัน</b> vagus สองข้างส่งเส้นใยไปที่ SA node และ AV node ในจำนวนไม่เท่ากัน ในคนก็เป็นแบบเดียวกัน",
+    "<b>หลังหยุดกระตุ้น</b> หัวใจฟื้นกลับมาเต้นได้เอง"
+  ],
+  "T-C3": [
+    "<b>วงจร</b> กระตุ้น vagus trunk = กระตุ้น preganglionic fibers → ปมประสาทที่ crescentic line (ACh → nicotinic receptor) → postganglionic fiber → ACh → M2 ที่ SA/AV node → HR ลด หรือหยุดเต้น",
+    "<b>ก่อนให้ยา</b> HR 46 ครั้งต่อนาที กระตุ้น vagus หรือ crescentic line ก็หยุดหัวใจได้ทั้งคู่ (HR 0)",
+    "<b>Nicotine ขนาดต่ำ (HR 40)</b> กระตุ้น nicotinic receptor ที่ปมประสาท → ปล่อย ACh ที่ SA node มากขึ้น → หัวใจช้าลง",
+    "<b>Nicotine ขนาดสูง (HR 50)</b> ทำให้ postganglionic neuron ถูก depolarize ค้าง Na⁺ channels จึง inactivated (depolarization block) ปมประสาทหยุดส่งต่อสัญญาณ → เสีย resting vagal tone หัวใจจึงเร็วขึ้นเล็กน้อย และกระตุ้น vagus 2–3 นาทีหลังให้ nicotine ก็ส่งผ่านไม่ได้แล้ว (HR ยัง 50)",
+    "<b>แต่กระตุ้น crescentic line ยังหยุดหัวใจได้ (HR 0)</b> เพราะเป็นการกระตุ้น postganglionic neurons ที่อยู่ใต้จุด block โดยตรง จึงสรุปได้ว่าไซแนปส์อยู่ที่ crescentic line",
+    "<b>เทียบกับ atropine</b> atropine block ที่ M2 ปลายทาง จึงกระตุ้นทั้ง vagus และ crescentic line ก็ทำให้หัวใจช้าลงไม่ได้"
+  ],
+  "T-C4": [
+    "<b>การทดลอง</b> ขัน Gaskell’s clamp ที่รอยต่อ atria กับ ventricle ให้แน่นขึ้นทีละขั้น atria เต้น 60 ตลอดเพราะ pacemaker อยู่เหนือ clamp",
+    "<b>ผล</b> หนีบเบา ventricle เต้นช้าลงและ A:V มากกว่า 1:1 หนีบปานกลาง ventricle ช้าลงอีก หนีบแน่น ventricle หยุด (0) clamp จึงสร้าง AV block ที่รุนแรงขึ้นตามแรงหนีบ",
+    "<b>1st degree AV block</b> ทุกสัญญาณผ่านแต่ช้า PR มากกว่า 0.20 s และ A:V 1:1",
+    "<b>2nd degree AV block</b> บางสัญญาณผ่านไม่ได้ QRS หายเป็นช่วง (2:1, 3:1) Mobitz I คือ PR ค่อยๆ ยาวขึ้นแล้ว beat หลุด ส่วน Mobitz II คือ beat หลุดทันทีโดยไม่มีสัญญาณเตือน",
+    "<b>3rd degree (complete) AV block</b> ไม่มีสัญญาณผ่านเลย เกิด AV dissociation: atria เต้นตาม sinus rate ส่วน ventricle เต้นด้วย escape rhythm (junctional 40–60 QRS แคบ หรือ ventricular 20–40 QRS กว้าง) ผู้ป่วยอาจหมดสติ (syncope)",
+    "<b>Block ในคนปกติและระดับของ block</b> vagal tone สูง (นักกีฬา ขณะหลับ) และยาเช่น β-blockers, calcium-channel blockers, digoxin ทำให้เกิด block ได้ ส่วนระดับของ block มี SA exit, intra-atrial, AV, bundle branch และ intraventricular"
+  ],
+
+  /* ---------------- B · Blood pressure ---------------- */
+  "B-C1": [
+    "<b>SBP</b> คือความดันสูงสุดขณะบีบเลือดออก ขึ้นกับ stroke volume และความแข็งของหลอดเลือดแดงเป็นหลัก",
+    "<b>DBP</b> คือความดันต่ำสุดช่วงคลายตัว ขึ้นกับ peripheral resistance เป็นหลัก แรงต้านสูงทำให้เลือดไหลออกจากหลอดเลือดแดงช้า ความดันจึงค้างสูง",
+    "<b>Pulse pressure = SBP − DBP</b> ในคนปกติสะท้อน stroke volume กว้างใน AR, หลอดเลือดแข็ง และขณะออกกำลังกาย แคบใน AS, tamponade และ hypovolemia",
+    "<b>MAP ≈ DBP + ⅓(SBP − DBP)</b> ทำไมหนึ่งในสาม ขณะพักช่วง diastole ยาวประมาณสองเท่าของ systole ค่าเฉลี่ยตามเวลาจึงอยู่ใกล้ DBP โดยสูงขึ้นมาแค่หนึ่งในสามของ pulse pressure",
+    "<b>วิธีวัดแบบ direct และ auscultatory</b> direct ใช้สายในหลอดเลือดแดงต่อ transducer ได้ SBP, DBP และ MAP ทุก beat ใช้ใน ICU ห้องผ่าตัด และแล็บสัตว์ แต่ invasive ส่วน auscultatory ใช้ sphygmomanometer กับ stethoscope ฟังเสียง Korotkoff ได้ SBP และ DBP เป็นวิธีอ้างอิงแบบ noninvasive",
+    "<b>วิธี palpatory และ oscillometric</b> palpatory คลำ radial pulse ที่กลับมาขณะปล่อยลม ได้ SBP อย่างเดียว ใช้ประมาณก่อนฟัง ส่วน oscillometric เป็นเครื่องอัตโนมัติที่จับการสั่นของผนังหลอดเลือด จุดที่สั่นแรงที่สุดคือ MAP แล้วคำนวณ SBP และ DBP ออกมา วิธี indirect ทั้งหมดต่างจาก direct ได้ราว ±10 mmHg"
+  ],
+  "B-C2": [
+    "<b>เตรียมผู้ถูกวัด</b> งดบุหรี่ คาเฟอีน อาหาร และการออกกำลังกาย 30 นาที ปัสสาวะก่อน พัก 5 นาทีในห้องเงียบ นั่งพิงหลัง เท้าวางราบ ไม่ไขว่ห้าง และไม่พูด เพราะสิ่งเหล่านี้ทำให้ BP สูงขึ้นชั่วคราว",
+    "<b>แขนและ cuff</b> แขนเปลือย วางบนที่รองรับ หงายมือ cuff อยู่ระดับหัวใจ ขอบล่างของ cuff สูงกว่าข้อพับศอกราว 2.5 cm (1 นิ้ว) กึ่งกลาง bladder ทับ brachial artery และพันให้กระชับ ระดับ 0 ของปรอทอยู่ระดับหัวใจ และอ่าน meniscus ในระดับสายตา",
+    "<b>ขนาด cuff</b> ความกว้างของ bladder ควรเป็นราว 40% ของรอบต้นแขน และความยาว 80–100% ของรอบต้นแขน ตารางในการ์ดมีตั้งแต่ newborn ถึง adult thigh",
+    "<b>ขั้นที่ 1 คลำก่อน</b> คลำ radial pulse บีบลมจนชีพจรหาย แล้วบีบต่ออีก 20–30 mmHg ปล่อยลมราว 2 mmHg ต่อ beat ความดันที่ชีพจรกลับมาคือ palpatory SBP (DBP ประเมินจากการคลำไม่ได้)",
+    "<b>ขั้นที่ 2 ฟัง</b> วาง bell หรือ diaphragm บน brachial artery ที่ข้อพับศอก (ไม่สอดไว้ใต้ cuff) บีบลมเร็วๆ ให้สูงกว่า palpatory SBP 20–30 mmHg แล้วปล่อยช้าๆ (ราว 1 mmHg ต่อวินาทีตามคู่มือ) เสียงเคาะแรก = SBP และเสียงหาย = DBP",
+    "<b>ทำไมต้องคลำก่อน</b> เพื่อไม่ให้หลงกับ auscultatory gap ซึ่งเป็นช่วงเงียบใต้ SBP ในผู้ป่วยความดันสูงบางคน และเพื่อไม่ต้องบีบลมสูงเกินจำเป็น"
+  ],
+  "B-C3": [
+    "<b>ที่มาของเสียง</b> เสียง Korotkoff เกิดจากเลือดไหลแบบ turbulent พุ่งเป็นลำผ่านหลอดเลือดแดงที่ถูกกดไว้บางส่วน เมื่อ cuff สูงกว่า SBP หลอดเลือดปิดสนิทจึงเงียบ เมื่อต่ำกว่า DBP เลือดไหลแบบ laminar ก็เงียบเช่นกัน",
+    "<b>Phase I</b> เสียงเคาะชัดครั้งแรก = SBP ความดัน cuff เพิ่งต่ำกว่ายอดความดัน เลือดจึงพุ่งผ่านได้เป็นจังหวะ",
+    "<b>Phase II และ III</b> phase II เป็นเสียงฟู่ที่เบาลง phase III กลับเป็นเสียงเคาะที่คมและดังขึ้น",
+    "<b>Phase IV</b> เสียงอู้อี้ลงทันที ใช้เป็น DBP ในเด็ก หญิงตั้งครรภ์ ภาวะ high-output และ AR เพราะในกลุ่มนี้เสียงอาจดังต่อไปจนถึง 0",
+    "<b>Phase V</b> เสียงหายไป = DBP ในผู้ใหญ่ หลอดเลือดเปิดตลอดรอบการเต้น เลือดกลับมาไหลราบเรียบ"
+  ],
+  "B-C4": [
+    "<b>Cuff เล็กหรือหลวมเกินไป → สูงเกินจริง</b> bladder ที่แคบต้องใช้ความดันมากกว่าจะกดหลอดเลือดให้ปิด ส่วน cuff ที่หลวมจะพองออกจนทำตัวเหมือน bladder แคบลง",
+    "<b>Cuff ใหญ่หรือแน่นเกินไป → ต่ำเกินจริง</b> พันแน่นเกินไปอ่านได้ต่ำ ตามเฉลยของรายวิชา",
+    "<b>ระดับแขน</b> แขนต่ำกว่าระดับหัวใจอ่านได้สูงเกินจริงจาก hydrostatic pressure (ราว +0.8 mmHg ต่อ cm) แขนสูงกว่าหัวใจอ่านได้ต่ำเกินจริง",
+    "<b>ปัจจัยอื่นที่ทำให้สูงเกินจริง</b> แขนไม่มีที่รองหรือกำมือ (กล้ามเนื้อเกร็ง), พูด, ปัสสาวะเต็ม, คาเฟอีน, บุหรี่, เพิ่งออกกำลังกาย, วิตกกังวลหรือ white-coat effect, หลังไม่พิง, ไขว่ห้าง และพัน cuff ทับแขนเสื้อ",
+    "<b>ปัจจัยอื่นที่ทำให้ต่ำเกินจริง</b> ปล่อยลมเร็วเกินไป (พลาด SBP จึงอ่านต่ำ ส่วน DBP อาจอ่านสูง), พลาด auscultatory gap เพราะไม่ได้คลำก่อน และกด stethoscope แรงเกิน (เสียงดังต่อลงไป DBP จึงอ่านต่ำ)",
+    "<b>ผิดได้ทั้งสองทิศ</b> ปรอทไม่อยู่ที่ 0, เครื่อง aneroid ไม่ได้ calibrate หรือปล่อย cuff ค้างสูงกว่า DBP นานเกินไป (เลือดดำคั่งและสาร mediators เฉพาะที่เปลี่ยนสภาพหลอดเลือด)"
+  ],
+  "B-C5": [
+    "<b>การทดลอง</b> นอนราบ 5 นาที แล้ววัดที่แขนทั้งสองข้าง (brachial) และขาทั้งสองข้าง (popliteal โดยใช้ thigh cuff)",
+    "<b>ปกติขาสูงกว่าแขน</b> ในท่านอน SBP ที่ขาสูงกว่าแขนราว 10–20 mmHg เพราะคลื่นความดันเดินทางเร็วกว่าตัวเลือดและสะท้อนกลับที่จุดแตกแขนง SBP และ pulse pressure จึงเพิ่มขึ้นเมื่อไกลจากหัวใจ ขณะที่ DBP และ MAP ลดลงเล็กน้อย เลือดจึงยังไหลจาก MAP สูงไปต่ำตามปกติ",
+    "<b>คำถามที่พบบ่อย</b> ระหว่าง aorta, arteriole, femoral artery, central vein และ pulmonary artery ตัวที่มี systolic pressure สูงที่สุดคือ femoral artery",
+    "<b>แขนสองข้างต่างกัน</b> ถ้าข้างหนึ่งสูงให้วัดอีกข้างเสมอ ต่างกันเกิน 10–15 mmHg ให้นึกถึง subclavian stenosis, aortic dissection, Takayasu arteritis หรือ coarctation",
+    "<b>Coarctation of the aorta</b> BP ที่แขนสูง ที่ขาต่ำ femoral pulse เบาและมาช้า",
+    "<b>Ankle–brachial index</b> = ankle SBP / arm SBP ปกติ 1.0–1.4 ถ้าต่ำกว่า 0.9 สงสัย peripheral arterial disease"
+  ],
+  "B-C6": [
+    "<b>ลุกจากนอนเป็นยืน</b> เลือดราว 500–800 mL ไปค้างในหลอดเลือดดำที่ขา → venous return ลด → SV และ CO ลด → BP ที่ carotid sinus ตก",
+    "<b>Baroreflex ตอบสนอง</b> baroreceptor ยิงน้อยลง → sympathetic เพิ่ม vagus ลด → HR เพิ่ม (+10–20), หลอดเลือดแดงหด (TPR เพิ่ม) และหลอดเลือดดำหด → BP กลับมาในไม่กี่วินาที",
+    "<b>ค่าที่วัดได้ตอนยืน</b> HR เพิ่ม DBP เพิ่มเล็กน้อย SBP ลดเล็กน้อยหรือเท่าเดิม pulse pressure แคบลง และ CO ยังต่ำกว่าท่านอน 20–30% แม้จะมี reflex เพราะ reflex คืน venous return ได้ไม่หมด BP ที่กลับมาส่วนหนึ่งจึงมาจาก TPR ที่เพิ่ม",
+    "<b>Orthostatic hypotension</b> คือ SBP ลด ≥ 20 หรือ DBP ลด ≥ 10 mmHg ภายใน 3 นาทีหลังลุกยืน",
+    "<b>ยืนแล้วนอนลง</b> venous return เพิ่ม BP เพิ่ม baroreceptor ยิงมากขึ้น → HR ลด ในสุนัข BP ขึ้นก่อนแล้วค่อยลดกลับเมื่อ reflex ทำงาน",
+    "<b>ขั้นตอนในแล็บ</b> นอน 5 นาที แล้วยืน วัดทันที ที่ 3 นาที และที่ 6 นาที"
+  ],
+  "B-C7": [
+    "<b>ผลทันทีหลังออกกำลังกาย</b> HR และ SBP เพิ่มมาก DBP เท่าเดิมหรือลดเล็กน้อย pulse pressure จึงกว้างขึ้น ที่ 3 นาทีค่าค่อยๆ ลดลง และที่ 6 นาทีใกล้ baseline",
+    "<b>ทำไม SBP ขึ้น</b> sympathetic เพิ่ม HR, contractility, SV และ CO",
+    "<b>ทำไม DBP ไม่ขึ้น</b> metabolites ในกล้ามเนื้อที่ทำงานทำให้ arteriole ขยาย TPR ลด หักล้างกับ CO ที่เพิ่ม",
+    "<b>ช่วงฟื้นตัว</b> คนที่ฟิตกว่าฟื้นกลับเร็วกว่า ถ้าหยุดวิ่งกะทันหันแล้วยืนนิ่ง จะขาด muscle pump → venous return ตก → หน้ามืดหรือเป็นลมได้",
+    "<b>Isometric exercise</b> การยกของหนักร่วมกับกลั้นหายใจทำให้ทั้ง SBP และ DBP พุ่งขึ้นมาก จึงควรเลี่ยงในผู้ป่วยความดันสูงที่คุมไม่ได้และโรคหลอดเลือดหัวใจ"
+  ],
+
+  /* ---------------- M · Microcirculation ---------------- */
+  "M-C1": [
+    "<b>Microcirculation คืออะไร</b> arterioles → metarterioles → precapillary sphincters → capillaries → postcapillary venules → venules รวมทั้ง lymphatics ผิวหนังที่นิ้วมือ นิ้วเท้า ฝ่ามือ ฝ่าเท้า หู จมูก และริมฝีปากยังมี arteriovenous anastomoses ที่ sympathetic ควบคุม: เปิดเมื่ออุ่น ปิดเมื่อเย็น",
+    "<b>1. Arterial occlusion</b> ยกแขน กำมือ บีบ cuff 200 mmHg นาน 5 นาทีแล้วปล่อย ระหว่างรัดแขนซีด เย็น คลำชีพจรไม่ได้ และปวด หลังปล่อยแดงสดและอุ่น คือ ischemia ตามด้วย reactive hyperemia",
+    "<b>2. Venous occlusion</b> cuff 30–40 แล้ว 80–90 mmHg อย่างละ 5 นาที หลอดเลือดดำโป่ง ผิวคล้ำม่วงน้ำเงิน ปลายนิ้วตึง และเสียวซ่า เพราะทางออกของเลือดถูกปิดแต่เลือดยังไหลเข้า",
+    "<b>3. Skin stroking</b> ขูดผิวด้วยวัตถุทู่ เบาแล้วแรง ได้เส้นขาว หรือ red line → flare → wheal ซึ่งเกิดจากการรีดเลือดออกเชิงกล หรือ triple response",
+    "<b>4. Temperature</b> แช่แขนในน้ำ 40–45, 20 และ 5–10 °C อย่างละ 5 นาที น้ำอุ่นทำให้แดงและหลอดเลือดดำเต็ม น้ำเย็นจัดทำให้แดงแต่หลอดเลือดดำแบนและปวด เพราะหลอดเลือดผิวหนังทำหน้าที่คุมอุณหภูมิ",
+    "<b>5. Gravity</b> ยกแขนข้างหนึ่งขึ้น อีกข้างห้อยลง 1 นาที ข้างที่ยกซีดและหลอดเลือดดำว่าง ข้างที่ห้อยแดงม่วงและหลอดเลือดดำเต็ม เป็นผลของ hydrostatic pressure"
+  ],
+  "M-C2": [
+    "<b>ระหว่างรัด cuff 200 mmHg นาน 5 นาที</b> ความดัน cuff สูงกว่า SBP เลือดจึงเข้าไม่ได้และออกไม่ได้",
+    "<b>อาการ</b> ซีด (ยกแขนและกำมือรีดเลือดออกก่อน) เย็น คลำ radial pulse ไม่ได้ ปวด เสียวซ่า และชา เพราะเส้นประสาทขาดเลือด และ K⁺, H⁺, lactate กับ bradykinin คั่งไปกระตุ้น nociceptors",
+    "<b>ทำไมไม่บวม</b> ไม่มีเลือดไหลเข้า ความดันใน capillary จึงต่ำ ไม่มีการกรองน้ำออก",
+    "<b>หลังปล่อย: reactive hyperemia</b> ผิวแดงสดและอุ่น เลือดไหลเพิ่มหลายเท่า สาเหตุคือ vasodilator metabolites ที่คั่งไว้ (adenosine, K⁺, H⁺, CO₂, lactate), การขาด O₂ และ myogenic relaxation ของ arteriole ตามด้วย NO จากเลือดที่ไหลแรง",
+    "<b>Deoxyhemoglobin ลดลงเร็ว</b> เพราะเลือดที่มี O₂ ทะลักเข้ามาแทนที่",
+    "<b>ระยะเวลา</b> hyperemia นานโดยประมาณตามระยะเวลาที่รัด และหยุดเมื่อ metabolites ถูกชะล้างออกและชดใช้ O₂ debt ครบ"
+  ],
+  "M-C3": [
+    "<b>Cuff 30–40 mmHg</b> สูงกว่าความดันหลอดเลือดดำแต่ต่ำกว่า DBP มาก เลือดแดงยังไหลเข้าได้แต่เลือดดำออกไม่ได้ หลอดเลือดดำโป่ง ผิวแดงม่วง อุ่น ปลายนิ้วตึง รู้สึกแน่นและเสียวซ่าเล็กน้อย ชีพจรยังคลำได้",
+    "<b>Cuff 80–90 mmHg</b> ใกล้ DBP เลือดแดงเข้าได้เฉพาะตอนยอด systole และเลือดดำออกไม่ได้ หลอดเลือดดำโป่งมากขึ้น ผิวคล้ำน้ำเงิน (cyanotic) ปลายนิ้วบวม อาจมี petechiae มีอาการเสียวซ่าและปวดจาก stagnant hypoxia และชีพจรเบาลง",
+    "<b>ทำไมบวม</b> ความดันหลอดเลือดดำสูง → capillary hydrostatic pressure สูง → กรองน้ำออกมากขึ้น",
+    "<b>หลอดเลือดดำโป่งแบบ passive</b> เพราะเลือดคั่ง ไม่ใช่ vasodilation และ arteriole ก็ไม่ได้ขยาย ตรงกันข้าม ความดันหลอดเลือดดำที่สูงกระตุ้น veno-arteriolar constriction เฉพาะที่ เพื่อจำกัดความดันใน capillary",
+    "<b>Tourniquet test ในไข้เลือดออก</b> ใช้หลักเดียวกัน คือรัด cuff ไว้ระหว่าง SBP กับ DBP 5 นาที แล้วนับ petechiae"
+  ],
+  "M-C4": [
+    "<b>White reaction (ขูดเบา)</b> เกิดเส้นซีดภายในราว 15–20 วินาที เพราะเลือดถูกรีดออกจาก capillaries และ venules ผิวตื้นเชิงกล (mechanical expulsion) ร่วมกับ precapillary sphincter หดตัว",
+    "<b>1. Red line (ขูดแรง, 3–15 วินาที ตรงแนวขูดพอดี)</b> หลอดเลือดเล็กขยายเฉพาะที่โดยตรง จาก histamine ที่ mast cell ปล่อยออกมาตรงนั้น",
+    "<b>2. Flare (15–30 วินาที แผ่ออกรอบแนว 1–2 cm)</b> เป็น axon reflex สัญญาณใน sensory C fiber วิ่งย้อนลงแขนงอื่นของตัวเอง (antidromic) แล้วปล่อย substance P และ CGRP ทำให้ arteriole ขยายเป็นวงกว้าง ไม่ใช่ spinal reflex: ยังเกิดได้แม้ตัดไขสันหลัง แต่หายไปเมื่อฉีดยาชาเฉพาะที่หรือเมื่อเส้นประสาทรับความรู้สึกเสื่อม",
+    "<b>3. Wheal (1–3 นาที นูนตามแนวขูด)</b> histamine เพิ่ม permeability ของ capillaries และ postcapillary venules → บวมเฉพาะที่",
+    "<b>แมลงกัดต่อย</b> ใช้ mediators เดียวกัน (histamine, bradykinin) อาการแดง บวม และปวด มาจาก capillary permeability ที่เพิ่มขึ้นเป็นหลัก"
+  ],
+  "M-C5": [
+    "<b>น้ำอุ่น 40–45 °C</b> ผิวแดงและอุ่น หลอดเลือดดำผิวตื้นโป่ง เพราะความร้อนเฉพาะที่และ sympathetic tone ที่ลดลง ทำให้ arterioles, veins และ AV shunts ขยายเพื่อระบายความร้อน",
+    "<b>น้ำ 20 °C</b> ผิวซีดเล็กน้อย หลอดเลือดดำเห็นไม่ชัด เพราะหลอดเลือดหดตัวเล็กน้อย",
+    "<b>น้ำเย็นจัด 5–10 °C</b> ผิวแดง (และปวด) แต่หลอดเลือดดำแบน เพราะความเย็นทำให้ veins และ arterioles หด (sympathetic ร่วมกับ α-receptors ที่ไวขึ้นเมื่อเย็น)",
+    "<b>ทำไมยังแดงทั้งที่หลอดเลือดหด</b> hemoglobin ที่เย็นจับ O₂ แน่นขึ้น (left shift) เลือดในผิวจึงยังมี O₂ สูงและสีแดง และเมื่อต่ำกว่าราว 10–15 °C จะเกิด cold-induced vasodilation (hunting reaction) หลอดเลือดเปิดเป็นระลอก",
+    "<b>แขนอีกข้างเป็น control</b> การเปลี่ยนแปลงเกิดเฉพาะแขนที่แช่น้ำ"
+  ],
+  "M-C6": [
+    "<b>ยกแขนเหนือศีรษะ</b> ซีด หลอดเลือดดำแฟบและยุบ เพราะ hydrostatic pressure ลดลง เลือดไหลกลับหัวใจ หลอดเลือดดำที่ยุบได้คงแรงดันลบไว้ไม่ได้ ความดันหลอดเลือดดำที่มือจึงอยู่ใกล้ 0",
+    "<b>ห้อยแขนลง</b> แดงม่วงและหลอดเลือดดำโป่ง เพราะ hydrostatic pressure บวกเข้าไปในความดันหลอดเลือดดำและ capillary จึงกรองน้ำออกมากขึ้น",
+    "<b>ยืนนิ่ง</b> หลอดเลือดดำที่เท้าราว +90 mmHg หลอดเลือดดำที่คอยุบ (ราว 0) ส่วน dural venous sinuses อยู่ในกะโหลกที่แข็ง ยุบตัวไม่ได้ ความดันจึงติดลบ (ราว −10 mmHg)",
+    "<b>ความสำคัญทางคลินิก</b> แรงดันลบนี้ทำให้การผ่าตัดสมองในท่านั่งเสี่ยงต่อ air embolism",
+    "<b>การหายใจเข้า</b> ความดันในช่องอกลด ความดันในหลอดเลือดดำใหญ่ในช่องอกจึงลด venous return เพิ่มขึ้น"
+  ],
+
+  /* ---------------- P · Physical examination ---------------- */
+  "P-C1": [
+    "<b>Inspection</b> ดู cyanosis, edema, หอบเหนื่อย, JVP และ apex ที่มองเห็น ระวัง: เขียวและบวมอาจไม่ได้มาจากหัวใจ เช่น โรคปอด nephrotic syndrome โรคตับ หรือหลอดเลือดดำและท่อน้ำเหลืองอุดตัน",
+    "<b>Palpation</b> apex beat (PMI) อยู่ที่ left 5th ICS แนว midclavicular line (ไม่ใช่ mid-axillary line) ถ้าเลื่อนออกไปแปลว่า LV dilation ถ้าเป็น heave ที่ค้างนานแปลว่า LVH ถ้าเป็น parasternal heave แปลว่า RVH และคลำหา thrill ด้วย การคลำบอกการโตของ ventricle ได้ แต่บอก atrium ไม่ได้",
+    "<b>Percussion</b> เคาะหาขอบเขต cardiac dullness มีประโยชน์น้อย และใช้วินิจฉัย constrictive pericarditis ไม่ได้",
+    "<b>Auscultation</b> diaphragm ฟังเสียงสูง (S1, S2, AR, MR, rub) ส่วน bell ที่วางเบาๆ ฟังเสียงต่ำ (S3, S4, MS rumble) และ murmur ไม่ได้แปลว่าเป็นโรคเสมอไป (innocent flow murmur)",
+    "<b>Heart failure แยกข้าง</b> ข้างซ้ายเลือดคั่งย้อนเข้าปอด: dyspnea, orthopnea, PND และ crackles ข้างขวาเลือดคั่งย้อนเข้าหลอดเลือดดำทั่วร่างกาย: JVP สูง, hepatojugular reflux, hepatomegaly และบวมที่ข้อเท้าและก้นกบ"
+  ],
+  "P-C2": [
+    "<b>ลำดับรอบการเต้น</b> atrial systole (S4 ถ้า LV แข็ง; JVP a) → S1 → isovolumetric contraction ลิ้นปิดหมด (JVP c) → ejection เร็วแล้วช้า (carotid pulse, systolic murmurs; JVP x) → S2 → isovolumetric relaxation ลิ้นปิดหมด (ยอด JVP v) → rapid filling (S3; JVP y) → diastasis เติมช้า",
+    "<b>S1</b> เกิดจาก mitral และ tricuspid ปิด อยู่ระหว่าง atrial systole กับ isovolumetric contraction มาก่อน carotid upstroke เล็กน้อย ส่วน radial pulse มาช้ากว่านั้น S1 ดังใน MS",
+    "<b>S2</b> เกิดจาก aortic และ pulmonic ปิด อยู่ระหว่าง ejection กับ isovolumetric relaxation แยกเป็นสองเสียงขณะหายใจเข้า (P2 มาช้า) ถ้าเป็น wide fixed split ให้นึกถึง ASD",
+    "<b>S3</b> เกิดจากเลือดเติม ventricle อย่างรวดเร็วในต้น diastole หลัง S2 ปกติในคนอายุน้อยและหญิงตั้งครรภ์ แต่ในผู้ใหญ่บ่งถึง heart failure หรือ volume overload",
+    "<b>S4</b> เกิดจาก atrium บีบเลือดเข้า ventricle ที่แข็ง ในปลาย diastole ก่อน S1 พบใน LVH, hypertension และ ischemia และไม่มีใน AF"
+  ],
+  "P-C3": [
+    "<b>Aortic และ pulmonic area</b> aortic = right 2nd ICS ข้างกระดูกอก ฟัง AS (ejection systolic ร้าวไป carotid) และ AR ส่วน pulmonic = left 2nd ICS ฟัง PS (ejection systolic) และ PR (early diastolic)",
+    "<b>Erb’s point และ tricuspid area</b> Erb’s point = left 3rd ICS ซึ่ง AR มักดังที่สุด ส่วน tricuspid = left lower sternal border ที่ 4th–5th ICS ฟัง TR (pansystolic ดังขึ้นตอนหายใจเข้า), TS (diastolic) และ VSD",
+    "<b>Mitral area (apex, PMI)</b> left 5th ICS แนว midclavicular line ฟัง MR (pansystolic ร้าวไป axilla) และ MS (mid-diastolic rumble ใช้ bell ในท่านอนตะแคงซ้าย)",
+    "<b>Ejection systolic (AS/PS)</b> crescendo–decrescendo เริ่มหลัง S1 เพราะต้องผ่านช่วง isovolumetric contraction ก่อนลิ้นจะเปิด ฟังที่ aortic area และร้าวไป carotid (PS ฟังที่ pulmonic area)",
+    "<b>Pansystolic (MR/TR)</b> เสียงเรียบตั้งแต่ S1 ถึง S2 เพราะเลือดรั่วย้อนตลอด systole MR ร้าวไป axilla ส่วน TR ฟังที่ lower left sternal border และดังขึ้นตอนหายใจเข้า",
+    "<b>Early diastolic (AR/PR) และ MS</b> AR/PR เป็น decrescendo เสียงเป่าที่เริ่มที่ S2 ฟังที่ Erb’s point หรือ right 2nd ICS โดยให้ผู้ป่วยนั่งโน้มตัวไปข้างหน้าและหายใจออกกลั้นไว้ ส่วน MS เป็น mid-diastolic rumble หลัง opening snap ฟังที่ apex ด้วย bell ในท่านอนตะแคงซ้าย",
+    "<b>สองคำถามแก้โจทย์ murmur</b> เกิดเมื่อไร (พร้อม carotid pulse = systolic, หลัง S2 = diastolic) และดังที่สุดที่ไหน (ชื่อ area บอกลิ้น) ข้อสอบใช้ตำแหน่ง classic อย่างเคร่งครัด: left 2nd ICS = pulmonic"
+  ],
+  "P-C4": [
+    "<b>Collapsing (water-hammer) pulse</b> ขึ้นเร็วแรงแล้วตกฮวบ pulse pressure กว้าง DBP ต่ำ พบใน aortic regurgitation",
+    "<b>Pulsus parvus et tardus</b> ชีพจรเล็ก ยอดมาช้า carotid pulse delayed และ pulse pressure แคบ พบใน aortic stenosis",
+    "<b>Pulsus paradoxus</b> SBP ตกมากกว่า 10 mmHg ตอนหายใจเข้า พบใน cardiac tamponade (และหอบหืดรุนแรง, constriction)",
+    "<b>Pulse deficit</b> อัตราที่ apex มากกว่าที่ radial พบใน atrial fibrillation เพราะ beat ที่สั้นส่งคลื่นไปไม่ถึงข้อมือ",
+    "<b>Pulsus alternans และหลอดเลือดแข็ง</b> pulsus alternans คือแรงกับเบาสลับกัน พบใน LV failure รุนแรง ส่วนหลอดเลือดแข็ง (อายุมาก, atherosclerosis) ทำให้คลื่นชีพจรเร็ว SBP สูง และ pulse pressure กว้าง",
+    "<b>Beck’s triad ใน tamponade</b> hypotension, JVP สูง และ heart sounds เบา ร่วมกับ tachycardia และ pulse pressure แคบ"
+  ],
+  "P-C5": [
+    "<b>วิธีดู</b> ให้ผู้ป่วยเอน 45° หันหน้าไปทางซ้ายเล็กน้อย ดู right internal jugular vein เพราะเป็นเส้นตรงไม่มีลิ้น ต่อเข้า RA โดยตรง",
+    "<b>การวัด</b> วัดความสูงแนวดิ่งของจุดที่เต้นเหนือ sternal angle (บวก 5 cm จะได้ RA pressure) ปกติ 3–4 cm",
+    "<b>แยกจากชีพจรหลอดเลือดแดง</b> JVP มีสองยอดต่อหนึ่งการเต้น คลำไม่ได้ กดให้หายได้ ลดลงตอนหายใจเข้า และสูงขึ้นเมื่อกดท้อง (hepatojugular reflux)",
+    "<b>a wave</b> = RA บีบตัว หายไปใน AF และกลายเป็น cannon a wave ใน AV dissociation (complete heart block)",
+    "<b>c wave และ x descent</b> c = ลิ้น tricuspid โป่งเข้า RA ตอน RV บีบ ส่วน x = atria คลายตัว และวงลิ้น tricuspid ถูกดึงลงระหว่าง ejection",
+    "<b>v wave และ y descent</b> v = เลือดเติม RA ขณะ tricuspid ปิด กลายเป็น giant v (cv) wave ใน TR ส่วน y = tricuspid เปิด RA เทเลือดลง RV"
+  ],
+  "P-C6": [
+    "<b>หายใจเข้าปกติ</b> ความดันในช่องอกลด → เลือดดำไหลเข้าหัวใจขวามากขึ้น → RV บีบเลือดนานขึ้นเล็กน้อย → P2 มาช้า → S2 แยกเป็นสองเสียง การหายใจเข้าลึกคือวิธีเพิ่ม venous return ได้เร็วที่สุด",
+    "<b>ASD ทำให้ wide split</b> เลือดลัดจาก LA ไป RA ตลอดเวลา RV จึงรับปริมาตรเกินเสมอ P2 มาช้าตลอด",
+    "<b>ทำไม split คงที่ (fixed)</b> ตอนหายใจเข้า venous return จากร่างกายที่เพิ่มขึ้นทำให้ความดัน RA สูงขึ้น shunt จาก LA ไป RA จึงลดลง ปริมาตรที่ RV ได้รับจึงพอๆ เดิมทั้งหายใจเข้าและออก",
+    "<b>คำถามที่พบบ่อย</b> ใน ASD ค่าที่ลดลงตอนหายใจเข้าคือ shunt volume ส่วน RA preload และ venous return เพิ่มขึ้น"
+  ],
+
+  /* ---------------- D · Dog lab I ---------------- */
+  "D-C1": [
+    "<b>สิ่งที่บันทึก</b> ในสุนัขที่ดมยาสลบ บันทึก arterial BP (cannula ต่อ transducer), HR, การหายใจ และ CVP บางครั้งมี ECG แต่ละ maneuver เปลี่ยนกราฟเหล่านี้ในรูปแบบเฉพาะตัว",
+    "<b>คำถามที่ 1–2</b> อะไรเปลี่ยนก่อน: ความดัน ปริมาตร ก๊าซ หรือเส้นประสาท และตัวรับไหนรับรู้: carotid sinus, aortic arch, carotid/aortic bodies หรือ atria",
+    "<b>คำถามที่ 3</b> ขาไหนตอบสนอง: vagus ไปหัวใจ, sympathetic ไปหัวใจและหลอดเลือด, catecholamines จาก adrenal หรือ phrenic ไปกะบังลม",
+    "<b>คำถามที่ 4</b> มีขาไหนถูกตัดหรือ block (vagotomy, atropine, หัวใจที่ไม่มีเส้นประสาท) ถ้ามี ส่วนนั้นของการตอบสนองจะหายไป",
+    "<b>กระตุ้นปลายไหน</b> ตัดเส้นประสาทแล้วกระตุ้นปลาย peripheral (ด้านหัวใจ) = ทดสอบ efferent fibers ส่วนกระตุ้นปลาย central (ด้านสมอง) = ทดสอบ afferent fibers และ reflex ที่มันก่อ",
+    "<b>กระแสต่ำกับกระแสสูง</b> กระแสต่ำกระตุ้นเส้นใยใหญ่ที่ threshold ต่ำ (baroreceptor afferents) กระแสสูงดึงเส้นใยเล็กที่ threshold สูงเข้ามาด้วย (chemoreceptor และ pain afferents)"
+  ],
+  "D-C2": [
+    "<b>Baroreceptor ถูก unload</b> หนีบ common carotid → ความดันใน carotid sinus ตก → baroreceptor ยิงน้อยลง → BP, HR และ RR เพิ่ม",
+    "<b>Baroreceptor ถูกกระตุ้น</b> ดึงหรือกด carotid sinus (carotid massage) → ยิงมากขึ้น → vagus เพิ่ม sympathetic ลด และยับยั้งการหายใจ → BP, HR และ RR ลด",
+    "<b>หลัง double vagotomy</b> กระตุ้น sinus แล้ว BP และ RR ยังลด แต่ HR ไม่ช้าลง เพราะ vagus ซึ่งเป็น effector ที่ลด HR ถูกตัด เหลือ sympathetic withdrawal และการยับยั้ง phrenic ส่วนการตัด vagus สองข้างเองทำให้ HR เพิ่ม (เสีย vagal tone) BP เท่าเดิมหรือเพิ่ม และหายใจช้าลงแต่ลึกขึ้น (เสีย lung stretch afferents)",
+    "<b>กระตุ้น vagus</b> ปลาย peripheral → ACh ที่ SA/AV node → HR ลดมากหรือหยุด (ถ้ากระตุ้นนานเกิด vagal escape) ปลาย central กระแสต่ำ → aortic baroreceptor afferents → BP, HR, RR ลด กระแสสูง → chemoreceptor afferents (aortic bodies) → BP, HR, RR เพิ่ม aortic (depressor) nerve ก็เช่นกัน: กระแสต่ำลด กระแสสูงเพิ่ม",
+    "<b>Sciatic nerve ปลาย central</b> กระแสต่ำ → depressor reflex (vagus เพิ่มผ่าน muscarinic ที่ SA node และ AV conduction ช้าลง, sympathetic ลด) BP และ HR ลด RR แทบไม่เปลี่ยนในกราฟแล็บ กระแสสูง → pressor (pain) reflex ผ่าน sympathetic และ phrenic ทุกค่าเพิ่ม",
+    "<b>ก๊าซและ tilt</b> หายใจ CO₂ → central และ peripheral chemoreceptors → BP, HR, RR เพิ่ม (แม้ CO₂ จะขยายหลอดเลือดเฉพาะที่) อุด trachea (asphyxia) → hypoxia ร่วมกับ hypercapnia → BP เพิ่ม HR เพิ่มแล้วลด และหายใจแบบ gasping ส่วน head-down/head-up tilt เปลี่ยน venous return ก่อน BP จึงขึ้นหรือลด แล้ว baroreflex ดึง BP กลับ"
+  ],
+  "D-C3": [
+    "<b>ค่า control</b> BP 160/120, HR 110, RR 14",
+    "<b>ดึง carotid sinus (เบา → แรง)</b> BP 150/110 → 140/100, HR 105 → 90, RR 12 → 10 การยืดทำให้ baroreceptor ยิงมากขึ้น ยิ่งดึงแรง BP ยิ่งตกมาก",
+    "<b>กระตุ้นไฟฟ้าที่ sinus</b> BP 120/80, HR 100, RR 10 เพราะกระตุ้น afferents ชุดเดียวกันโดยตรง",
+    "<b>หนีบ common carotid</b> BP 190/150, HR 140, RR 18 เพราะ sinus อยู่เลยจุดหนีบไป ความดันใน sinus จึงตก baroreceptor ถูก unload → sympathetic เพิ่ม vagus ลด จุดหลอกคือหนีบหลอดเลือดแต่ BP ทั้งระบบกลับสูงขึ้น",
+    "<b>การหายใจ</b> ในสุนัขที่ดมยาสลบ การกระตุ้น baroreceptor ทำให้หายใจช้าลง",
+    "<b>ในผู้ป่วย</b> carotid massage เพิ่ม vagal tone ทำให้หัวใจช้าลงและ AV conduction ช้าลง ใช้หยุด supraventricular tachycardia บางชนิด"
+  ],
+  "D-C4": [
+    "<b>ค่า control</b> BP 170/120, HR 108",
+    "<b>Head-down tilt</b> เลือดไหลกลับหัวใจ venous return เพิ่ม → BP ขึ้นก่อนเป็น 185/135 → baroreceptor ยิงมากขึ้น → BP และ HR ถูกดึงลงเป็น 130/90, HR 95",
+    "<b>Head-up tilt</b> เลือดค้างที่ร่างกายส่วนล่าง venous return ลด → BP ตกก่อนเป็น 100/60 → baroreceptor ถูก unload → HR และ vascular tone เพิ่ม BP กลับเป็น 150/95, HR 120",
+    "<b>การหายใจ</b> กราฟการหายใจอ่านไม่ได้ระหว่าง tilt จึงประเมิน RR ไม่ได้",
+    "<b>เชื่อมกับแล็บ BP</b> เป็น reflex เดียวกับการลุกยืน carotid sinus รับรู้การเปลี่ยนแปลงก่อน"
+  ],
+  "D-C5": [
+    "<b>หลัง double vagotomy</b> control คือ BP 160/120, HR 110, RR 8",
+    "<b>ผล</b> ดึง carotid sinus ได้ BP 120/80, HR 110 (ไม่เปลี่ยน), RR 6 และกระตุ้นไฟฟ้าได้ BP 100/60, HR 110, RR 6",
+    "<b>ทำไม HR ไม่ลด</b> vagus เป็นทางของ efferent fibers ที่ทำให้หัวใจช้า ตัดแล้ว HR จึงไม่ตก",
+    "<b>ทำไม BP ยังลด</b> sympathetic withdrawal ยังทำงาน (arteriole และหลอดเลือดดำขยาย) และการหายใจยังช้าลงจากการยับยั้ง phrenic",
+    "<b>ผลของ vagotomy เอง</b> RR ตอน control เหลือแค่ 8 (เดิม 14) และหายใจลึกขึ้น เพราะ lung stretch afferents ที่วิ่งใน vagus หายไป"
+  ],
+  "D-C6": [
+    "<b>การทดลอง</b> ตัด sciatic nerve แล้วกระตุ้นปลาย central ด้วยกระแสต่ำแล้วกระแสสูง control คือ BP 150/110, HR 100, RR 12",
+    "<b>กระแสต่ำ → depressor reflex</b> BP 130/90, HR 96, RR 12 (แทบเท่าเดิม) เพราะ vagus เพิ่ม (M2 ที่ SA node, AV conduction ช้าลง) และ sympathetic ลด",
+    "<b>กระแสสูง → pressor (pain) reflex</b> BP 200/170, HR 120, RR 56 เพราะ sympathetic drive เพิ่ม ร่วมกับ phrenic nerve ปล่อย ACh ที่กะบังลมทำให้หายใจเร็ว",
+    "<b>ทำไมต่างกัน</b> กระแสต่ำกระตุ้นเส้นใย afferent ขนาดใหญ่ที่ threshold ต่ำ กระแสสูงดึงเส้นใยเจ็บปวดขนาดเล็กเข้ามาด้วย",
+    "<b>ระวังเฉลย</b> เฉลยข้อสอบเขียนว่ากระแสต่ำทำให้ BP, HR และ RR ลดทั้งหมด แต่ในกราฟนี้การหายใจแทบไม่เปลี่ยน"
+  ],
+  "D-C7": [
+    "<b>กระตุ้น splanchnic nerve</b> control BP 150/110, HR 104, RR 12 กระตุ้นแล้ว BP ขึ้นเป็น 180/150 และ 220/160 ที่กระแสสูง HR 112 → 80 เมื่อ baroreflex ตอบโต้ และ RR ลด 6 → 4",
+    "<b>BP ขึ้นสองจังหวะ</b> จังหวะแรกคือ α₁ หดหลอดเลือดในช่องท้อง จังหวะที่สองซึ่งช้ากว่าคือ epinephrine จาก adrenal",
+    "<b>BP ตกต่ำกว่า baseline หลังหยุดกระตุ้น</b> epinephrine ที่เหลือค้างในระดับต่ำออกฤทธิ์ที่ β₂ ทำให้หลอดเลือดขยาย",
+    "<b>หลัง double vagotomy</b> BP 200/150 พร้อม HR เพิ่มเป็น 120 ไม่มี reflex bradycardia และการหายใจที่ช้าลงเป็นผลเดียวของ baroreflex ที่ยังเห็นได้",
+    "<b>Epinephrine ขนาดต่ำ (β₂ &gt; α; β₁)</b> DBP และ MAP ลด HR เพิ่ม หลอดเลือดในกล้ามเนื้อ ตับ และหัวใจขยาย CVP ลดเพราะหัวใจบีบแรงขึ้น",
+    "<b>Epinephrine ขนาดสูง (α₁ + β₁)</b> BP เพิ่มมาก HR เพิ่มแล้วลดจาก reflex หายใจลดลง (adrenaline apnea) และหลอดเลือดไตหดทำให้ปัสสาวะลด",
+    "<b>Norepinephrine และ phenylephrine</b> norepinephrine (α₁, β₁) เพิ่ม BP มาก HR ลดจาก reflex และมีผล β₂ น้อย ส่วน phenylephrine (α₁) เพิ่ม BP และ afterload โดยไม่เพิ่ม inotropy โดยตรง HR ลดจาก reflex",
+    "<b>Isoproterenol, acetylcholine และ nitroglycerin</b> isoproterenol (β₁, β₂ ล้วน) BP ลด HR เพิ่มมาก acetylcholine (M: หลอดเลือดผ่าน NO, M2 ที่หัวใจ) ลดทั้ง BP และ HR และถูก block ด้วย atropine ส่วน nitroglycerin (NO donor ออกฤทธิ์ที่หลอดเลือดดำเป็นหลัก) ลด venous return, preload และ CVP BP ลด HR เพิ่มจาก reflex",
+    "<b>หลัง vagotomy</b> ไม่มี reflex bradycardia ยาที่เพิ่ม BP จึงเพิ่ม HR ด้วย และหัวใจที่ไม่มีเส้นประสาทยังตอบสนองต่อ catecholamines ในกระแสเลือด"
+  ],
+
+  /* ---------------- H · Dog lab II ---------------- */
+  "H-C1": [
+    "<b>เพิ่มการเติมเลือด</b> ให้ saline เข้าหลอดเลือดดำหรือ RA → venous return และ preload เพิ่ม → SV และ CO เพิ่ม (Frank–Starling) CVP และ BP เพิ่ม HR อาจเพิ่ม (atrial stretch, Bainbridge reflex) หรือลด (baroreflex)",
+    "<b>เสียเลือด</b> CVP และ BP ลด HR เพิ่มจาก baroreceptor และ chemoreceptor reflexes RR เพิ่ม และใน 15–30 นาทีน้ำจาก interstitium ไหลเข้าหลอดเลือด Hct จึงลด",
+    "<b>หนีบ SVC/IVC และ nitroglycerin</b> หนีบ vena cava ทำให้ RA pressure และ BP ลด HR เพิ่ม และ reflex เพิ่ม contractility กับ TPR ความดันในหลอดเลือดดำเหนือจุดหนีบ (ศีรษะ แขน) สูงขึ้น ส่วน nitroglycerin ขยายหลอดเลือดดำ เลือดค้างในหลอดเลือดดำ preload ลด CVP และ BP ลด HR เพิ่มจาก reflex",
+    "<b>หัวใจเติมเลือดไม่ได้ (tamponade)</b> ฉีดน้ำเข้าถุงหุ้มหัวใจ CVP เพิ่ม ขณะที่ venous return ลด BP ลด HR เพิ่ม pulse pressure แคบ และมี pulsus paradoxus",
+    "<b>ทางออกผิดปกติ</b> ทำลายลิ้น aortic (AR) ทำให้ SBP เพิ่ม DBP ลด เลือดไหลย้อนช่วง diastole EDV และ total SV เพิ่ม pulse pressure กว้าง collapsing pulse ส่วน aortic stenosis หรือหนีบ aorta ทำให้ความดันก่อนจุดตีบเพิ่ม หลังจุดตีบลด LV pressure และ afterload เพิ่ม ความดันอาจคั่งย้อนจน CVP เพิ่ม และ coarctation (เลย left subclavian) ทำให้ BP แขนสูง ขาต่ำ LV afterload เพิ่ม femoral pulse เบาและช้า",
+    "<b>บทเรียนสำคัญ</b> CVP สูงไม่ได้แปลว่าเลือดในระบบเต็มเสมอไป tamponade ทำให้ CVP สูงทั้งที่หัวใจเติมเลือดไม่ได้"
+  ],
+  "H-C2": [
+    "<b>ค่า control</b> BP 100/50 (PP 50), HR 88, CVP 2.5 cmH₂O",
+    "<b>ผล</b> หนีบ SVC ได้ 60/30 (PP 30), HR 92, CVP 2.0 หนีบ IVC ได้ 40/20 (PP 20), HR 96, CVP 1.5",
+    "<b>กลไก</b> เลือดไปถึง RA น้อยลง → venous return, RA pressure (CVP), preload, SV และ CO ลดทั้งหมด → BP และ pulse pressure ลด baroreflex ตอบโต้ด้วยการเพิ่ม HR, contractility และ TPR",
+    "<b>ทำไม IVC แรงกว่า</b> IVC นำ venous return ส่วนใหญ่ คือจากร่างกายส่วนล่างทั้งหมด",
+    "<b>เหนือจุดหนีบและบน PV loop</b> ความดันหลอดเลือดดำต้นทาง (ศีรษะและแขนสำหรับ SVC) สูงขึ้น และบน PV loop จุด end-diastolic เลื่อนไปทางซ้าย"
+  ],
+  "H-C3": [
+    "<b>การทดลอง</b> เพิ่มความดันในถุงหุ้มหัวใจผ่าน cannula จาก water manometer control 100/50 (PP 50), HR 88, CVP 2 → 20/10 (PP 10), HR 80, CVP 3",
+    "<b>กลไก</b> น้ำในถุงหุ้มหัวใจบีบหัวใจช่วง diastole ห้องหัวใจขยายรับเลือดไม่ได้ venous return จึงลด แต่ความดันใน RA และหลอดเลือดดำกลับสูงขึ้น (CVP เพิ่ม)",
+    "<b>ผลต่อเนื่อง</b> preload, SV และ CO ลด → BP ลดและ pulse pressure แคบ afterload ซึ่งดูจากความดัน aorta ก็ลดลงด้วย",
+    "<b>HR ในกราฟนี้</b> ตามทฤษฎีควรเกิด reflex tachycardia แต่กราฟนี้ HR ลดเล็กน้อย (88 → 80) และใบแล็บถามให้อธิบาย อย่าคิดว่าทุกกราฟจะเป็นไปตามตำรา",
+    "<b>Pulsus paradoxus</b> ตอนหายใจเข้า หัวใจขวาเติมเลือดมากขึ้น septum ดันไปทางซ้าย SBP จึงตกมากกว่า 10 mmHg",
+    "<b>การรักษา</b> เอาน้ำออก (pericardiocentesis)"
+  ],
+  "H-C4": [
+    "<b>การทดลอง</b> สอด stylet ลงทาง left common carotid ไปทำลายลิ้น aortic control 90/45 (PP 45), HR 110 → 100/40 (PP 60), HR 100 และ CVP ไม่เปลี่ยน",
+    "<b>อ่าน PV loop (ข้อสอบ AC80)</b> B = end-diastole (mitral ปิด ปริมาตร I = EDV) → C = aortic valve เปิด → D = ความดันสูงสุด → E = aortic valve ปิดบนเส้น ESPVR → A = mitral เปิด (ปริมาตร H = ESV) → เติมเลือดกลับไปที่ B",
+    "<b>ใน AR</b> เลือดรั่วย้อนจาก aorta ช่วง diastole LV จึงเติมจากสองทาง EDV (I) เลื่อนไปทางขวา total SV เพิ่ม SBP เพิ่ม DBP ลด (จุด C เลื่อนลง) pulse pressure กว้าง collapsing pulse และไม่มี isovolumetric relaxation ที่แท้จริง",
+    "<b>ระวัง</b> ใน AR pulse pressure ทำให้ประเมิน flow ที่ใช้ได้จริงสูงเกินไป เพราะส่วนหนึ่งของแต่ละ stroke ไหลกลับเข้า LV effective forward SV จึงต่ำกว่าที่เห็น"
+  ],
+  "H-C5": [
+    "<b>หนีบ ascending aorta (carotid แยกออกหลังจุดหนีบ)</b> carotid BP 100/50 → 30/20, HR 90 → 70, CVP 2.5 → 3.5 จำลอง severe aortic stenosis: LV pressure และ afterload เพิ่ม forward flow ลด และความดันคั่งย้อนกลับ",
+    "<b>หนีบ aortic arch (carotid แยกออกก่อนจุดหนีบ)</b> 90/40 → 130/80, HR 96 → 90, CVP 2.5 → 3.0 จำลอง coarctation: ความดันสูงก่อนจุดตีบ ต่ำหลังจุดตีบ",
+    "<b>Coarctation ในคน</b> ตีบเลย left subclavian ไป BP จึงสูงที่แขนและ carotid ต่ำและมาช้าที่ขา (femoral) และ LV afterload เพิ่ม",
+    "<b>Aortic stenosis ในคน</b> LV pressure และ afterload สูง ชีพจรเล็กและช้า (parvus et tardus) และความดันอาจคั่งย้อนจน CVP สูง",
+    "<b>กราฟที่ไม่เป็นไปตามตำรา</b> หนีบ ascending aorta แล้ว HR ลด ทั้งที่ carotid BP ตก ใบแล็บถามให้อธิบาย เป็นอีกกราฟที่ไม่เป็นไปตาม baroreflex แบบง่ายๆ"
+  ],
+  "H-C6": [
+    "<b>ค่า control</b> BP 90/40, HR 96",
+    "<b>Aortic nerve กระแสต่ำ (A)</b> BP 65/20, HR 80 เพราะกระตุ้นเส้นใย baroreceptor ขนาดใหญ่ → depressor",
+    "<b>Aortic nerve กระแสสูง (B)</b> BP 135/85, HR 110 เพราะเส้นใย chemoreceptor ขนาดเล็กเข้าร่วม → pressor",
+    "<b>ทำไมไปได้สองทาง</b> ในสุนัข aortic nerve นำ afferents จากทั้ง baroreceptor ที่ aortic arch และ aortic bodies วิ่งใน left vagosympathetic trunk ไปก้านสมอง ผลต่อ BP และ RR จึงขึ้นกับความแรงของกระแส",
+    "<b>Right vagus ปลาย peripheral</b> BP 20/0 ไม่มีการเต้น เพราะ ACh ที่ SA node ทำให้หัวใจหยุด",
+    "<b>เชื่อมกับแล็บเต่า</b> right vagus คุมอัตราของ SA node ส่วน left vagus คุมการนำไฟฟ้าผ่าน AV node"
+  ],
+  "H-C7": [
+    "<b>AF ในสุนัข</b> control 100/40, HR 100 ระหว่าง AF ได้ BP 125/20 (PP 105), HR 50 ไม่สม่ำเสมอ และกลับเป็น 100/40, HR 100 (สม่ำเสมอ) เมื่อหยุดกระตุ้น CVP คงที่ 2.5",
+    "<b>กลไก AF</b> เริ่มใน atria ส่วนใหญ่รอบ pulmonary veins ใน left atrium AV node ทำหน้าที่เพียงส่งต่อสัญญาณที่ไม่สม่ำเสมอ",
+    "<b>ECG และการตรวจร่างกายใน AF</b> ไม่มี P wave, RR ไม่สม่ำเสมอแบบไร้รูปแบบ (irregularly irregular), QRS มักแคบ และมักเร็ว ตรวจพบชีพจรไม่สม่ำเสมอ, pulse deficit, ไม่มี a wave ใน JVP และไม่มี S4",
+    "<b>VF ในสุนัข</b> กระตุ้น ventricle แล้วกราฟ BP ตกเป็นเส้นราบไม่มีการเต้น และต่างจาก AF ตรงที่ไม่หยุดเองเมื่อหยุดกระตุ้น",
+    "<b>กลไก VF</b> ventricle สั่นพลิ้วโดยไม่บีบตัวอย่างประสานกัน ไม่มี stroke volume คลำชีพจรไม่ได้ BP ตกเข้าหา 0 และต้อง defibrillation ทันที"
+  ]
+};
+
+/* Tutor-only teaching notes for each concept card: knowledge beyond the slide that helps explain it.
+   b = terse bullets (HTML allowed; write < as &lt;), d = optional plain-text diagram (lines, shown in monospace).
+   Items marked "possible" are candidate explanations, not settled answers. */
+window.TUTOR_NOTES = {
+  /* ---------------- R · Regulation ---------------- */
+  "R-C1": {
+    b: [
+      "Ohm's law for blood: ΔP = Q × R → (MAP − RAP) = CO × TPR; RAP ≈ 0 → MAP ≈ CO × TPR",
+      "Poiseuille: R = 8ηL / πr⁴ → radius halves → R × 16",
+      "Viscosity counts too: Hct ↑ (polycythemia) → η ↑ → TPR ↑",
+      "Starling = moving <i>along</i> the curve (preload); contractility = shifting the curve up",
+      "Teaching move: stimulus → which handle? → which term? → MAP ↑ or ↓"
+    ],
+    d: [
+      "              MAP",
+      "             /   \\",
+      "           CO  x  TPR <- arteriole radius (r^4)",
+      "          /  \\",
+      "        HR  x  SV",
+      "             / | \\",
+      "   preload  contractility  afterload",
+      "  (venous tone)          (TPR, aortic P)"
+    ]
+  },
+  "R-C2": {
+    b: [
+      "Analogy: baroreflex = cruise control (fast, forgets in 1–2 days); kidney = sets the speed limit",
+      "Gain = correction ÷ error left: baroreflex ≈ 2 (fixes ~2/3); kidney ≈ ∞ (fixes all, given time)",
+      "Pressure natriuresis: BP ↑ → urine Na⁺ & H₂O ↑ → volume ↓ → BP back to set point",
+      "Chronic hypertension: baroreceptors reset upward → defend the high BP",
+      "Exam cue words: “standing up” → baroreflex · “minutes after bleeding” → Ang II, fluid shift · “5 days” → kidney"
+    ],
+    d: [
+      "seconds  --> baroreflex | chemoreflex (<80) | CNS ischemic (<60)",
+      "minutes  --> Ang II constriction | stress relaxation | fluid shift",
+      "days     --> kidney: Na/H2O out  <->  volume  <->  BP"
+    ]
+  },
+  "R-C3": {
+    b: [
+      "RVLM = gas pedal (always pressed); CVLM = brake on RVLM; NTS = reception desk that decides",
+      "CVLM inhibits RVLM with GABA",
+      "RVLM → IML cell column (T1–L2) = spinal sympathetic preganglionic neurons",
+      "Adrenal medulla = a sympathetic ganglion whose “postganglionic neurons” are chromaffin cells secreting into blood",
+      "Vasovagal syncope: emotion/pain → cortex, hypothalamus → vagus ↑ + sympathetic ↓ → bradycardia + vasodilation → faint"
+    ],
+    d: [
+      "baro/chemo --IX, X--> NTS --+--> CVLM --(-)--> RVLM --> IML --> heart, vessels, adrenal",
+      "                            |",
+      "                            +--> nucleus ambiguus / DMNX --> vagus --> SA, AV"
+    ]
+  },
+  "R-C4": {
+    b: [
+      "Mnemonic: carotid <b>S</b>inus = <b>S</b>tretch (baro) · carotid <b>B</b>ody = <b>B</b>lood gases (chemo)",
+      "Nerves: neck = IX (Hering's), arch = X (aortic nerve)",
+      "Fires to pressure AND to its rate of rise → pulsatile pressure drives it more than steady pressure",
+      "Buffer, not setter: after denervation, mean BP is about the same but swings widely",
+      "Clinic: carotid massage stops some SVTs · carotid sinus hypersensitivity in the elderly → syncope with a tight collar or head turn",
+      "Blunted reflex: diabetic autonomic neuropathy, old age, drugs → orthostatic hypotension"
+    ],
+    d: [
+      "BP up -> wall stretch up -> firing up -> NTS",
+      "   -> vagus up    -> HR down",
+      "   -> SNS down    -> HR, contractility, TPR, venous tone down",
+      "   -> BP back down          (negative feedback loop)"
+    ]
+  },
+  "R-C5": {
+    b: [
+      "Carotid body flow ≈ 2,000 mL/100 g/min (body's highest) → it samples arterial blood, so it fires only when flow itself falls",
+      "Senses PaO₂, not O₂ content → anemia and CO poisoning barely stimulate it",
+      "Cerebral perfusion pressure: CPP = MAP − ICP → ICP ↑ → CPP ↓ → medulla ischemic",
+      "Cushing: the BP surge is the brain buying back CPP; the bradycardia is the baroreflex answering that surge",
+      "Irregular breathing in Cushing = brainstem compression → herniation warning"
+    ],
+    d: [
+      "MAP (mmHg)",
+      "180 +",
+      "    |  baroreflex only",
+      " 80 +  + chemoreflex",
+      " 60 +  + CNS ischemic response",
+      " 20 +  CNS ischemic response at its strongest (last stand)"
+    ]
+  },
+  "R-C6": {
+    b: [
+      "Constrictors mostly use Gq → IP₃ → Ca²⁺ ↑: α₁, AT1 (Ang II), V1 (ADH), ETA (endothelin)",
+      "β₂ uses Gs → cAMP ↑ → smooth muscle relaxes",
+      "Epinephrine dose switch: low → β₂ wins (muscle beds dilate, DBP ↓) · high → α₁ wins",
+      "ADH at normal levels acts on V2 (kidney); constrictor levels need a big stimulus such as severe hemorrhage",
+      "Low-dose aspirin blocks platelet TXA₂ for the platelet's life (no nucleus, no new COX) → antithrombotic",
+      "Drug links: nitrates = NO donors · sildenafil blocks PDE5 → cGMP ↑ · bosentan blocks endothelin (pulmonary HTN)"
+    ],
+    d: [
+      "ACh, bradykinin, shear -> eNOS -> NO -> guanylyl cyclase -> cGMP -> relax",
+      "                                         nitrates --^    sildenafil keeps cGMP up"
+    ]
+  },
+  "R-C7": {
+    b: [
+      "Myogenic response = Bayliss effect; metabolic = demand signal",
+      "Brain: CO₂ rules → hyperventilation (PaCO₂ ↓) → cerebral constriction → ICP ↓ (short-term trick)",
+      "Heart: already extracts ~70–75% of O₂ at rest → only way to get more O₂ is more flow (adenosine)",
+      "Kidney TGF: GFR ↑ → NaCl ↑ at macula densa → afferent arteriole constricts → GFR back",
+      "Chronic hypertension shifts the autoregulation plateau right → lowering BP too fast → brain ischemia"
+    ],
+    d: [
+      "pressure up -> stretch -> Ca2+ in -> constrict -> flow back to normal   (myogenic)",
+      "work up -> adenosine, CO2, H+, K+ up, O2 down -> dilate -> flow up      (metabolic)"
+    ]
+  },
+  "R-C8": {
+    b: [
+      "Aldosterone: principal cells → ENaC + Na⁺/K⁺-ATPase → Na⁺ kept, K⁺ lost → hyperaldosteronism = HTN + hypokalemia",
+      "Ang II constricts the efferent > afferent arteriole → props up GFR when renal flow is low",
+      "So ACE inhibitor in bilateral renal artery stenosis → GFR collapses (AKI)",
+      "ADH triggers: osmolality ~1–2% change vs blood volume ~5–10% loss",
+      "Heart failure drugs block this axis: ACEi/ARB, spironolactone, sacubitril–valsartan → longer survival"
+    ],
+    d: [
+      "angiotensinogen --renin--> Ang I --ACE--> Ang II --AT1--> constrict, aldosterone, ADH, thirst",
+      "                  ^aliskiren       ^ACEi           ^ARB",
+      "bradykinin --ACE--> inactive   (ACEi -> bradykinin up -> dry cough, angioedema)"
+    ]
+  },
+  "R-C9": {
+    b: [
+      "Funny current = HCN channels: open on hyperpolarization, cAMP makes them open more",
+      "→ β₁ (cAMP ↑) speeds the SA node; ACh (cAMP ↓) slows it · ivabradine blocks I<sub>f</sub> → HR ↓ only",
+      "Three ways to change rate: phase-4 slope, threshold, starting (most negative) potential; the vagus changes slope AND start",
+      "Phospholamban brakes SERCA; PKA phosphorylation releases the brake → faster relaxation (lusitropy) + more Ca²⁺ stored for the next beat",
+      "β-blocker: HR ↓ + contractility ↓ → myocardial O₂ demand ↓ → angina relief"
+    ],
+    d: [
+      "sympathetic: steeper phase 4  -> reaches threshold sooner -> HR up",
+      "vagus:       lower start + flatter phase 4 -> reaches threshold later -> HR down"
+    ]
+  },
+  "R-C10": {
+    b: [
+      "Resting HR 90–110 = what you see in a normal person after full atropine (vagal brake removed)",
+      "Exercise order: SV rises first (Starling, minutes 0–2), HR rises later as adrenal catecholamines arrive",
+      "→ transplant patients need longer warm-up and cool-down",
+      "Ischemia is often painless (sensory afferents cut too) → silent ischemia",
+      "Drugs acting through nerves fail (atropine, digoxin's vagal AV effect); drugs acting on receptors work (epinephrine, isoproterenol)"
+    ],
+    d: [
+      "normal:     vagus --(-)--> SA (intrinsic ~100) -> rests at ~70",
+      "transplant: no nerves      SA (intrinsic ~100) -> rests at ~100",
+      "            adrenal Epi --(slow, via blood)--> HR up during exercise"
+    ]
+  },
+  "R-C11": {
+    b: [
+      "ATLS classes: I &lt;15% ~normal · II 15–30% HR ↑, PP narrow · III 30–40% BP falls, confused · IV >40% life-threatening",
+      "Narrow PP = SV ↓ (SBP ↓) with TPR ↑ holding DBP",
+      "Early Hct is normal: whole blood is lost → Hct falls only after fluid shifts in",
+      "Shock index = HR / SBP; > 1 suggests major loss",
+      "Past ~30–40%: compensation fails → coronary ischemia → heart weakens → BP falls more (vicious cycle)"
+    ],
+    d: [
+      "0 s   --> baroreflex: HR up, TPR up, veins constrict",
+      "min   --> Ang II, ADH (V1), fluid shift in -> Hct down",
+      "h-d   --> aldosterone, ADH (V2), thirst -> volume back",
+      "weeks --> EPO -> red cells back"
+    ]
+  },
+
+  /* ---------------- F · Frog heart ---------------- */
+  "F-C1": {
+    b: [
+      "Frog heart = 2 atria + 1 ventricle; sinus venosus = the frog's SA node",
+      "Spongy ventricle gets O₂ from blood inside the chamber → no coronaries → ligatures cause no ischemia",
+      "History: Sydney Ringer found the heart needs Ca²⁺ using frog hearts → Ringer's solution",
+      "Cold-blooded: rate depends on temperature, so rates differ between groups"
+    ],
+    d: [
+      "Exp 1 observe     -> pacemaker order: SV -> A -> V",
+      "Exp 2 shocks      -> refractory period, extrasystole",
+      "Exp 3 ligatures   -> automaticity, latent pacemakers",
+      "Exp 4 currents    -> all-or-none law"
+    ]
+  },
+  "F-C2": {
+    b: [
+      "AV node is slow on purpose: small cells, few gap junctions, Ca²⁺ upstroke → atria finish filling the ventricles first",
+      "Atrial kick ≈ 15–25% of ventricular filling at rest",
+      "Purkinje is fast: wide fibers, many gap junctions, Na⁺ upstroke → ventricles contract together",
+      "Long plateau → ventricular AP ~250–300 ms vs nerve ~1–2 ms",
+      "Drug links: class I antiarrhythmics block Na⁺ (fast tissue) · verapamil, adenosine slow the AV node"
+    ],
+    d: [
+      "fast response (Na+):   steep phase 0  -> fast conduction  (muscle, Purkinje)",
+      "slow response (Ca2+):  gentle phase 0 -> slow conduction  (SA, AV node)"
+    ]
+  },
+  "F-C3": {
+    b: [
+      "Na⁺ channel has 2 gates: activation (m) opens fast; inactivation (h) shuts and reopens only after repolarization → ARP",
+      "Skeletal muscle: AP ~2–5 ms vs twitch ~10–100 ms → twitches can sum → tetanus",
+      "R-on-T: a stimulus in the vulnerable period (end of T wave ≈ RRP) can trigger VF",
+      "Defibrillation works by making every cell refractory at once → organized rhythm can restart"
+    ],
+    d: [
+      "AP      |~~~~~~~~\\__",
+      "ARP     [=======]",
+      "RRP             [==]",
+      "twitch    /~~~~~\\__     -> ARP covers almost the whole twitch: no tetanus"
+    ]
+  },
+  "F-C4": {
+    b: [
+      "Human version: PVC → full compensatory pause (SA node not reset) · PAC → usually not compensatory (SA node reset)",
+      "Patients feel the pause and the strong beat after it (“skipped beat, then a thump”), not the PVC itself",
+      "Post-extrasystolic potentiation: longer filling (Starling) + more Ca²⁺ in the SR",
+      "An early beat with little filling may not reach the wrist → pulse deficit"
+    ],
+    d: [
+      "normal: |----|----|----|----|",
+      "PVC:    |----|--X-|---------|----|",
+      "                  ^ next normal impulse lost (refractory)",
+      "        interval around the PVC = 2 x normal interval"
+    ]
+  },
+  "F-C5": {
+    b: [
+      "Overdrive suppression: a fast driver loads latent pacemakers with Na⁺ → Na⁺/K⁺ pump hyperpolarizes them → pause before escape",
+      "Same in patients: pause after a tachycardia stops or after cardioversion; sick sinus syndrome → junctional escape",
+      "Rule: the fastest surviving pacemaker below the block wins",
+      "Ventricle stayed at 0 after ligature II: its own escape was too slow or absent within the observation time",
+      "Slow escape in complete heart block → artificial pacemaker"
+    ],
+    d: [
+      "SV --X-- A ------ V     ligature I:  SV 60 | A, V 0 -> 32 (escape)",
+      "SV --X-- A --X--- V     ligature II: SV 60 | A 32  | V 0"
+    ]
+  },
+  "F-C6": {
+    b: [
+      "Skeletal muscle grades force by recruiting motor units + summation; the heart cannot (every cell fires every beat)",
+      "So the heart grades force by Ca²⁺ and stretch instead",
+      "Treppe (Bowditch staircase): faster rate → stronger beats",
+      "Digoxin: blocks Na⁺/K⁺-ATPase → Na⁺ in ↑ → Na⁺/Ca²⁺ exchanger removes less Ca²⁺ → contractility ↑"
+    ],
+    d: [
+      "stimulus:  sub   threshold   x2    x4",
+      "force:      0      ###       ###   ###    (same height)"
+    ]
+  },
+
+  /* ---------------- T · Turtle vagus ---------------- */
+  "T-C1": {
+    b: [
+      "Parasympathetic: long pre, short post (ganglion on the organ) · sympathetic: short pre, long post",
+      "Every autonomic ganglion is nicotinic (Nn); the targets differ: M2 vs β₁",
+      "Proof of vagal tone: atropine in a young adult → HR rises to ~100–120",
+      "Sinus arrhythmia: HR ↑ on inspiration (vagal withdrawal), normal in the young",
+      "Right-side nerves favour the SA node, left-side the AV node (both vagus and sympathetic)"
+    ],
+    d: [
+      "PARA: medulla ==========(N)= M2  heart    long pre, short post",
+      "SYMP: T1-T4 ==(N)=========== b1  heart    short pre, long post",
+      "      adrenal medulla -> Epi -> blood -> b1"
+    ]
+  },
+  "T-C2": {
+    b: [
+      "SA node sits in the right atrium near the SVC → right vagus; it is a preference, not exclusive",
+      "Vagal escape: keep stimulating and the ventricle restarts with escape beats",
+      "Vagal maneuvers (Valsalva, carotid massage) slow AV conduction → stop SVT or reveal flutter waves"
+    ],
+    d: [
+      "right vagus -> SA node -> rate down -> arrest       (chronotropic)",
+      "left vagus  -> AV node -> A:V > 1:1 -> AV block     (dromotropic)"
+    ]
+  },
+  "T-C3": {
+    b: [
+      "Logic to locate a synapse: block a site; stimulating above fails, stimulating below works → the synapse is in between",
+      "Two-phase nicotine (stimulate, then depolarization block) = same idea as succinylcholine phase I block at the NMJ",
+      "Hexamethonium = ganglion blocker (old antihypertensive): blocks BOTH sympathetic and parasympathetic ganglia",
+      "Smokers: nicotine excites sympathetic ganglia + adrenal medulla → HR and BP ↑"
+    ],
+    d: [
+      "vagus ==> [ganglion: Nn] ==> postganglionic ==> [SA node: M2]",
+      "               ^ nicotine                           ^ atropine",
+      "stimulate vagus:      must cross ganglion -> fails after high nicotine",
+      "stimulate crescentic: below the ganglion  -> still works (until atropine)"
+    ]
+  },
+  "T-C4": {
+    b: [
+      "Mobitz I (Wenckebach): usually in the AV node, often vagal, usually benign",
+      "Mobitz II: below the AV node (His–Purkinje) → can jump to complete block → pacemaker",
+      "Complete block signs: cannon a waves in the JVP, S1 loudness varies beat to beat",
+      "Rhyme: “If R is far from P → 1st degree · longer, longer, drop → Wenckebach · some P's don't get through → Mobitz II · P's and Q's don't agree → 3rd degree”"
+    ],
+    d: [
+      "1st:   P--[long PR]--QRS   P--[long PR]--QRS",
+      "M-I:   PR 0.20 -> 0.28 -> 0.36 -> P (no QRS)",
+      "M-II:  PR fixed ... P (no QRS)   -> dangerous",
+      "3rd:   P  P  P  P  P   (regular)",
+      "        QRS     QRS    (regular, slow, unrelated)"
+    ]
+  },
+
+  /* ---------------- B · Blood pressure ---------------- */
+  "B-C1": {
+    b: [
+      "Windkessel: elastic aorta stores energy in systole, recoils in diastole → keeps DBP up",
+      "Stiff aorta (elderly) → SBP ↑, DBP ↓ → isolated systolic hypertension",
+      "Fast HR: diastole shortens more than systole → MAP moves toward the simple average",
+      "Worked example: 120/80 → PP 40 → MAP ≈ 80 + 13 ≈ 93",
+      "Hypertension: ≥140/90 (Thai and ESC guidelines) · ACC/AHA uses ≥130/80",
+      "Oscillometric SBP/DBP come from an algorithm → unreliable in AF and other arrhythmias"
+    ],
+    d: [
+      "SBP --+   <- stroke volume, aortic stiffness",
+      "      | PP",
+      "DBP --+   <- TPR (run-off), heart rate",
+      "MAP ~ DBP + PP/3"
+    ]
+  },
+  "B-C2": {
+    b: [
+      "Narrow bladder → cuff pressure does not reach the artery fully → overestimates",
+      "Every 10 cm the arm hangs below the heart → about +8 mmHg",
+      "Auscultatory gap is common in hypertension with stiff arteries → pump only to 140 and you may call 180 “130”",
+      "Good practice: ≥2 readings 1–2 min apart; first visit measure both arms and use the higher arm"
+    ],
+    d: [
+      "step 1  palpate: inflate until pulse gone, +20-30 -> deflate -> pulse back = palpatory SBP",
+      "step 2  listen:  inflate to palpatory SBP +20-30 -> deflate slowly",
+      "                 first tap = SBP (I)      silence = DBP (V)"
+    ]
+  },
+  "B-C3": {
+    b: [
+      "Turbulence ↑ with velocity ↑ and viscosity ↓ (Reynolds number) → flow murmurs in anemia, fever, pregnancy",
+      "Phase IV to V gap is normally ~5–10 mmHg; in high-output states sounds can run to 0",
+      "Phase memory: tap → swish → crisp tap → muffle → silence",
+      "History: Nikolai Korotkoff described the sounds in 1905"
+    ],
+    d: [
+      "cuff > SBP       : artery shut all cycle      -> silent",
+      "SBP > cuff > DBP : opens at each peak -> jet  -> sounds I-IV",
+      "cuff < DBP       : open all cycle, laminar    -> silent (V)"
+    ]
+  },
+  "B-C4": {
+    b: [
+      "Rule 1: the cuff transmits poorly (small, narrow, loose) → reads HIGH",
+      "Rule 2: anything that truly raises BP for a moment (talking, pain, cold, full bladder, white coat) → HIGH",
+      "Rule 3: deflating too fast → the needle passes the first sound before you hear it → SBP LOW",
+      "White-coat HTN: high in clinic, normal at home · masked HTN: the opposite → confirm with home or 24-h BP"
+    ]
+  },
+  "B-C5": {
+    b: [
+      "Why SBP grows downstream: reflected waves add to the forward wave + arteries get smaller and stiffer",
+      "Coarctation clues: radio-femoral delay, rib notching (intercostal collaterals), hypertension in a young patient → check leg BP",
+      "ABI > 1.4 = calcified, non-compressible arteries (diabetes, CKD); the reading is unreliable",
+      "Hill's sign: in severe AR, leg SBP exceeds arm SBP by far more than normal"
+    ],
+    d: [
+      "aorta     peak  e.g. 120/80",
+      "femoral   taller, narrower peak  e.g. 130/78",
+      "foot      taller still           e.g. 140/75",
+      "mean pressure falls slightly along the way (flow needs a gradient)"
+    ]
+  },
+  "B-C6": {
+    b: [
+      "Muscle pump + respiratory pump also push blood back up",
+      "SBP ↓ with SV ↓, DBP ↑ with TPR ↑ → PP narrows",
+      "Orthostatic hypotension causes: hypovolemia, drugs (α-blockers, diuretics, nitrates), autonomic failure (diabetes, Parkinson's), long bed rest",
+      "POTS: HR rises ≥30 bpm within 10 min of standing without hypotension"
+    ],
+    d: [
+      "stand -> 500-800 mL to legs -> VR down -> SV down -> carotid BP down",
+      "      -> baro firing down -> SNS up, vagus down",
+      "      -> HR up, TPR up, veins constrict -> BP back in seconds"
+    ]
+  },
+  "B-C7": {
+    b: [
+      "Dynamic (running): muscle beds dilate → TPR ↓ → SBP ↑, DBP ≈",
+      "Static (isometric): contracted muscle squeezes its vessels → TPR ↑ → SBP and DBP ↑ (pressor response)",
+      "Lifting with breath-holding = Valsalva → intrathoracic pressure ↑ → BP spikes",
+      "CO 5 → 20–25 L/min in trained people; muscle flow up ~15–20×",
+      "Heart rate recovery &lt;12 bpm in the first minute after exercise = poor prognosis"
+    ],
+    d: [
+      "exercise -> SNS up -> HR up, SV up -> CO up -> SBP up",
+      "         -> metabolites -> muscle arterioles dilate -> TPR down -> DBP ~ same"
+    ]
+  },
+
+  /* ---------------- M · Microcirculation ---------------- */
+  "M-C1": {
+    b: [
+      "Starling: filtration = Kf × [(Pc − Pi) − σ(πc − πi)] → most experiments change Pc",
+      "Arterial occlusion: Pc ↓ → no filtration · venous occlusion: Pc ↑ → filtration → swelling",
+      "AV anastomoses (glomus bodies) in fingers, toes, ears, nose → heat dump"
+    ],
+    d: [
+      "experiment      what changes     principle",
+      "art occlusion   inflow 0         metabolites -> reactive hyperemia",
+      "ven occlusion   outflow 0        Pc up -> filtration, stagnant hypoxia",
+      "skin stroke     mast cell, axon  triple response",
+      "water temp      SNS, local temp  thermoregulation, AV shunts",
+      "arm up/down     rho x g x h      hydrostatic pressure"
+    ]
+  },
+  "M-C2": {
+    b: [
+      "Same pain mediators as angina and claudication → ischemic pain",
+      "Bigger O₂ debt → bigger and longer hyperemia",
+      "Clinic: flow-mediated dilation test (5-min brachial cuff, then ultrasound) measures endothelial NO function"
+    ],
+    d: [
+      "flow",
+      "base ----+          +^^\\",
+      "         |  0 flow  |   \\____ base",
+      "         +----------+",
+      "       cuff on    cuff off -> reactive hyperemia"
+    ]
+  },
+  "M-C3": {
+    b: [
+      "Visible cyanosis needs ~5 g/dL deoxyhemoglobin in the capillaries",
+      "Venous occlusion plethysmography (cuff ~40–50 mmHg) measures limb arterial inflow in research",
+      "DVT looks the same: outflow blocked → swollen, warm, dusky limb",
+      "Dengue tourniquet test: cuff at the midpoint of SBP and DBP for 5 min; positive ≥10 petechiae per square inch"
+    ],
+    d: [
+      "cuff 30-40 : art in yes   vein out no -> engorged, reddish",
+      "cuff 80-90 : art in peaks vein out no -> blue, swollen, petechiae",
+      "cuff > SBP : art in no    vein out no -> pale (arterial occlusion)"
+    ]
+  },
+  "M-C4": {
+    b: [
+      "Named the Lewis triple response (Thomas Lewis, 1927)",
+      "Antihistamine shrinks wheal and flare; local anesthetic abolishes only the flare (nerve-dependent)",
+      "Dermographism: an exaggerated wheal after light stroking → a form of urticaria",
+      "Capsaicin depletes substance P → smaller flare"
+    ],
+    d: [
+      "firm stroke -> mast cells -> histamine",
+      "   -> local dilation                        -> RED LINE (seconds)",
+      "   -> C fiber -> antidromic -> SP, CGRP     -> FLARE (spreads 1-2 cm)",
+      "   -> venule permeability up                -> WHEAL (minutes)"
+    ]
+  },
+  "M-C5": {
+    b: [
+      "Cold sensitizes α₂-adrenoceptors in skin vessels → stronger constriction",
+      "Hunting reaction protects fingers, ears and nose from cold injury",
+      "Raynaud's: exaggerated cold constriction → white → blue → red",
+      "Same left shift explains red ears and nose in the cold"
+    ],
+    d: [
+      "warm -> SNS down + local heat -> arterioles, AV shunts, veins dilate -> heat out",
+      "cold -> SNS up + a2 sensitized -> constrict -> veins flat -> heat kept",
+      "       below ~10-15 C -> cold-induced dilation in waves -> protects tissue"
+    ]
+  },
+  "M-C6": {
+    b: [
+      "Hydrostatic pressure = ρgh; 1 cmH₂O ≈ 0.74 mmHg",
+      "Varicose veins: leaky valves → long hydrostatic column → venous hypertension → edema, ulcers",
+      "JVP works because neck veins collapse above the blood column → the top of the column shows RA pressure",
+      "Central line insertion: head-down + Valsalva prevents air embolism (same negative-pressure risk)",
+      "Passive leg raise ≈ 150–300 mL autotransfusion → bedside fluid-responsiveness test"
+    ],
+    d: [
+      "skull sinuses  ~ -10   rigid walls, cannot collapse",
+      "neck veins     ~ 0     collapse",
+      "heart (RA)     ~ 0     reference level",
+      "foot veins     ~ +90   standing still"
+    ]
+  },
+
+  /* ---------------- P · Physical examination ---------------- */
+  "P-C1": {
+    b: [
+      "Displaced apex = volume overload (MR, AR, dilated cardiomyopathy) · sustained heave = pressure overload (AS, hypertension)",
+      "Central cyanosis (lips, tongue: lung or shunt) vs peripheral (fingers: low flow, cold)",
+      "Edema causes: heart, liver, kidney, low albumin, veins, lymph",
+      "Commonest cause of right heart failure = left heart failure"
+    ],
+    d: [
+      "LV fails -> LA P up -> pulmonary veins up -> lung: dyspnea, orthopnea, PND, crackles",
+      "RV fails -> RA P up -> systemic veins up  -> JVP up, liver up, leg edema"
+    ]
+  },
+  "P-C2": {
+    b: [
+      "S1 loudest at the apex, S2 at the base",
+      "Rhythm words: S3 = “Ken-TUCK-y” (S1-S2-S3) · S4 = “TEN-nes-see” (S4-S1-S2)",
+      "Loud S1 in MS: valve still wide open when the ventricle contracts → slams shut",
+      "Soft S1: MR, first-degree AV block (leaflets already drifting closed)",
+      "Time it with the carotid: the sound just before the upstroke is S1"
+    ],
+    d: [
+      "         S4  S1               S2   S3",
+      "atria    a   |                |",
+      "valves   AV open | all shut | SL open | all shut | AV open",
+      "LV       fill    | IVC      | eject   | IVR      | fill"
+    ]
+  },
+  "P-C3": {
+    b: [
+      "Area order: “All Physicians Take Money” → right 2nd ICS → left 2nd → left lower sternal border → apex",
+      "RILE: Right-sided murmurs louder on Inspiration, Left-sided on Expiration",
+      "Handgrip (afterload ↑) → MR and AR louder, AS softer",
+      "Valsalva softens most murmurs except HOCM and MVP",
+      "Levine grade 1–6; a palpable thrill means grade ≥4"
+    ],
+    d: [
+      "         S1                S2",
+      "AS/PS    |   <crescendo>   |          ejection",
+      "MR/TR    |=================|          pansystolic",
+      "AR/PR    |                 |>====---  early diastolic",
+      "MS       |                 | OS ~~~rumble~~~  mid-diastolic"
+    ]
+  },
+  "P-C4": {
+    b: [
+      "Pulsus paradoxus: fixed pericardial volume → RV fills on inspiration → septum bulges left → LV SV ↓",
+      "AR eponyms: Corrigan (water-hammer), de Musset (head bob), Quincke (nail-bed pulsation), Traube (pistol-shot femoral)",
+      "AS symptoms: angina, syncope, dyspnea (“SAD”)",
+      "Count a pulse deficit with two people over 1 min (apex and radial together)"
+    ],
+    d: [
+      "normal        /\\__",
+      "water-hammer  |\\___     sharp rise, sudden fall",
+      "parvus-tardus  /~\\      small, late peak",
+      "alternans     /\\ /~~\\ /\\ /~~\\   weak-strong-weak-strong"
+    ]
+  },
+  "P-C5": {
+    b: [
+      "RA pressure ≈ CVP ≈ RV end-diastolic pressure (if no tricuspid stenosis)",
+      "JVP ↑: right heart failure, fluid overload, tamponade, constriction (Kussmaul: JVP rises on inspiration), SVC obstruction (non-pulsatile)",
+      "Giant a wave: TS, pulmonary hypertension · cannon a: AV dissociation",
+      "Steep y descent: constrictive pericarditis · blunted y: tamponade",
+      "Wave memory: a = atrial contraction · c = closing tricuspid bulges · x = atrial relaxation · v = venous filling · y = emptying"
+    ],
+    d: [
+      "   a  c        v",
+      "  /\\ /\\       /\\",
+      " /  V  \\_x__/  \\_y_/",
+      "   S1         S2"
+    ]
+  },
+  "P-C6": {
+    b: [
+      "On inspiration A2 also comes slightly earlier (less blood returns from the lungs to the LV for a moment)",
+      "ASD murmur = ejection systolic at the pulmonic area from extra flow across a normal pulmonary valve, not from the hole",
+      "Untreated large ASD → pulmonary hypertension → shunt reverses → cyanosis (Eisenmenger)"
+    ],
+    d: [
+      "             expiration     inspiration",
+      "normal       A2P2 single    A2 . P2 split",
+      "wide         A2 . P2        A2 .  . P2      RBBB, PS",
+      "fixed        A2 .. P2       A2 .. P2        ASD",
+      "paradoxical  P2 . A2        single          LBBB, AS"
+    ]
+  },
+
+  /* ---------------- D · Dog lab I ---------------- */
+  "D-C1": {
+    b: [
+      "Pressor = BP ↑ · depressor = BP ↓",
+      "Large myelinated (A) fibers fire at low current; small (Aδ, C) need high current",
+      "Anesthesia blunts reflexes → lab traces can differ from textbook values",
+      "Habit: read the control values first, then the size and direction of each change"
+    ],
+    d: [
+      "brain <-- central end --X-- peripheral end --> organ",
+      "stimulate central end    = fake sensory signal -> reflex",
+      "stimulate peripheral end = fake motor command  -> direct effect"
+    ]
+  },
+  "D-C2": {
+    b: [
+      "Always ask: is the sensor loaded or unloaded? The common carotid clamp sits BELOW the sinus",
+      "Hering–Breuer reflex: lung stretch afferents in the vagus stop inspiration → after vagotomy breaths are slow and deep",
+      "Asphyxia HR: first sympathetic surge (chemoreflex), then hypoxic heart + vagal → bradycardia",
+      "Vagal escape: keep stimulating the vagus and the ventricles restart with escape beats"
+    ],
+    d: [
+      "clamp common carotid -> sinus pressure down -> firing down -> BP up, HR up",
+      "pull carotid sinus   -> stretch up          -> firing up   -> BP down, HR down"
+    ]
+  },
+  "D-C3": {
+    b: [
+      "Stronger pull → more stretch → more fibers recruited and faster firing → bigger fall",
+      "Electrical stimulation skips the stretch step → proves the nerve pathway, not the receptor",
+      "Clamping both carotids gives a bigger pressor response (no opposite-side buffer)",
+      "Carotid massage: avoid with a carotid bruit or recent stroke (plaque emboli)"
+    ]
+  },
+  "D-C4": {
+    b: [
+      "Two phases on every tilt trace: (A) physics = gravity moves blood · (B) physiology = reflex corrects",
+      "Clinical tilt-table test diagnoses vasovagal syncope and POTS",
+      "A dog's hydrostatic column is shorter than a standing human's → smaller swings"
+    ],
+    d: [
+      "head-down: VR up   -> BP up (A)   -> baro up   -> HR down, TPR down -> BP settles (B)",
+      "head-up:   VR down -> BP down (A) -> baro down -> HR up, TPR up     -> BP recovers (B)"
+    ]
+  },
+  "D-C5": {
+    b: [
+      "General rule: cut an efferent arm → only that output disappears; the other arms still answer",
+      "Slow deep breathing after vagotomy = Hering–Breuer reflex lost"
+    ],
+    d: [
+      "sinus --IX--> NTS --+--> vagus  X (cut)  -> HR cannot fall",
+      "                    +--> SNS down        -> BP still falls",
+      "                    +--> phrenic down    -> RR still falls"
+    ]
+  },
+  "D-C6": {
+    b: [
+      "Somatosympathetic reflex: surgical pain under light anesthesia → hypertension, tachycardia",
+      "Pain can go either way in people: pressor response, or a vasovagal faint at a needle",
+      "Phrenic → diaphragm is a skeletal-muscle synapse (nicotinic ACh)"
+    ],
+    d: [
+      "low current  -> large afferents        -> depressor: vagus up, SNS down -> BP down, HR down",
+      "high current -> + small pain fibers    -> pressor: SNS up, phrenic up   -> BP up, HR up, RR up"
+    ]
+  },
+  "D-C7": {
+    b: [
+      "The splanchnic bed holds ~20–25% of blood volume → constricting it is an autotransfusion",
+      "Epinephrine reversal: after an α-blocker, epinephrine lowers BP (β₂ unmasked)",
+      "Clinic: norepinephrine = first vasopressor in septic shock · phenylephrine = anesthesia hypotension · isoproterenol = bridge for bradycardia or heart block",
+      "Nitroglycerin: preload ↓ → wall stress and O₂ demand ↓ → angina relief; headache from meningeal dilation; never with PDE5 inhibitors"
+    ],
+    d: [
+      "            a1    b1    b2",
+      "NE          +++   ++    +/-   BP up up, reflex HR down",
+      "Epi low     +     ++    +++   DBP down",
+      "Epi high    +++   ++    ++    BP up up",
+      "phenyl      +++   -     -     BP up, reflex HR down",
+      "iso         -     +++   +++   BP down, HR up up"
+    ]
+  },
+
+  /* ---------------- H · Dog lab II ---------------- */
+  "H-C1": {
+    b: [
+      "Sort every maneuver: a filling problem (saline, bleeding, caval clamp, NTG, tamponade) or an outflow problem (AR, AS, coarctation)",
+      "Venous return = (mean systemic filling pressure − RA pressure) ÷ venous resistance",
+      "Bainbridge reflex: atrial stretch → HR ↑ (opposes the baroreflex after a fluid load)"
+    ],
+    d: [
+      "             CVP down              CVP up",
+      "BP down      hypovolemia,          tamponade, RV failure",
+      "             caval clamp, NTG      (heart cannot fill or pump)",
+      "BP up                              fluid load"
+    ]
+  },
+  "H-C2": {
+    b: [
+      "IVC brings ~2/3 of venous return, SVC ~1/3",
+      "Late pregnancy lying supine: uterus compresses the IVC → supine hypotension → tilt to the left",
+      "SVC syndrome (lung cancer, lymphoma): swollen face and arms, distended neck veins",
+      "PV loop: the end-diastolic corner moves left → narrower loop (SV ↓) → lower peak pressure"
+    ]
+  },
+  "H-C3": {
+    b: [
+      "Diastolic pressures in all four chambers equalize ≈ pericardial pressure",
+      "Speed matters: 100–200 mL suddenly can kill; a slow effusion can reach >1 L",
+      "Also look for electrical alternans on the ECG",
+      "Temporize with IV fluid (raise filling pressure); avoid diuretics and vasodilators",
+      "HR fell in the lab, possible reasons: lower coronary perfusion pressure → ischemic bradycardia, an inhibitory cardiac reflex, anesthesia"
+    ],
+    d: [
+      "fluid in sac -> pericardial P up -> diastolic filling blocked",
+      "   -> VR down, but CVP up (blood waits outside)",
+      "   -> EDV down -> SV down -> BP down, PP narrow",
+      "inspiration: RV fills -> septum shifts left -> LV fills less -> SBP down >10"
+    ]
+  },
+  "H-C4": {
+    b: [
+      "Chronic AR: LV dilates slowly (eccentric hypertrophy) → huge SV, wide PP, well tolerated for years",
+      "Acute AR (endocarditis, dissection): no time to dilate → pulmonary edema, shock",
+      "Low DBP → poor coronary filling (coronaries fill in diastole) → angina",
+      "Austin Flint murmur: the regurgitant jet hits the mitral leaflet → mid-diastolic rumble at the apex"
+    ],
+    d: [
+      "normal loop: B (EDV) -> C -> D -> E -> A -> back to B",
+      "AR: B moves right (EDV up), C lower (DBP down), loop wider (SV up)",
+      "    E -> A no longer vertical: filling from the aorta starts at once"
+    ]
+  },
+  "H-C5": {
+    b: [
+      "Teaching key: where is the sensor relative to the block? That decides the reflex",
+      "Coarctation clues: radio-femoral delay, rib notching, “3 sign” on CXR; associated with bicuspid aortic valve and Turner syndrome",
+      "AS → concentric LV hypertrophy → angina, syncope, dyspnea",
+      "HR fell with the ascending clamp, possible reasons: LV pressure overload triggering an inhibitory ventricular reflex, or a failing LV"
+    ],
+    d: [
+      "LV -> [clamp] -> arch -> carotids             carotid sees LOW   (AS model)",
+      "LV -> ascending -> carotids -> [clamp] -> desc  carotid sees HIGH  (coarctation model)"
+    ]
+  },
+  "H-C6": {
+    b: [
+      "In the rabbit the aortic depressor nerve runs on its own (Ludwig and Cyon's nerve); in the dog it joins the vagosympathetic trunk",
+      "Same principle as the sciatic experiment: low current = big fibers, high current = small fibers",
+      "Prolonged right-vagus stimulation → vagal escape after a few seconds"
+    ],
+    d: [
+      "aortic nerve  low current  -> baro fibers         -> depressor (BP down, HR down)",
+      "aortic nerve  high current -> + chemo fibers      -> pressor (BP up, HR up)",
+      "right vagus (peripheral)   -> ACh at SA node      -> arrest (BP -> 20/0)"
+    ]
+  },
+  "H-C7": {
+    b: [
+      "AF: atria fire ~350–600/min; the AV node filters → irregular ventricular rate",
+      "Atrial kick lost (~15–25% of filling) → CO ↓, worse with a stiff ventricle",
+      "Stasis in the left atrial appendage → clot → embolic stroke → anticoagulate by CHA₂DS₂-VASc",
+      "Wide PP in the dog's AF, possible reason: long pauses → more filling (bigger SV) and more aortic run-off (DBP ↓)",
+      "VF: no output = cardiac arrest → CPR + unsynchronized shock; AF gets synchronized cardioversion"
+    ],
+    d: [
+      "AF: ~~v~~|~~v~|~~~~v~~~|~|   no P waves, irregular narrow QRS",
+      "VF: vvvvvvvvvvvvvvvvvvvvvv   chaotic, no QRS, no pulse"
+    ]
+  }
+};
+
+/* English recording script for the tutor deck: 5-video plan, per-section 80% summary, and a SAY line per concept card / core question.
+   Keys match deck IDs. Recovered from the first tutor-notes version (commit 9dbf163). */
+window.TUTOR_SCRIPT = {
+ "plan": [
+  [
+   "Video 1",
+   [
+    "R"
+   ],
+   "Regulation lecture. Long: split at R-C7 into 1a (neural + hormones) and 1b (local, kidney, heart, hypovolemia).",
+   "45&#8211;50 min"
+  ],
+  [
+   "Video 2",
+   [
+    "F",
+    "T"
+   ],
+   "Frog heart and turtle vagus labs: extrasystole, Stannius, all-or-none, vagus, nicotine, heart block.",
+   "30&#8211;35 min"
+  ],
+  [
+   "Video 3",
+   [
+    "B",
+    "M"
+   ],
+   "Blood pressure lab and microcirculation lab.",
+   "30&#8211;35 min"
+  ],
+  [
+   "Video 4",
+   [
+    "P"
+   ],
+   "Physical examination lab: heart sounds, murmurs, pulses, JVP.",
+   "25&#8211;30 min"
+  ],
+  [
+   "Video 5",
+   [
+    "D",
+    "H"
+   ],
+   "Dog labs I and II: reflexes, drugs, hemodynamic disturbances.",
+   "30&#8211;35 min"
+  ]
+ ],
+ "sec": {
+  "R": {
+   "part": "Video 1",
+   "time": "45&#8211;50 min",
+   "open": "This part is the lecture. Every question comes back to one equation and three time scales, so learn those first and the rest is pattern-matching.",
+   "u": [
+    "<b>One equation.</b> MAP = HR &#215; SV &#215; TPR. Arterioles are the main resistance vessels (R &#8733; 1/r&#8308;), so they are the main target of antihypertensive drugs.",
+    "<b>Three speeds.</b> Seconds: baroreceptor, chemoreceptor and CNS ischemic reflexes. Minutes&#8211;hours: Ang II vasoconstriction, stress relaxation, capillary fluid shift. Hours&#8211;days: kidney (pressure natriuresis, aldosterone, ADH, thirst) with infinite gain. The baroreflex resets in 1&#8211;2 days, so it cannot set long-term BP.",
+    "<b>Medullary centers.</b> NTS receives CN IX and X. The vasoconstrictor area (RVLM) fires all the time and creates sympathetic vasoconstrictor tone. The vagal nuclei (dorsal motor nucleus, nucleus ambiguus) slow the heart. The adrenal medulla adds epinephrine via the splanchnic nerves.",
+    "<b>Baroreceptor reflex.</b> Stretch endings in the carotid sinus (Hering&#8217;s nerve &#8594; IX) and aortic arch (X) &#8594; NTS. BP up &#8594; more firing &#8594; RVLM inhibited (sympathetic down) and vagal output up &#8594; &#8595;HR, &#8595;contractility, arteriolar and venous dilation. BP down &#8594; fewer impulses &#8594; the opposite. Works from about 60 to 180 mmHg, most sensitive near 100, and responds to the rate of change.",
+    "<b>Chemoreceptors and CNS ischemia.</b> Carotid and aortic <b>bodies</b> sense &#8595;PO&#8322;, &#8593;PCO&#8322;, &#8593;H&#8314;. They matter when MAP is below ~80 and also drive breathing. Below ~60 the vasomotor center itself becomes ischemic &#8594; huge sympathetic discharge &#8594; systemic hypertension. Cushing reaction (&#8593;ICP): hypertension + bradycardia + irregular breathing.",
+    "<b>Vasoactive substances.</b> Constrictors: NE and epinephrine on &#945;1, Ang II, ADH (V1, the most potent), endothelin-1 (endothelium), thromboxane A&#8322;. Dilators: NO (shear stress, cGMP, also anti-platelet), prostacyclin, histamine and bradykinin (injury: dilation + leaky capillaries), ANP, low-dose epinephrine on &#946;2, and metabolites (adenosine, CO&#8322;, H&#8314;, K&#8314;, lactate).",
+    "<b>Local control.</b> Metabolic: more work &#8594; more metabolites &#8594; dilation (active hyperemia in exercise, reactive hyperemia after occlusion). Myogenic: more pressure &#8594; stretch &#8594; constriction. Together they give autoregulation = constant flow despite changing pressure (kidney is best). Long-term: months of high demand &#8594; angiogenesis; chronic blockage &#8594; collateral circulation.",
+    "<b>Kidney and RAAS.</b> &#8595;renal perfusion pressure, &#8595;NaCl at the macula densa or &#8593;renal sympathetic (&#946;1) &#8594; renin &#8594; Ang I &#8594; ACE &#8594; Ang II &#8594; arteriolar constriction, aldosterone (Na&#8314; retention), ADH and thirst, proximal Na&#8314; reabsorption. CKD: &#8595;GFR &#8594; salt and water retention &#8594; volume hypertension. Heart failure: renin&#8211;Ang II&#8211;aldosterone up (ANP is high but loses). ACE inhibitor: less Ang II and aldosterone, more bradykinin (cough).",
+    "<b>The heart side.</b> &#946;1 &#8594; cAMP &#8594; &#8593;If (funny) and &#8593;ICa-L &#8594; steeper phase 4 &#8594; &#8593;HR; more Ca&#178;&#8314; &#8594; stronger beat, so ESV falls and SV/EF rise at about the same EDV. M2 (vagus) &#8594; &#8593;IK-ACh &#8594; hyperpolarized and flatter phase 4 &#8594; &#8595;HR. An &#945;1 agonist raises afterload without changing contractility.",
+    "<b>Denervated (transplanted) heart.</b> No vagal tone, so resting HR is high. On exertion HR rises late and less, through circulating catecholamines; SV rises through Frank&#8211;Starling and lower afterload. A &#946;-agonist works; atropine does nothing.",
+    "<b>Hypovolemia as one story.</b> Direct: &#8595;SV &#8594; weak pulse, low BP, narrow pulse pressure. Seconds: baroreceptor firing <b>falls</b> (less IX/X traffic) &#8594; sympathetic up &#8594; tachycardia (steeper phase 4), &#8593;SVR, cold pale skin; chemoreceptors add tachypnea. Minutes: interstitial fluid enters plasma (Hct falls), Ang II. Days: thirst, ADH, aldosterone, kidney."
+   ],
+   "say": {
+    "R-C1": "Before any reflex: MAP equals HR times SV times TPR. For every question I&#8217;ll ask which of the five handles moved: heart rate, contractility, venous tone, arteriolar tone or volume.",
+    "R1": "Immediate means nervous, and the baroreceptor reflex is the classic answer. The chemoreceptor reflex is fast too, but it only matters below 80 mmHg, and sympathetic stimulation is the effector, not the mechanism.",
+    "R-C2": "Three gears. Seconds: nerves. Minutes to hours: angiotensin vasoconstriction, stress relaxation, capillary fluid shift. Hours to days: the kidney. The baroreflex resets in one to two days.",
+    "R2": "Five days of diarrhea: by now the kidney is doing most of the work by keeping salt and water.",
+    "R-C3": "Who gives the orders: NTS listens, RVLM drives sympathetic tone, the vagal nuclei slow the heart, the adrenal medulla adds epinephrine.",
+    "R-C4": "Walk the arc left to right: stretch, carotid sinus on nine and aortic arch on ten, NTS, then vagus up and sympathetic down, and BP comes back. Now run it backwards for a fall in BP. On the slide, arrow one is the sensory arm, two and three are the vagal and sympathetic arms, four goes to the adrenal medulla. Sinus is baro, body is chemo.",
+    "R4": "Which input makes the sympathetic quieter? Only the stretch receptor. Everything else on the list excites it.",
+    "R6": "The classic swap: carotid body versus carotid sinus.",
+    "R7": "BP falls, baroreceptors fire less, sympathetic goes up. Resistance rises, it doesn&#8217;t fall.",
+    "R-C5": "Use the pressure ladder in the table: baroreceptors work from 60 to 180, chemoreceptors take over below 80, and below 60 the brainstem itself is ischemic. Cushing triad: hypertension, bradycardia, irregular breathing.",
+    "R8": "The CNS ischemic response is the strongest sympathetic push the body has, so systemic hypertension.",
+    "R-C6": "Sort the list into constrictors and dilators. The favourites: ADH is the most potent constrictor, endothelin comes from endothelium, NO comes from shear stress and also blocks platelets, histamine comes from injured tissue.",
+    "R10": "ADH is the only constrictor in the list.",
+    "R14": "Shear stress means NO, every time.",
+    "R18": "Tissue injury, mast cells, histamine: red, swollen and leaky.",
+    "R-C7": "Two ideas: metabolic, more work gives more flow; myogenic, more pressure gives constriction. Together they hold flow steady from about 70 to 175 mmHg: that is autoregulation, best in the kidney. Months of demand grow new vessels; a chronic block grows collaterals.",
+    "R19": "CO2 dilates, most strongly in the brain. High O2 constricts.",
+    "R22": "Exercising muscle is metabolic control, active hyperemia.",
+    "R24": "Autoregulation keeps flow constant when pressure changes. Flow is supposed to change with demand.",
+    "R26": "Months of workload: new vessels, hypervascularization. Collateral circulation is the answer for a chronic blockage.",
+    "R-C8": "RAAS in one breath: low pressure, low NaCl or sympathetic, then renin, angiotensin one, ACE, angiotensin two: constrict, aldosterone, ADH, thirst. Then three stories: CKD, heart failure, ACE inhibitor.",
+    "R30": "CKD: fewer nephrons, lower GFR, the kidney can&#8217;t get rid of salt, so volume and BP go up.",
+    "R31": "Heart failure: the kidney sees low flow and thinks the body is dry, so renin goes up. ANP is high, not low.",
+    "R32": "ACE inhibitor: less angiotensin two, less aldosterone. Bradykinin builds up, which is the cough.",
+    "R33": "Find the wrong word in each option: angiotensinogen, free water, ADH with sodium. Only the baroreceptor tachycardia is clean.",
+    "R-C9": "This is the SA-node potential from the lab slide. Phase four creeps up on the funny current. Sympathetic makes that slope steeper, so threshold comes sooner; vagal starts it more negative and flatter, so the next beat comes later.",
+    "R34": "Beta-one, cAMP, funny channel. That is the answer they want.",
+    "R38": "Sympathetic squeezes harder: ESV falls, EDV stays about the same, so SV rises.",
+    "R-C10": "Transplanted heart: no nerves. Resting HR is high because there&#8217;s no vagal tone, and exercise HR rises late, through adrenal catecholamines.",
+    "R41": "No nerves means no vagal withdrawal. Everything else still works.",
+    "R-C11": "Now one patient for the whole topic: direct effect, then seconds, minutes to hours, and days.",
+    "R45": "Tachycardia from sympathetic drive means a steeper diastolic depolarization.",
+    "R46": "Only SVR goes up. Everything about filling and output goes down.",
+    "R47": "Afferent traffic goes down in hypotension. That drop is what triggers the reflex.",
+    "R48": "The direct effect is the weak pulse. Tachycardia, tachypnea and cold skin are compensation."
+   }
+  },
+  "F": {
+   "part": "Video 2",
+   "time": "15&#8211;18 min",
+   "open": "Frog lab: four experiments that show who leads the heart, when it can be re-excited, and why bigger shocks don&#8217;t give bigger beats.",
+   "u": [
+    "<b>Frog heart.</b> Sinus venosus (pacemaker = SA node) &#8594; atria &#8594; ventricle. The crescentic line on the back marks the SA junction. No coronary vessels, so ligatures do not cause ischemia. Systole looks pale, diastole darker; rate about 56/min.",
+    "<b>Two action potentials.</b> Pacemaker: phase 4 slow rise on the funny current (If) &#8594; phase 0 by L-type Ca&#178;&#8314; &#8594; phase 3 by K&#8314;. Ventricle: phase 0 INa, 1 Ito, 2 plateau (ICa &#8776; IK), 3 IK, 4 rest at &#8722;90 (IK1).",
+    "<b>Why SA leads.</b> It fires fastest (70&#8211;80 vs AV 40&#8211;60 vs Purkinje 20&#8211;40) and overdrive-suppresses the rest. Location is never the reason. Conduction is slowest in the AV node (relay, ~0.1 s delay) and fastest in His&#8211;Purkinje.",
+    "<b>Refractory periods.</b> ARP runs from phase 0 to about &#8722;50 mV in phase 3 and covers the whole contraction, so no tetanus. RRP follows: a stronger stimulus is needed.",
+    "<b>Extrasystole.</b> Shock in systole: nothing (ARP). Shock in diastole: premature beat + compensatory pause, because the next SA impulse lands in the ARP of the extrasystole. Amplitude depends on preload (later in diastole = more filling = bigger); the beat after the pause is strongest. On a Frank&#8211;Starling plot an extrasystole is the same curve at a lower EDV.",
+    "<b>Stannius ligatures.</b> Ligature I (SA junction): atria and ventricle stop, then restart slower: automaticity of a latent pacemaker. Ligature II (AV junction): the ventricle stops. In humans with SA failure the AV node usually takes over: ~40&#8211;60/min, narrow QRS.",
+    "<b>All-or-none.</b> Subthreshold: nothing. Threshold and anything above it: the same full contraction. Force changes only through preload, contractility, temperature, pH and ions."
+   ],
+   "say": {
+    "F-C1": "This is Figure 9-1 from the manual. Fill the blanks with me: A, the downstroke, is diastole; B, the upstroke, is systole. Use that on every tracing in this lab, including the AC81 question coming up.",
+    "F1": "Quick true/false warm-up.",
+    "F-C2": "Two real slides of the action potential. The ventricular one rests at minus ninety and has a plateau; the pacemaker one never sits flat, because phase four creeps up on the funny current. Then name the seven stops on the conduction slide before you reveal them.",
+    "F2": "Location is never the reason. Firing fastest is.",
+    "F-C3": "Left slide: ARP, then RRP, on the action potential. Right slide: the twitch sits almost entirely inside the ARP, so the heart can&#8217;t be tetanized.",
+    "F7": "The ARP isn&#8217;t just phase zero. It runs through the plateau into phase three.",
+    "F9": "Here is the whole extrasystole experiment as one question.",
+    "F-C4": "This is Figure 9-2. Shocks one, two and three land in systole: nothing happens. Four, five and six land in diastole: an extra beat, then a long flat pause. The later the shock in diastole, the bigger the extra beat.",
+    "F10": "It&#8217;s the SA impulse that falls into the ARP, not the ectopic one.",
+    "F13": "Different amplitudes mean different preload: a later shock means more filling.",
+    "F14": "Same curve, less filling, so C.",
+    "F15": "Read it like Figure 9-1. B is on an upstroke and C at the top: both systole, so nothing, however strong. D is subthreshold, so nothing. A is on the downstroke, diastole, and it is the only one that gives an extra beat. The AC81 key says A.",
+    "F-C5": "Ligature one: atria and ventricle stop, then the atria wake up at 32. That&#8217;s automaticity of a latent pacemaker. Ligature two: the ventricle stays still.",
+    "F17": "The atria restart on their own: automaticity.",
+    "F18": "Fifty a minute with a narrow QRS is the AV node taking over.",
+    "F-C6": "Figure 9-3: the shocks get bigger, the beats don&#8217;t. That&#8217;s all-or-none, and the minimum that works is threshold.",
+    "F19": "Threshold."
+   }
+  },
+  "T": {
+   "part": "Video 2",
+   "time": "15&#8211;18 min",
+   "open": "Turtle lab: the vagus reaches the heart through a ganglion on the heart itself, and nicotine proves where it is.",
+   "u": [
+    "<b>Wiring.</b> Vagus (preganglionic, ACh on <b>nicotinic</b>) &#8594; ganglion at the crescentic line &#8594; postganglionic (ACh on <b>M2</b>) &#8594; SA and AV node. Sympathetic: T1&#8211;T4 &#8594; stellate/cervical ganglia &#8594; NE on &#946;1.",
+    "<b>Effects.</b> Sympathetic: chronotropy, inotropy and dromotropy up, AP duration down. Parasympathetic: rate and conduction down strongly, force down a little, AP duration up (lab slide). Vagal tone exists at rest.",
+    "<b>M2 mechanism.</b> More K&#8314; efflux (IK-ACh) &#8594; more negative membrane and a flatter phase 4 &#8594; slower rate.",
+    "<b>Right vs left vagus.</b> Right &#8594; SA node &#8594; slower rate, A:V stays 1:1, then arrest. Left &#8594; AV node &#8594; A:V &gt; 1:1 (block), then arrest. Cause: unequal fiber distribution. Same pattern in humans.",
+    "<b>Nicotine.</b> Low dose stimulates the ganglion &#8594; HR 46 &#8594; 40. High dose &#8594; depolarization block: HR 50 (resting vagal tone lost), vagal stimulation no longer works, crescentic-line stimulation still stops the heart. So the synapse is at the crescentic line. Atropine blocks M2, so neither route slows the heart.",
+    "<b>Heart block.</b> Gaskell clamp: light &#8594; dropped ventricular beats (A:V &gt; 1:1), tight &#8594; ventricle stops. Humans: 1st degree (PR &gt; 0.2 s), 2nd (some dropped beats), 3rd (AV dissociation, escape rhythm 40&#8211;60 junctional or 20&#8211;40 ventricular). Blocks can occur in healthy people (vagal tone, drugs)."
+   ],
+   "say": {
+    "T-C1": "Trace both wires on the slide. Vagus: long preganglionic, ganglion on the heart, short postganglionic, ACh on M2. Sympathetic: ganglion near the spine, long postganglionic, norepinephrine on beta-one. Then fill the four-row effect table.",
+    "T1": "ACh opens K+ channels, so the membrane gets more negative.",
+    "T-C2": "Figures 9-4 and 9-5. Right vagus goes to the SA node: the rate falls, atria and ventricles stay one to one, then the heart stops. Left vagus goes to the AV node: the atria keep going and the ventricle drops beats.",
+    "T5": "Not equivalent. Right is rate, left is conduction.",
+    "T6": "Compression stimulates the nerve. Left vagus means AV node, so heart block.",
+    "T-C3": "Figures 9-6 to 9-8, then this table: that is the whole experiment. Low dose stimulates the ganglion, so the heart slows. High dose blocks it: the heart speeds up a little because resting vagal tone is gone, vagal stimulation can&#8217;t get through, but the crescentic line still works because we stimulate below the block.",
+    "T9": "Ganglion means nicotinic. Muscarinic is at the node.",
+    "T10": "Low dose is plain stimulation of nicotinic receptors.",
+    "T11": "High dose is a depolarization block.",
+    "T13": "Low dose doesn&#8217;t block anything, so both still slow the heart.",
+    "T14": "Compare with baseline: 46, then 50, then still 50. Increase, increase.",
+    "T15": "Which nicotine trick speeds the heart up? The high dose.",
+    "T-C4": "Figure 9-9. Clamp harder and more ventricular beats drop out, until the ventricle stops. Map it onto first, second and third degree block.",
+    "T20": "P waves and QRS complexes ignore each other: third-degree block."
+   }
+  },
+  "B": {
+   "part": "Video 3",
+   "time": "18&#8211;20 min",
+   "open": "BP lab: how the cuff works, why readings go wrong, and what posture and exercise do.",
+   "u": [
+    "<b>Numbers.</b> PP = SBP &#8722; DBP; MAP &#8776; DBP + PP/3. Back-calculate with DBP = MAP &#8722; PP/3.",
+    "<b>Methods.</b> Direct = intra-arterial line (ICU, continuous). Indirect = auscultatory (noninvasive gold standard), palpatory (SBP only), oscillometric (automatic; maximal oscillation = MAP).",
+    "<b>Technique.</b> No caffeine, smoking, food or exercise for 30 min; empty bladder; seated, back supported, feet flat, no talking. Arm supported at heart level. Bladder width ~40% and length 80&#8211;100% of arm circumference; lower edge ~2.5 cm above the elbow crease.",
+    "<b>Two steps.</b> Palpate first (inflate until the radial pulse disappears + 20&#8211;30 mmHg; pulse returns = SBP), then auscultate: phase I = SBP, phase V = DBP (phase IV in children, pregnancy, high output). Palpating first avoids the auscultatory gap.",
+    "<b>Errors.</b> Small or loose cuff, arm below heart, talking, caffeine, smoking, full bladder, anxiety &#8594; falsely <b>high</b>. Large or tight cuff, arm above heart, deflating too fast &#8594; falsely <b>low</b>.",
+    "<b>Limbs.</b> Supine leg SBP is higher than arm SBP (pulse-wave amplification), so femoral SBP &gt; aortic SBP. Check the other arm when one is high; coarctation gives arms &gt; legs.",
+    "<b>Posture.</b> Standing pools blood in the legs &#8594; baroreceptor firing falls &#8594; HR up, TPR up; CO stays 20&#8211;30% lower. Lying down raises baroreceptor firing &#8594; HR falls.",
+    "<b>Exercise.</b> SBP up, DBP about the same, PP wider. Sudden stop &#8594; loss of the muscle pump &#8594; post-exercise syncope. Heavy isometric lifting is avoided in hypertension. Low BP alone is not shock."
+   ],
+   "say": {
+    "B-C1": "Three numbers and one formula. MAP is DBP plus a third of the pulse pressure, because diastole lasts about twice as long.",
+    "B1": "A cuff on the outside is indirect. Direct means a catheter in the artery.",
+    "B4": "Say the arithmetic out loud: pulse pressure 54, a third is 18, plus 72 gives 90.",
+    "B9": "Work backwards: DBP is 80 minus 20, so 60; SBP is 60 plus 60, so 120.",
+    "B-C2": "This is Figure 1 from the BP manual and its prep list. Cuff rule: width 40 percent, length 80 to 100 percent of the arm. Always palpate before you listen.",
+    "B-C3": "Five phases: tapping, swishing, crisp tapping, muffling, silence. First tapping is SBP; silence is DBP in adults; muffling is used when the sounds never stop.",
+    "B11": "Phase one.",
+    "B-C4": "Left column reads high, right column reads low. Small or loose reads high; large or tight reads low.",
+    "B14": "Tight reads low, by the course key.",
+    "B15": "Deflating too fast skips past the systolic level.",
+    "B16": "A big cuff reads low.",
+    "B-C5": "Lying down, legs read higher than arms because of pulse amplification. If they ask which artery has the highest systolic pressure: femoral, not aorta.",
+    "B21": "False. Legs are higher.",
+    "B-C6": "Stand up: blood pools, less stretch, the reflex kicks in. HR goes up, and CO still stays lower.",
+    "B23": "Blood pools in the legs.",
+    "B-C7": "Exercise: SBP up, DBP flat, pulse pressure wide.",
+    "B28": "True."
+   }
+  },
+  "M": {
+   "part": "Video 3",
+   "time": "12&#8211;15 min",
+   "open": "Microcirculation lab: five things we did to our own arms.",
+   "u": [
+    "<b>Arterial occlusion (200 mmHg, 5 min).</b> Pale, cold, pulseless, painful (ischemic nerves, K&#8314;, H&#8314;, lactate, bradykinin), and <b>no edema</b> because nothing flows in. After release: reactive hyperemia, bright red and warm, from accumulated metabolites + O&#8322; lack + myogenic relaxation + NO; deoxyhemoglobin falls fast.",
+    "<b>Venous occlusion (30&#8211;40, then 80&#8211;90 mmHg).</b> Blood gets in but cannot get out: engorged veins, bluish-purple skin, tense fingertips, tingling, more filtration and swelling. The veins distend passively; arterioles do not dilate.",
+    "<b>Skin stroking.</b> Light stroke &#8594; white reaction (mechanical expulsion of blood). Firm stroke &#8594; triple response: red line (local dilation), flare (axon reflex: antidromic C-fiber impulses release substance P/CGRP; not a spinal reflex), wheal (leaky capillaries from histamine). Bee stings and insect bites = increased capillary permeability.",
+    "<b>Temperature.</b> Warm water: red skin, engorged veins (dilation, AV shunts open). Ice water 5&#8211;10 &#176;C: veins flatten, the skin is painful but still red (cold hemoglobin keeps its O&#8322;, plus cold-induced vasodilation).",
+    "<b>Gravity.</b> Raised arm: pale, veins collapse (pressure ~0). Hanging arm: red-purple, engorged. Standing quietly: foot veins ~ +90 mmHg, dural sinuses negative."
+   ],
+   "say": {
+    "M-C1": "Five experiments, one table. We&#8217;ll take them in order.",
+    "M-C2": "During the 200 mmHg cuff: pale, cold, pulseless, painful, but no edema. After release: bright red and warm. That&#8217;s reactive hyperemia.",
+    "M1": "Edema needs blood coming in, and nothing comes in at 200.",
+    "M3": "Warm blood rushes in.",
+    "M4": "Fresh oxygen floods in, so deoxyhemoglobin drops.",
+    "M-C3": "Venous cuff: blood gets in but can&#8217;t get out. The veins stretch passively.",
+    "M6": "Vasodilation is the odd one out.",
+    "M-C4": "Light stroke: white line. Firm stroke: red line, flare, wheal. The flare is the axon reflex: the nerve talks to itself, not through the spinal cord.",
+    "M7": "White reaction.",
+    "M9": "Redness around the line is the flare: antidromic C fibers.",
+    "M12": "A sting makes capillaries leaky.",
+    "M-C5": "Warm water: red skin, full veins. Ice water: still red, but flat veins, and it hurts.",
+    "M14": "Red and flattened, left arm only.",
+    "M-C6": "Arm up is pale, arm down is purple. The skull sinuses are the only veins with negative pressure.",
+    "M16": "The dural sinuses."
+   }
+  },
+  "P": {
+   "part": "Video 4",
+   "time": "25&#8211;30 min",
+   "open": "Heart exam lab: almost every question is timing plus location.",
+   "u": [
+    "<b>Exam steps.</b> PMI = left 5th ICS, midclavicular line. Parasternal heave = RVH (palpation finds ventricular, not atrial, enlargement). Percussion is of little value. Diaphragm for high-pitched sounds, bell for low. Cyanosis and edema are not always cardiac.",
+    "<b>Sounds.</b> S1 = AV valves close, between atrial systole and isovolumetric contraction. S2 = semilunar valves close, between ejection and isovolumetric relaxation. S3 = rapid filling just after S2. S4 = atrial contraction into a stiff LV just before S1.",
+    "<b>Areas.</b> Aortic right 2nd ICS; pulmonic left 2nd ICS; Erb&#8217;s left 3rd ICS; tricuspid left lower sternal border; mitral apex (left 5th ICS MCL).",
+    "<b>Murmurs.</b> Ejection systolic: AS, PS. Pansystolic: MR, TR, VSD. Early diastolic blowing: AR, PR. Mid-diastolic rumble: MS, TS.",
+    "<b>Pulses.</b> AR collapsing (wide PP); AS slow-rising and delayed; tamponade pulsus paradoxus; AF pulse deficit; severe LV failure pulsus alternans.",
+    "<b>JVP.</b> Right internal jugular at 45&#176;; height above the sternal angle (+5 cm &#8776; RA pressure). a = RA contraction (absent in AF), c = tricuspid bulge, x = atrial relaxation, v = RA filling (giant in TR), y = RA emptying. Raised JVP = raised RA pressure.",
+    "<b>Breathing.</b> Inspiration raises venous return to the right heart and splits S2. ASD: wide fixed split; on inspiration the LA&#8594;RA shunt volume falls.",
+    "<b>Hypertension.</b> Raised afterload &#8594; LVH &#8594; apex displaced laterally."
+   ],
+   "say": {
+    "P-C1": "Figure 1 shows the palpation. Four steps, four traps: cyanosis isn&#8217;t always the heart, palpation finds ventricles not atria, percussion can&#8217;t diagnose constriction, diaphragm for high pitch and bell for low.",
+    "P1": "Diaphragm means high pitch.",
+    "P5": "Hypertension is afterload. The LV thickens, then the apex moves out.",
+    "P-C2": "Read the strip left to right: atrial systole, S1, isovolumetric contraction, ejection, S2, isovolumetric relaxation, rapid filling with S3. Just after S1 is IVC; just after S2 is IVR.",
+    "P6": "S1 is the AV valves closing. The radial pulse comes later.",
+    "P7": "After S1: isovolumetric contraction.",
+    "P8": "After S2: isovolumetric relaxation.",
+    "P-C3": "Point to each area on the chest picture, then run the murmur table: when is it, and where is it loudest.",
+    "P12": "Diastolic at the left second space: pulmonary regurgitation.",
+    "P14": "Ejection systolic at the left second space: pulmonary stenosis.",
+    "P16": "Rumble at the apex: mitral stenosis.",
+    "P17": "Pansystolic at the apex: mitral regurgitation.",
+    "P18": "Diastolic at the left fifth space by the sternum: tricuspid stenosis.",
+    "P-C4": "AR collapses, AS rises slowly, tamponade is paradoxus, AF has a deficit.",
+    "P20": "AR: collapsing pulse.",
+    "P22": "AS: slow and late.",
+    "P23": "Tamponade: pulsus paradoxus.",
+    "P-C5": "a is contraction, c is the bulge, x is relaxation, v is filling, y is emptying. AF removes the a wave; TR makes the v wave giant.",
+    "P25": "Right internal jugular.",
+    "P27": "Atrial contraction.",
+    "P30": "No atrial contraction in AF, so no a wave.",
+    "P32": "TR: giant v wave.",
+    "P-C6": "Inspiration sends more blood to the right heart, so P2 comes later. In ASD the extra RA pressure shrinks the shunt, which is why the split stays fixed.",
+    "P33": "The shunt volume is the thing that decreases."
+   }
+  },
+  "D": {
+   "part": "Video 5",
+   "time": "15&#8211;18 min",
+   "open": "Dog lab one: every tracing is a reflex. Find the stimulus, the receptor, the arm that answers, and anything that was cut.",
+   "u": [
+    "<b>Recorded:</b> arterial BP, HR, respiration, CVP.",
+    "<b>Carotid sinus.</b> Clamping the common carotids (less pressure at the sinus) &#8594; BP and HR up. Pulling or massaging the sinus &#8594; BP, HR and RR down. After double vagotomy the HR no longer slows, but BP and RR still fall.",
+    "<b>Nerve stimulation.</b> Peripheral vagus &#8594; bradycardia or arrest. Central vagus: low current &#8594; depressor (baroreceptor fibers); high current &#8594; pressor with &#8593;RR (chemoreceptor fibers). Aortic nerve: same rule.",
+    "<b>Sciatic, central end.</b> Low current &#8594; depressor reflex: BP and HR down (exam keys add RR down; in the lab tracing RR barely changed); vagal (muscarinic at SA node, longer AV conduction). High current &#8594; pressor (pain): all up; the faster breathing comes from phrenic ACh at the diaphragm.",
+    "<b>CO&#8322;.</b> Chemoreceptor drive &#8594; BP, HR, RR up; locally CO&#8322; dilates.",
+    "<b>Splanchnic.</b> BP up (splanchnic vasoconstriction + adrenal epinephrine), then a dip below baseline from &#946;2 as epinephrine falls. After double vagotomy: BP up, HR up, and only the slower breathing shows the baroreflex.",
+    "<b>Drugs.</b> Low-dose epinephrine: &#946;2 dilation &#8594; BP and CVP down, HR up. High dose: BP way up, reflex HR down and breathing inhibited. NE and phenylephrine: BP up, reflex bradycardia. Isoproterenol: BP down, HR up. After vagotomy there is no reflex bradycardia. A denervated heart responds only to circulating catecholamines."
+   ],
+   "say": {
+    "D-C1": "Four questions for every tracing. Low current hits baroreceptor fibers; high current also recruits chemoreceptor and pain fibers.",
+    "D-C2": "This table is Dog one. Read the why column out loud; that&#8217;s what the exam asks.",
+    "D2": "Pressing below the angle of the jaw is carotid massage: more firing, slower heart.",
+    "D-C3": "These are the real Dog I tracings. Pull the sinus: BP, HR and breathing all drop, more with a harder pull. Clamp the common carotid: everything goes up, because the sinus sits beyond the clamp and feels less pressure.",
+    "D4": "Sympathetic withdrawal relaxes vessels, so resistance falls.",
+    "D6": "BP down and breathing down together: carotid sinus stretch.",
+    "D7": "True: up first, then the reflex pulls it down.",
+    "D-C4": "Head down: BP jumps first, then the baroreflex drags BP and HR down. Head up: BP drops, then HR climbs and BP recovers. Same reflex as standing up in the BP lab.",
+    "D8": "Vagi cut, so the heart can&#8217;t slow, but BP still falls.",
+    "D-C5": "Look at the HR labels: one-ten every time. The vagi are cut, so the heart can&#8217;t slow, but BP and breathing still fall through sympathetic withdrawal and the phrenic nerve.",
+    "D9": "High current recruits chemoreceptor fibers: pressor, not depressor.",
+    "D11": "Low-current sciatic is a depressor reflex: vagal, so muscarinic at the SA node.",
+    "D-C6": "Low current: BP and HR dip. High current: BP to two hundred, HR up, breathing to fifty-six. Big fibers first, pain fibers only at high current.",
+    "D12": "BP down and HR down: only C has both. In the lab tracing the breathing hardly changed at low current, so don&#8217;t argue about the third value.",
+    "D14": "Spot the error in each option. Ganglia use ACh, central chemoreceptors don&#8217;t sense O2, and the phrenic nerve explains the faster breathing.",
+    "D-C7": "Splanchnic tracing: BP climbs twice, first from the gut vessels, then from adrenal epinephrine, and dips below baseline when it stops because the leftover epinephrine acts on beta-two. After vagotomy the heart rate rises with BP and only the breathing slows. Then the drug table.",
+    "D15": "False. The dip is beta-two.",
+    "D16": "True. Breathing is the only sign left.",
+    "D18": "BP down, CVP down, HR way up: low-dose epinephrine."
+   }
+  },
+  "H": {
+   "part": "Video 5",
+   "time": "15&#8211;18 min",
+   "open": "Dog lab two: change the filling or change the outflow, then predict CVP, BP and HR.",
+   "u": [
+    "<b>IV fluid.</b> CVP up, preload up &#8594; SV and CO up (Frank&#8211;Starling) &#8594; BP up.",
+    "<b>Hemorrhage.</b> BP down, HR and RR up. Within ~15 min Hct falls because interstitial fluid moves into the plasma.",
+    "<b>SVC/IVC clamp.</b> Venous return and RA pressure fall, CO and BP fall &#8594; reflex &#8593;contractility and &#8593;TPR. Venous pressure upstream (head, arms) rises. On the PV loop, EDV moves left.",
+    "<b>Nitroglycerin.</b> Venodilation &#8594; less venous return, lower preload and CVP, BP down, reflex HR up.",
+    "<b>Tamponade.</b> CVP up while venous return falls; SV, CO and BP down; narrow PP; HR expected up (it fell slightly in the lab recording); pulsus paradoxus. Preload, CO and afterload (aortic pressure) all fall.",
+    "<b>Aortic regurgitation.</b> EDV up, total SV up, SBP up, DBP down, wide PP, collapsing pulse; effective forward SV falls, so PP overestimates it. PV loop: EDV point moves right.",
+    "<b>Coarctation and AS.</b> Coarctation distal to the left subclavian: arms high, legs low, LV afterload up. AS raises LV pressure and can raise CVP.",
+    "<b>Arrhythmias.</b> AF starts in the atria (pulmonary veins in the LA): no P waves, irregular, narrow QRS, pulse deficit. VF: no pulse."
+   ],
+   "say": {
+    "H-C1": "One table, eight disturbances. For each one say CVP, BP, HR and the one-line why.",
+    "H1": "Fluid means preload, and preload means output.",
+    "H3": "False. Tamponade raises CVP with an empty heart.",
+    "H4": "HR up, breathing up, BP down.",
+    "H5": "Hct falls because interstitial fluid moves into the plasma.",
+    "H6": "Less return, then the reflex squeezes harder: down, up, up.",
+    "H-C2": "Two clamps, same direction: BP, pulse pressure and CVP down, HR up. The IVC drop is bigger because the IVC carries the whole lower body.",
+    "H9": "Nitroglycerin is a venodilator: less venous return.",
+    "H-C3": "BP collapses to 20 over 10 while CVP creeps up. Tamponade is the one where CVP goes up while venous return goes down.",
+    "H12": "Fluid in the pericardial sac.",
+    "H13": "Down, down, down.",
+    "H-C4": "First the dog: SBP up, DBP down, pulse pressure from 45 to 60. Then the loop:  AR fills the ventricle from two sides, so the end-diastolic volume moves right and pulse pressure widens.",
+    "H15": "Up, up, down, up.",
+    "H16": "DBP is the one that falls.",
+    "H21": "Up before the narrowing, down after it, afterload up.",
+    "H-C5": "Where you measure decides the answer. Clamp the ascending aorta and the carotid is downstream: BP falls, CVP rises, like severe AS. Clamp the arch and the carotid is upstream: BP rises, like coarctation.",
+    "H-C6": "Aortic nerve: low current, BP and HR down; high current, both up. Right vagus, peripheral end: the heart stops.",
+    "H-C7": "In the tracing, AF makes the beats irregular with a huge pulse pressure and recovers when the stimulus stops; VF drops BP to a flat line and does not recover. AF starts in the atria and still has a narrow QRS. VF has no pulse at all.",
+    "H27": "False. The chaos is in the atria."
+   }
+  }
+ }
+};
+
 (function () {
   var S = CVS.sections, LET = 'ABCDEFGH';
   var $ = function (id) { return document.getElementById(id); };
@@ -638,6 +2192,11 @@ CVS.add({"id":"H","short":"Dog lab II","title":"Lab: Disturbance of CVS II (dog)
   };
   var byId = {}, secOf = {};
   S.forEach(function (s, si) { s.items.forEach(function (it) { byId[it.id] = it; secOf[it.id] = si; }); });
+
+  /* English recording script (src/tutor-script.js): plan, 80% summary, one SAY line per card */
+  var SCRIPT = window.TUTOR_SCRIPT || { plan: [], sec: {} };
+  function sayLine(id) { var s = S[secOf[id]], sc = s && SCRIPT.sec[s.id]; return sc && sc.say ? sc.say[id] || '' : ''; }
+  function sayBox(text, label) { return text ? '<div class="saybox"><div class="tp-head">' + (label || 'พูดในวิดีโอ &#183; SAY') + '</div><p>' + text + '</p></div>' : ''; }
 
   var THAI_Q = {
   "R1": [
@@ -1275,7 +2834,8 @@ CVS.add({"id":"H","short":"Dog lab II","title":"Lab: Disturbance of CVS II (dog)
     "การกระตุ้นด้าน central end ของ sciatic nerve ด้วย <b>กระแสไฟต่ำ (low current)</b> ทำให้เกิด <b>depressor reflex</b> → เพิ่มการทำงานของ vagus nerve ไปหลั่ง ACh จับกับ <b>Muscarinic receptor (M2) ที่ SA node</b>"
   ],
   "D12": [
-    "การกระตุ้นด้าน central end ของ sciatic nerve ด้วย <b>low current</b> กระตุ้น depressor reflex ทำให้ <b>BP, HR และ RR ลดลง (Decreased, decreased, decreased)</b>",
+    "การกระตุ้นด้าน central end ของ sciatic nerve ด้วย <b>low current</b> กระตุ้น depressor reflex ทำให้ <b>BP และ HR ลดลง</b> ซึ่งมีแค่ข้อ C ที่ BP และ HR ลดทั้งคู่ (เฉลย AC81: Decreased, decreased, decreased)",
+    "ในกราฟจริงของแล็บ (D-C6) RR แทบไม่เปลี่ยน (12 → 12) จึงไม่ต้องเถียงค่าที่สาม",
     "ในทางกลับกัน ถ้าใช้ high current จะกระตุ้น pain fibers เกิด pressor reflex ทำให้ทั้งสามค่าเพิ่มขึ้น"
   ],
   "D13": [
@@ -1579,7 +3139,7 @@ CVS.add({"id":"H","short":"Dog lab II","title":"Lab: Disturbance of CVS II (dog)
   ],
   "D-C7": [
     "กระตุ้น <b>splanchnic nerve</b>: BP พุ่งขึ้น 2 จังหวะ (หลอดเลือดช่องท้องหดตัว + หลั่ง adrenal epinephrine) และเมื่อหยุดกระตุ้น BP จะลดต่ำกว่า baseline จากฤทธิ์ <b>β₂ vasodilation</b>",
-    "<b>Low-dose epinephrine</b>: デ่นที่ β₂ (↓BP, ↓CVP) ร่วมกับ β₁ (↑HR) | <b>High-dose epinephrine</b>: ↑↑BP จนเกิด reflex ↓RR (adrenaline apnea)"
+    "<b>Low-dose epinephrine</b>: เด่นที่ β₂ (↓BP, ↓CVP) ร่วมกับ β₁ (↑HR) | <b>High-dose epinephrine</b>: ↑↑BP จนเกิด reflex ↓RR (adrenaline apnea)"
   ],
   "H-C1": [
     "สรุปภาพรวมแล็บ Dog II: เปรียบเทียบผลต่อ CVP, BP, HR และ PP เมื่อเปลี่ยนการเติมเลือด (IV fluid, hemorrhage, caval clamp, nitroglycerin, tamponade) หรือเปลี่ยนทางออก (AR, AS, coarctation)"
@@ -1736,22 +3296,46 @@ CVS.add({"id":"H","short":"Dog lab II","title":"Lab: Disturbance of CVS II (dog)
       }).join('') + '</div>';
     }
     h += '<div class="explain"><div class="ans">' + answerText(it) + '</div>' + renderExplainBullets(it) + (it.flag ? '<div class="flag"><b>Recall note:</b> ' + it.flag + '</div>' : '') + '</div>';
+    h += sayBox(sayLine(it.id));
     return h + '</article>';
+  }
+  function notesHtml(it) {
+    var n = window.TUTOR_NOTES && window.TUTOR_NOTES[it.id];
+    if (!n) return '';
+    var esc = function (x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+    return '<div class="tnotes"><div class="tn-head">Tutor notes &#183; beyond the slide</div>' +
+      (n.b && n.b.length ? '<ul>' + n.b.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' : '') +
+      (n.d && n.d.length ? '<pre class="tdiag">' + n.d.map(esc).join('\n') + '</pre>' : '') + '</div>';
+  }
+  function thxHtml(it) {
+    var tx = window.THAI_EXPLAIN && window.THAI_EXPLAIN[it.id];
+    if (!tx || !tx.length) return '';
+    return '<details class="thx" open><summary><span class="thx-h">อธิบายเป็นภาษาไทย</span><span class="thx-s">Thai explanation &#183; ' + tx.length + ' ย่อหน้า</span></summary><div class="thx-body">' + tx.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div></details>';
   }
   function renderC(it) {
     var kp = THAI_CONCEPT[it.id];
     var kpHtml = kp && kp.length ? '<div class="tpoints"><div class="tp-head">สรุปประเด็นสำคัญ (Key Points)</div><ul>' + kp.map(function (b) { return '<li>' + b + '</li>'; }).join('') + '</ul></div>' : '';
-    return '<article class="card concept" data-id="' + it.id + '">' + eyebrow(it) + '<h2>' + it.title + '</h2>' + kpHtml + '<div class="cbody">' + it.html + '</div></article>';
+    return '<article class="card concept" data-id="' + it.id + '">' + eyebrow(it) + '<h2>' + it.title + '</h2>' + kpHtml + sayBox(sayLine(it.id)) + notesHtml(it) + thxHtml(it) + '<div class="cbody">' + it.html + '</div></article>';
   }
   function renderSec(si) {
-    var s = S[si], c = counts(s), ts = THAI_SEC[s.id] || {};
+    var s = S[si], c = counts(s), ts = THAI_SEC[s.id] || {}, sc = SCRIPT.sec[s.id] || {};
+    var u80 = sc.u && sc.u.length ? '<details class="u80"><summary>Understand it: the 80% <span>English summary &#183; ' + sc.u.length + ' points</span></summary><ol>' + sc.u.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol></details>' : '';
     var toc = s.items.filter(function (it) { return it.t === 'c'; }).map(function (it) { return '<li><span class="tid">' + it.id + '</span>' + it.title + '</li>'; }).join('');
     var trapsHtml = ts.traps && ts.traps.length ? '<div class="traps-box"><div class="tp-head">จุดหลอกข้อสอบที่พบบ่อย (Exam Traps)</div><ul>' + ts.traps.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul></div>' : '';
-    return '<article class="card secard"><div class="eyebrow"><span class="chip kind">' + s.kind + '</span><span class="id">Section ' + s.id + '</span><span class="chip">' + (si + 1) + ' of ' + S.length + '</span></div>' +
-      '<h2>' + s.title + '</h2><p class="lede">' + (ts.big || s.blurb) + '</p>' +
+    return '<article class="card secard"><div class="eyebrow"><span class="chip kind">' + s.kind + '</span><span class="id">Section ' + s.id + '</span><span class="chip">' + (si + 1) + ' of ' + S.length + '</span>' + (sc.part ? '<span class="chip core">' + sc.part + ' &#183; ' + sc.time + '</span>' : '') + '</div>' +
+      '<h2>' + s.title + '</h2><p class="lede">' + (ts.big || s.blurb) + '</p>' + sayBox(sc.open, 'เปิด Section &#183; SAY') +
       '<div class="stats"><span><b>' + c.c + '</b>concept cards</span><span><b>' + c.q + '</b>questions</span><span><b>' + c.core + '</b>core, for the video</span></div>' +
-      trapsHtml +
+      trapsHtml + u80 +
       '<h3 class="minih">Concept cards in this section</h3><ol class="toc">' + toc + '</ol></article>';
+  }
+  function planTable() {
+    var bySec = {}; S.forEach(function (s) { bySec[s.id] = s; });
+    var rows = (SCRIPT.plan || []).map(function (p) {
+      var core = 0, names = [];
+      p[1].forEach(function (id) { if (bySec[id]) { core += counts(bySec[id]).core; names.push('<b>' + id + '</b> ' + bySec[id].short); } });
+      return '<tr><td>' + p[0] + '</td><td>' + names.join('<br>') + '</td><td class="num">' + core + '</td><td>' + p[2] + '</td><td class="num">' + p[3] + '</td></tr>';
+    }).join('');
+    return rows ? '<h3 class="minih">แผนการอัดวิดีโอ &#183; Recording plan</h3><div class="tblwrap"><table class="tbl compact plan"><thead><tr><th>Video</th><th>Sections</th><th>Core Qs</th><th>Covers</th><th>Length</th></tr></thead><tbody>' + rows + '</tbody></table></div>' : '';
   }
   function renderIntro() {
     var tot = 0, core = 0;
@@ -1763,11 +3347,13 @@ CVS.add({"id":"H","short":"Dog lab II","title":"Lab: Disturbance of CVS II (dog)
     return '<article class="card secard"><div class="eyebrow"><span class="chip kind">Peer support 82</span><span class="chip">All Answers Revealed &#183; คำอธิบายภาษาไทย</span></div>' +
       '<h2>CVS I Regulation &amp; Lab &#183; หน้าสำหรับผู้สอน (Tutor View)</h2>' +
       '<p class="lede">หน้าตาและลำดับการ์ดตรงกับ Student Deck ทุกข้อ (' + tot + ' คำถาม, ' + core + ' ข้อหลักสำหรับอัดวิดีโอ และ 54 Concept Cards) โดยเปิดเฉลยคำตอบและช่องว่าง Cloze ทั้งหมดไว้ล่วงหน้า พร้อมคำอธิบายแบบกระชับเป็น Bullet ภาษาไทย (คงศัพท์การแพทย์ภาษาอังกฤษ)</p>' +
-      '<div class="stations">' + st + '</div>' +
+      '<div class="stations">' + st + '</div>' + planTable() +
       '<div class="traps-box"><div class="tp-head">วิธีใช้งานคู่กับหน้า Student Deck</div><ul>' +
       '<li>เปิด <b>Student Deck</b> ในหน้าจอที่ใช้อัดวิดีโอ และเปิดหน้า <b>Tutor Deck</b> นี้ไว้ดูโพยคำอธิบายควบคู่กัน (รหัสการ์ด เช่น <code>R12</code>, <code>F-C2</code>, <code>D-C3</code> ตรงกันทั้งหมด)</li>' +
+      '<li>เปิด Student Deck กับหน้านี้ใน<b>เบราว์เซอร์เดียวกัน</b> (คนละแท็บหรือคนละหน้าต่าง) แล้วเปิด <b>Follow student</b> ไว้ เมื่อเลื่อนการ์ดในหน้า Student หน้านี้จะเลื่อนตามไปการ์ดเดียวกันเอง</li>' +
+      '<li>กล่อง <b>SAY</b> คือประโยคภาษาอังกฤษสั้นๆ สำหรับพูดตอนอัด ส่วน bullet ภาษาไทยไว้อ่านทำความเข้าใจก่อนพูด</li>' +
       '<li>กดปุ่ม <kbd>&#8592;</kbd> <kbd>&#8594;</kbd> หรือ <kbd>Space</kbd> เพื่อเลื่อนการ์ดทีละข้อในโหมด <b>Present</b> หรือกด <kbd>B</kbd> เพื่อดูรายการทั้งหมดแบบ <b>Browse</b></li>' +
-      '<li>ติ๊ก <b>Core only</b> เพื่อกรองเฉพาะข้อหลัก (106 ข้อ) ที่คัดมาสำหรับอัดวิดีโอสรุป</li>' +
+      '<li>ติ๊ก <b>Core only</b> เพื่อกรองเฉพาะข้อหลัก (' + core + ' ข้อ) ที่คัดมาสำหรับอัดวิดีโอสรุป</li>' +
       '</ul></div></article>';
   }
 
@@ -1944,6 +3530,19 @@ CVS.add({"id":"H","short":"Dog lab II","title":"Lab: Disturbance of CVS II (dog)
   }, { passive: true });
   window.addEventListener('hashchange', function () { jumpTo(location.hash.slice(1)); });
 
+  /* ---------- follow the student deck (same browser, another tab or window) ---------- */
+  var follow = LS.get('follow', true);
+  function readDeckPos() { try { var v = localStorage.getItem('cvsdeck:pos'); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
+  function followTo(id) {
+    if (!follow || !id || (view === 'present' && seq[idx] && seq[idx].id === id)) return;
+    if (view === 'browse') { var el = document.querySelector('#blist [data-id="' + id + '"]'); if (el) { el.scrollIntoView({ block: 'start' }); return; } }
+    if (jumpTo(id)) { try { window.scrollTo(0, 0); } catch (e) { } }
+  }
+  window.addEventListener('storage', function (e) { if (e.key === 'cvsdeck:pos' && e.newValue) { try { followTo(JSON.parse(e.newValue)); } catch (err) { } } });
+  try { var bc = new BroadcastChannel('cvs-peer-82'); bc.onmessage = function (e) { if (e.data && e.data.pos) followTo(e.data.pos); }; } catch (e) { }
+  $('follow').checked = follow;
+  $('follow').addEventListener('change', function () { follow = this.checked; LS.set('follow', follow); if (follow) followTo(readDeckPos()); });
+
   /* ---------- start ---------- */
   $('tabs').innerHTML = S.map(function (s, si) { return '<button type="button" class="tab" data-sec="' + si + '"><span class="k">' + s.id + '</span>' + s.short + '</button>'; }).join('');
   var th = LS.get('theme', null); if (th === 'dark' || th === 'light') document.documentElement.setAttribute('data-theme', th);
@@ -1954,7 +3553,7 @@ CVS.add({"id":"H","short":"Dog lab II","title":"Lab: Disturbance of CVS II (dog)
     coreOnly = typeof data.coreOnly === 'boolean' ? data.coreOnly : !!LS.get('core', false);
     $('coreOnly').checked = coreOnly;
     buildSeq();
-    var want = location.hash ? location.hash.slice(1) : (data.pos || LS.get('pos', 'start'));
+    var want = location.hash ? location.hash.slice(1) : (data.pos || (follow && readDeckPos()) || LS.get('pos', 'start'));
     var k = find(want); idx = k >= 0 ? k : 0;
     setView(data.view || LS.get('view', 'present'));
   }

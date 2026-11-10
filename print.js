@@ -23,21 +23,24 @@ const isQ = it => it.t === 'q' || it.t === 'tf' || it.t === 'open';
 let nQ = 0, nC = 0;
 S.forEach(s => s.items.forEach(it => { if (it.t === 'c') nC++; else nQ++; }));
 
+/* ---------- concept units: each concept page, then the quiz on that concept ---------- */
+const units = [];   /* {s, c, qs} in deck order: every question follows the concept it belongs to */
+S.forEach(s => { let cur = null; s.items.forEach(it => { if (it.t === 'c') { cur = { s: s, c: it, qs: [] }; units.push(cur); } else if (cur) cur.qs.push(it); else throw new Error(it.id + ' comes before any concept'); }); });
+
 /* ---------- cover ---------- */
 let h = '<section class="cover"><div class="eyebrow"><span class="chip kind">Peer support 82</span><span class="chip">AC75–81 + lab quizzes</span><span class="chip">Student handout</span></div>' +
   '<h1>CVS I Regulation &amp; Lab</h1>' +
-  '<p class="lede">' + nQ + ' past-exam and lab-quiz questions on the cardiovascular regulation lecture and every lab except ECG, with ' + nC + ' concept pages built from the real lab figures.</p>' +
-  '<div class="howuse"><div><b>1 · Try</b>Each section starts with its questions. Nothing is answered on those pages: circle your choice first.</div>' +
-  '<div><b>2 · Learn</b>After the questions come the concept pages, one page per concept. Underlined terms are the key details.</div>' +
+  '<p class="lede">' + nC + ' concept pages built from the real lab figures, each followed by a quiz on it: ' + nQ + ' past-exam and lab-quiz questions on the cardiovascular regulation lecture and every lab except ECG.</p>' +
+  '<div class="howuse"><div><b>1 · Learn</b>Read the concept page. Underlined terms are the key details.</div>' +
+  '<div><b>2 · Try</b>The quiz on that concept comes right after it. Nothing is answered there: circle your choice first.</div>' +
   '<div><b>3 · Check</b>Answers and Thai explanations are all at the back, from page ' + pg('ans') + '. The Thai explanation of every concept follows them, from page ' + pg('thx') + '.</div></div>' +
-  '<h3 class="minih">Contents</h3><table class="toc"><thead><tr><th>Section</th><th>Questions</th><th>Concept pages</th><th>Answers</th><th>Thai concept explanations</th></tr></thead><tbody>';
+  '<h3 class="minih">Contents</h3><table class="toc"><thead><tr><th>Section</th><th>Starts</th><th>Concepts · questions</th><th>Answers</th><th>Thai concept explanations</th></tr></thead><tbody>';
 S.forEach(s => {
   const qn = s.items.filter(isQ).length, cn = s.items.filter(it => it.t === 'c').length;
-  h += '<tr><td><span class="tid">' + s.id + '</span>' + s.title + '</td><td>p. ' + pg('q-' + s.id) + ' <span class="muted">· ' + qn + ' Qs</span></td><td>p. ' + pg('c-' + s.id) + ' <span class="muted">· ' + cn + ' pages</span></td><td>p. ' + pg('a-' + s.id) + '</td><td>p. ' + pg('x-' + s.id) + '</td></tr>';
+  h += '<tr><td><span class="tid">' + s.id + '</span>' + s.title + '</td><td>p. ' + pg('s-' + s.id) + '</td><td>' + cn + ' · ' + qn + '</td><td>p. ' + pg('a-' + s.id) + '</td><td>p. ' + pg('x-' + s.id) + '</td></tr>';
 });
 h += '</tbody></table><p class="note"><span class="chip core">core</span> = done on the video. Question IDs (R1, F12, …) match the interactive deck and the answer key.</p></section>';
 
-/* ---------- per section: questions, then concepts ---------- */
 function qBlock(it) {
   let b = '<div class="pq"><div class="pqh"><b>' + it.id + '</b>' + (it.src ? '<span class="src">' + it.src + '</span>' : '') + (it.core ? '<span class="chip core">core</span>' : '') + (it.t === 'tf' ? '<span class="src">True / False</span>' : '') + (it.group ? '<span class="src">' + it.group + '</span>' : '') + '</div>';
   b += '<div class="pstem">' + it.q + '</div>';
@@ -47,18 +50,16 @@ function qBlock(it) {
   else b += '<div class="plines"><i></i><i></i><i></i><i></i></div>';
   return b + '</div>';
 }
-S.forEach(s => {
-  const qs = s.items.filter(isQ), cs = s.items.filter(it => it.t === 'c');
-  h += '<section class="qsec"><header class="qhead"><div class="eyebrow"><span class="chip kind">' + s.kind + '</span><span class="id">Section ' + s.id + ' · Questions</span><span class="sp"></span><span>' + qs.length + ' questions · answers on p. ' + pg('a-' + s.id) + '</span></div>' +
-    '<h2>' + s.title + '</h2><p>' + s.blurb + '</p></header><div class="qcols">' + qs.map(qBlock).join('') + '</div></section>';
-  cs.forEach(it => {
-    const kp = THAI_CONCEPT[it.id];
-    h += '<section class="cpage" data-id="' + it.id + '"><div class="cfit concept"><div class="eyebrow"><span class="id">' + it.id + '</span><span class="chip kind">Concept</span>' + (it.src ? '<span class="chip">' + it.src + '</span>' : '') + '<span class="sp"></span><span>' + s.title + '</span></div>' +
-      '<h2>' + it.title + '</h2>' +
-      (kp && kp.length ? '<div class="tpoints"><div class="tp-head">สรุปประเด็นสำคัญ (Key Points)</div><ul>' + kp.map(b => '<li>' + b + '</li>').join('') + '</ul></div>' : '') +
-      '<div class="cbody">' + eager(CVS.cloze(it.html)) + '</div>' +
-      '<p class="cfoot">Thai explanation of this concept: p. ' + pg('x-' + s.id) + '</p></div></section>';
-  });
+units.forEach(u => {
+  const s = u.s, it = u.c, kp = THAI_CONCEPT[it.id], first = s.items[0] === it;
+  h += '<section class="cpage" data-id="' + it.id + '"><div class="cfit concept">' +
+    (first ? '<div class="secband"><span class="chip kind">' + s.kind + '</span><span class="id">Section ' + s.id + '</span><b>' + s.title + '</b><span class="muted">' + s.blurb + '</span></div>' : '') +
+    '<div class="eyebrow"><span class="id">' + it.id + '</span><span class="chip kind">Concept</span>' + (it.src ? '<span class="chip">' + it.src + '</span>' : '') + '<span class="sp"></span><span>' + s.title + '</span></div>' +
+    '<h2>' + it.title + '</h2>' +
+    (kp && kp.length ? '<div class="tpoints"><div class="tp-head">สรุปประเด็นสำคัญ (Key Points)</div><ul>' + kp.map(b => '<li>' + b + '</li>').join('') + '</ul></div>' : '') +
+    '<div class="cbody">' + eager(CVS.cloze(it.html)) + '</div>' +
+    '<p class="cfoot">Thai explanation of this concept: p. ' + pg('x-' + s.id) + '</p></div></section>';
+  if (u.qs.length) h += '<section class="quiz" data-for="' + it.id + '"><header class="quizh"><span class="id">Quiz · ' + it.id + ' ·</span><b>' + it.title + '</b><span class="sp"></span><span class="muted">' + u.qs.length + (u.qs.length === 1 ? ' question' : ' questions') + ' · answers p. ' + pg('a-' + s.id) + '</span></header><div class="qcols">' + u.qs.map(qBlock).join('') + '</div></section>';
 });
 
 /* ---------- answer key ---------- */
@@ -67,10 +68,11 @@ function ansLine(it) {
   if (it.t === 'tf') return '<span class="alet">' + (it.a ? 'T' : 'F') + '</span> <span class="atxt">' + (it.a ? 'True' : 'False') + '</span>';
   return '<span class="atxt">Model answer</span>';
 }
-h += '<section class="part"><div class="eyebrow"><span class="chip kind">Answer key</span></div><h1>เฉลยและคำอธิบาย</h1><p class="lede">Answers and Thai explanations for all ' + nQ + ' questions, in the same order as the question pages.</p></section>';
+h += '<section class="part"><div class="eyebrow"><span class="chip kind">Answer key</span></div><h1>เฉลยและคำอธิบาย</h1><p class="lede">Answers and Thai explanations for all ' + nQ + ' questions, grouped by the concept quiz they belong to.</p></section>';
 S.forEach(s => {
-  h += '<section class="aksec"><header class="akhead"><span class="id">Answer key · Section ' + s.id + '</span><b>' + s.title + '</b><span class="muted">questions on p. ' + pg('q-' + s.id) + '</span></header><div class="acols">';
-  s.items.filter(isQ).forEach(it => {
+  h += '<section class="aksec"><header class="akhead"><span class="id">Answer key · Section ' + s.id + '</span><b>' + s.title + '</b><span class="muted">section starts p. ' + pg('s-' + s.id) + '</span></header><div class="acols">';
+  s.items.forEach(it => {
+    if (it.t === 'c') { const u = units.find(x => x.c === it); if (u.qs.length) h += '<div class="akc"><b>' + it.id + '</b>' + it.title + ' <span class="muted">· quiz p. ' + pg('z-' + it.id) + '</span></div>'; return; }
     const tb = THAI_Q[it.id];
     h += '<div class="ak"><div class="akq"><b>' + it.id + '</b>' + ansLine(it) + '</div>' +
       (it.t === 'open' && it.ans ? '<p class="model">' + it.ans + '</p>' : '') +
@@ -93,14 +95,30 @@ S.forEach(s => {
 
 /* ---------- fit each concept on one page ---------- */
 const fitJs = `(function () {
+  var PH = 0;
+  function h(el) { return el.getBoundingClientRect().height; }
   function fit(page) {
     var inner = page.firstElementChild, lo = 0.4, hi = 1;
     inner.style.zoom = 1;
-    if (page.scrollHeight <= page.clientHeight + 1) return 1;
-    for (var i = 0; i < 10; i++) { var m = (lo + hi) / 2; inner.style.zoom = m; if (page.scrollHeight <= page.clientHeight + 1) lo = m; else hi = m; }
+    if (h(page) <= PH) return 1;
+    for (var i = 0; i < 10; i++) { var m = (lo + hi) / 2; inner.style.zoom = m; if (h(page) <= PH) lo = m; else hi = m; }
     inner.style.zoom = lo; return lo;
   }
-  function run() { var ps = document.querySelectorAll('.cpage'); for (var i = 0; i < ps.length; i++) ps[i].setAttribute('data-zoom', fit(ps[i]).toFixed(3)); document.documentElement.setAttribute('data-fitted', '1'); }
+  function run() {
+    var probe = document.createElement('div'); probe.style.height = '266mm'; document.body.appendChild(probe); PH = h(probe); probe.remove();
+    var ps = document.querySelectorAll('.cpage');
+    for (var i = 0; i < ps.length; i++) {
+      var z = fit(ps[i]); ps[i].setAttribute('data-zoom', z.toFixed(3));
+      var q = ps[i].nextElementSibling;
+      if (q && q.classList.contains('quiz')) {
+        var used = q.getBoundingClientRect().bottom - ps[i].getBoundingClientRect().top;
+        var together = z === 1 && used <= PH * 0.97;
+        if (!together) q.style.breakBefore = 'page';
+        q.setAttribute('data-place', together ? 'same-page' : 'next-page');
+      }
+    }
+    document.documentElement.setAttribute('data-fitted', '1');
+  }
   var go = function () { (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(run); };
   if (document.readyState === 'complete') go(); else window.addEventListener('load', go);
 })();`;

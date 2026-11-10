@@ -11,10 +11,14 @@ const out = {};
 out.ans = phrase('Answer key', 2);
 out.thx = phrase('Concepts in Thai', 2);
 CVS.sections.forEach(s => {
-  out['q-' + s.id] = phrase('Section ' + s.id + ' · Questions');
   const cs = s.items.filter(it => it.t === 'c');
-  cs.forEach(it => { out['k-' + it.id] = first(new RegExp('(^|[^\\w-])' + esc(it.id) + '(?![\\w])'), out['q-' + s.id]); });
-  out['c-' + s.id] = out['k-' + cs[0].id];
+  cs.forEach(it => {
+    out['k-' + it.id] = first(new RegExp('(^|[^\\w-])' + esc(it.id) + '(?![\\w])'), 2);
+    const nq = s.items.slice(s.items.indexOf(it) + 1).findIndex(x => x.t === 'c');
+    const hasQ = (nq < 0 ? s.items.length - s.items.indexOf(it) - 1 : nq) > 0;
+    if (hasQ) out['z-' + it.id] = phrase('Quiz · ' + it.id + ' ·', out['k-' + it.id]);
+  });
+  out['s-' + s.id] = out['k-' + cs[0].id];
   out['a-' + s.id] = phrase('Answer key · Section ' + s.id + ' ' + s.title.split(' ')[0]);
   out['x-' + s.id] = phrase('Thai explanations · Section ' + s.id + ' ' + s.title.split(' ')[0]);
 });

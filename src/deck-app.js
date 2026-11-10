@@ -1139,16 +1139,13 @@
       var c = counts(s);
       return '<button type="button" class="station" data-sec="' + si + '"><span class="k">' + s.id + ' &#183; ' + s.kind + '</span><b>' + s.short + '</b><span>' + c.q + ' questions &#183; ' + c.core + ' core</span></button>';
     }).join('');
+    var nc = 0; S.forEach(function (s) { nc += counts(s).c; });
     return '<article class="card secard"><div class="eyebrow"><span class="chip kind">Peer support 82</span><span class="chip">AC75&#8211;81 + lab quizzes</span></div>' +
-      '<h2>CVS I Regulation &amp; Lab</h2><p class="lede">Question first, concept second. ' + tot + ' past-exam and lab-quiz questions on the regulation lecture and every lab except ECG; ' + core + ' are marked core for the video.</p>' +
+      '<h2>CVS I Regulation &amp; Lab</h2>' +
+      '<div class="coverline"><div class="counts"><div><b>' + nc + '</b><span>concepts</span></div><div><b>' + tot + '</b><span>questions</span></div></div>' +
+      '<a class="qrlink" href="https://punnawit9285.github.io/cvs-peer-tutoring/"><img src="img/qr-site.svg" width="112" height="112" alt="QR code for punnawit9285.github.io/cvs-peer-tutoring"><span>punnawit9285.github.io/cvs-peer-tutoring</span></a></div>' +
       '<div class="stations">' + st + '</div>' +
-      '<div class="howto"><div><b>Ask</b>Read the stem, wait 10 seconds, then click the option most people would pick.</div>' +
-      '<div><b>Reveal</b>Clicking an option shows the answer at once. Green is correct; red marks a wrong pick. A letter key only selects; press <kbd>Space</kbd> to reveal.</div>' +
-      '<div><b>Explain</b>Concept cards carry the real lab figures, tables and traps behind the answers. Click a figure to enlarge it.</div>' +
-      '<div><b>Blanks</b>Key details on concept cards are hidden. <kbd>Space</kbd> fills the next blank, <kbd>Enter</kbd> fills them all, <kbd>R</kbd> hides them again; click any blank to flip it.</div>' +
-      '<div><b>Thai</b>Every concept card has a Thai explanation under it. Click <i>Explanation</i> or press <kbd>L</kbd>; it stays open on the next cards until you close it.</div>' +
-      '<div><b>Keys</b><kbd>&#8592;</kbd> <kbd>&#8594;</kbd> move, <kbd>A</kbd>&#8211;<kbd>F</kbd> choose, <kbd>T</kbd>/<kbd>F</kbd> true-false, <kbd>R</kbd> reset, <kbd>B</kbd> browse</div></div>' +
-      '<p class="note"><span class="chip core">core</span> = do it on the video. A <b>recall note</b> appears after some answers when the exam wording was remembered imperfectly: teach the principle. <b>Lab quiz</b> items are the true/false lab checks with their official answers.</p></article>';
+      '<p class="legend"><span class="chip core">core</span> done in the video</p></article>';
   }
 
   /* ---------- cloze blanks on concept cards ---------- */

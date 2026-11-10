@@ -21,9 +21,12 @@ h1 { font: 600 2.6em/1.1 var(--f-display); margin: 4px 0 10px; letter-spacing: .
 /* cover */
 .cover { padding-top: 24mm; }
 .cover h1 { font-size: 3.4em; }
-.howuse { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 16px 0 6px; }
-.howuse > div { background: var(--sheet2); border-radius: 10px; padding: 10px 12px; font-size: .98em; }
-.howuse b { display: block; font: 600 1.1em var(--f-display); color: var(--art); margin-bottom: 3px; }
+.cover .coverline { margin: 10px 0 26px; padding: 18px 0 20px; }
+.cover .counts { gap: 16mm; }
+.cover .counts b { font-size: 4.6em; }
+.cover .counts span { font-size: .95em; }
+.cover .qrlink img { width: 36mm; height: 36mm; }
+.cover .qrlink span { font-size: .85em; }
 table.toc { width: 100%; border-collapse: collapse; font-size: 1em; }
 table.toc th { text-align: left; font: 600 .78em var(--f-mono); text-transform: uppercase; letter-spacing: .05em; color: var(--ink2); border-bottom: 1.5px solid var(--ink); padding: 5px 6px; }
 table.toc td { border-bottom: 1px solid var(--rule); padding: 6px; white-space: nowrap; }

@@ -52,16 +52,14 @@ let nB = 0;
 /* ---------- cover ---------- */
 let h = '<section class="cover"><div class="eyebrow"><span class="chip kind">Peer support 82</span><span class="chip">AC75–81 + lab quizzes</span><span class="chip">Student handout</span></div>' +
   '<h1>CVS I Regulation &amp; Lab</h1>' +
-  '<p class="lede">' + nC + ' concept pages built from the real lab figures, each followed by a quiz on it: ' + nQ + ' past-exam and lab-quiz questions on the cardiovascular regulation lecture and every lab except ECG.</p>' +
-  '<div class="howuse"><div><b>1 · Learn</b>Read the concept page and fill in its numbered blanks: they are the key details.</div>' +
-  '<div><b>2 · Try</b>The quiz on that concept comes right after it. Nothing is answered there: circle your choice first.</div>' +
-  '<div><b>3 · Check</b>Everything is at the back: quiz answers with Thai explanations from page ' + pg('ans') + ', blank answers from page ' + pg('blk') + ', and the Thai explanation of every concept from page ' + pg('thx') + '.</div></div>' +
+  '<div class="coverline"><div class="counts"><div><b>' + nC + '</b><span>concepts</span></div><div><b>' + nQ + '</b><span>questions</span></div></div>' +
+  '<a class="qrlink" href="https://punnawit9285.github.io/cvs-peer-tutoring/"><img src="img/qr-site.svg" alt="QR code for punnawit9285.github.io/cvs-peer-tutoring"><span>punnawit9285.github.io/cvs-peer-tutoring</span></a></div>' +
   '<h3 class="minih">Contents</h3><table class="toc"><thead><tr><th>Section</th><th>Starts</th><th>Concepts · questions</th><th>Quiz answers</th><th>Blank answers</th><th>Thai concept explanations</th></tr></thead><tbody>';
 S.forEach(s => {
   const qn = s.items.filter(isQ).length, cn = s.items.filter(it => it.t === 'c').length;
   h += '<tr><td><span class="tid">' + s.id + '</span>' + s.title + '</td><td>p. ' + pg('s-' + s.id) + '</td><td>' + cn + ' · ' + qn + '</td><td>p. ' + pg('a-' + s.id) + '</td><td>p. ' + pg('b-' + s.id) + '</td><td>p. ' + pg('x-' + s.id) + '</td></tr>';
 });
-h += '</tbody></table><p class="note"><span class="chip core">core</span> = done on the video. Question IDs (R1, F12, …) match the interactive deck and the answer key.</p></section>';
+h += '</tbody></table><p class="legend"><span class="chip core">core</span> done in the video</p></section>';
 
 function qBlock(it) {
   let b = '<div class="pq"><div class="pqh"><b>' + it.id + '</b>' + (it.src ? '<span class="src">' + it.src + '</span>' : '') + (it.core ? '<span class="chip core">core</span>' : '') + (it.t === 'tf' ? '<span class="src">True / False</span>' : '') + (it.group ? '<span class="src">' + it.group + '</span>' : '') + '</div>';
@@ -158,7 +156,9 @@ const fitJs = `(function () {
   if (document.readyState === 'complete') go(); else window.addEventListener('load', go);
 })();`;
 
-const FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">';
+/* local copies from tools/fonts.sh when present (headless Chrome cannot always reach Google Fonts) */
+const FONTS = fs.existsSync('dist/fonts/fonts.css') ? '<link rel="stylesheet" href="fonts/fonts.css">' :
+  '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">';
 const html = '<!doctype html>\n<html lang="en" data-theme="light">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>CVS I Regulation &amp; Lab · Peer support 82 · student handout</title>\n' + FONTS +
   '\n<style>\n' + rd('src/base.css') + '\n' + rd('src/print.css') + '\n</style>\n</head>\n<body>\n<main class="sheet">\n' + h + '\n</main>\n<script>' + fitJs + '</script>\n</body>\n</html>\n';
 if (/<\/script/i.test(h)) throw new Error('script close tag inside content');

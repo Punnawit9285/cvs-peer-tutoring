@@ -5,7 +5,7 @@
 const fs = require('fs');
 const rd = f => fs.readFileSync(f, 'utf8');
 global.window = global;
-['lib', 'reg', 'heart', 'bp', 'micro', 'pe', 'dog'].forEach(f => eval(rd('data/' + f + '.js')));
+['lib', 'reg', 'heart', 'bp', 'micro', 'pe', 'dog','lite'].forEach(f => eval(rd('data/' + f + '.js')));
 eval(rd('src/thai-explain.js'));
 const app = rd('src/deck-app.js');
 function grab(name) {
@@ -121,7 +121,7 @@ S.forEach(s => {
     const tx = window.THAI_EXPLAIN[it.id] || [];
     const kp = THAI_CONCEPT[it.id] || [];
     h += '<div class="xc"><div class="xch"><b>' + it.id + '</b>' + it.title + ' <span class="muted">· p. ' + pg('k-' + it.id) + '</span></div>' +
-      (kp.length ? '<ul class="xkp">' + kp.map(b => '<li>' + b + '</li>').join('') + '</ul>' : '') + tx.map(p => '<p>' + p + '</p>').join('') + '</div>';
+      (kp.length ? '<ul class="xkp">' + kp.map(b => '<li>' + b + '</li>').join('') + '</ul>' : '') + '<ul class="xtx">' + tx.map(p => '<li>' + p + '</li>').join('') + '</ul></div>';
   });
   h += '</div></section>';
 });

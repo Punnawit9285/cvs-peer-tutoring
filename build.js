@@ -1,7 +1,7 @@
 const fs=require('fs'),vm=require('vm');
 const rd=f=>fs.readFileSync(f,'utf8');
 const FONTS='<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">';
-const DATA=['lib','reg','heart','bp','micro','pe','dog'].map(f=>rd('data/'+f+'.js')).join('\n');
+const DATA=['lib','reg','heart','bp','micro','pe','dog','lite'].map(f=>rd('data/'+f+'.js')).join('\n');
 function page(title, cssFiles, body, appFiles){
   appFiles=[].concat(appFiles);
   const js=DATA+'\n'+appFiles.map(rd).join('\n');

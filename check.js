@@ -1,6 +1,6 @@
 const fs=require('fs'),vm=require('vm');
 const ctx={window:{}};ctx.window=ctx;vm.createContext(ctx);
-['lib','reg','heart','bp','micro','pe','dog'].forEach(f=>vm.runInContext(fs.readFileSync('data/'+f+'.js','utf8'),ctx,{filename:f}));
+['lib','reg','heart','bp','micro','pe','dog','lite'].forEach(f=>vm.runInContext(fs.readFileSync('data/'+f+'.js','utf8'),ctx,{filename:f}));
 const S=ctx.CVS.sections;const ids=new Set();let errs=[];let tot={c:0,q:0,tf:0,open:0,core:0};
 S.forEach(s=>{let n={c:0,q:0,tf:0,open:0,core:0};s.items.forEach(it=>{
  if(ids.has(it.id))errs.push('dup '+it.id);ids.add(it.id);n[it.t]++;tot[it.t]++;if(it.core){n.core++;tot.core++;}

@@ -1,7 +1,7 @@
 /* Find where each part of the handout landed. node tools/pages.js <pdftext.txt> [--check pages.json] */
 const fs = require('fs');
 global.window = global;
-['lib', 'reg', 'heart', 'bp', 'micro', 'pe', 'dog'].forEach(f => eval(fs.readFileSync('data/' + f + '.js', 'utf8')));
+['lib', 'reg', 'heart', 'bp', 'micro', 'pe', 'dog','lite'].forEach(f => eval(fs.readFileSync('data/' + f + '.js', 'utf8')));
 const lines = fs.readFileSync(process.argv[2], 'utf8').split('\n').filter(Boolean).map(l => { const i = l.indexOf('\t'); return { n: +l.slice(0, i), t: l.slice(i + 1) }; });
 const first = (re, from) => { const p = lines.find(l => l.n >= (from || 1) && re.test(l.t)); return p ? p.n : 0; };
 /* PDF text extraction can split words ("a n d"), so phrases are matched with all spaces removed */
@@ -28,8 +28,12 @@ CVS.sections.forEach(s => {
 const plain = h => String(h).replace(/<span class="cz">[\s\S]*?<\/span>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/\{\{|\}\}/g, '').replace(/&#(\d+);/g, (m, n) => String.fromCharCode(+n)).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&[a-z]+;/g, '').replace(/\s+/g, '');
 const clipped = [];
 CVS.sections.forEach(s => s.items.filter(it => it.t === 'c').forEach(it => {
-  const tail = plain(it.html).replace(/[^A-Za-z0-9]/g, '').slice(-14), pgT = (lines.find(l => l.n === out['k-' + it.id]) || {}).t || '';
-  if (tail && !pgT.replace(/[^A-Za-z0-9]/g, '').includes(tail)) clipped.push(it.id);
+  /* the end of the text and the start of every figure caption must be on the page (text extraction order varies) */
+  const h = String(it.html), an = x => x.replace(/[^A-Za-z0-9]/g, '');
+  const marks = [an(plain(h.replace(/<figure\b[\s\S]*?<\/figure>/g, ' '))).slice(-14)]
+    .concat((h.match(/<figcaption[\s\S]*?<\/figcaption>/g) || []).map(c => an(plain(c)).slice(0, 14)));
+  const pgT = an((lines.find(l => l.n === out['k-' + it.id]) || {}).t || '');
+  if (marks.some(m => m && !pgT.includes(m))) clipped.push(it.id);
 }));
 if (clipped.length) { console.error('concept pages that may be clipped:', clipped.join(' ')); process.exitCode = 3; }
 const missing = Object.keys(out).filter(k => !out[k]);

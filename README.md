@@ -8,7 +8,7 @@ Interactive question-first Peer support 82 deck and tutor guide for **CVS I Regu
 |---|---|
 | **Student deck** (present to the audience) | https://punnawit9285.github.io/cvs-peer-tutoring/student.html |
 | **Tutor deck** (second screen: answers, Thai explanations, tutor notes, script) | https://punnawit9285.github.io/cvs-peer-tutoring/tutor.html |
-| **Student handout PDF** | https://punnawit9285.github.io/cvs-peer-tutoring/student.pdf?v=9492cd28 |
+| **Student handout PDF** | https://punnawit9285.github.io/cvs-peer-tutoring/student.pdf?v=ebaa364b |
 
 Open the student and tutor decks in the same browser and tick *Follow student* in the tutor deck: it jumps to whatever card the student deck shows.
 
@@ -40,5 +40,7 @@ tools/pdf.sh      # Build student.pdf (print.js -> dist/print.html -> headless C
 ```
 
 `tools/pdf.sh` prints twice: the first pass finds where each part landed, the second fills in the page numbers. It stops if a cross-reference moved or a concept page looks clipped.
+
+`data/lite.js` holds the short form of every concept card (arrow chains and brief bullets, 3–8 blanks); it loads after the section files and keeps each card's figures. `gen.js` does not touch it.
 
 `src/tutor-script.js` holds the English recording script (plan, 80% summaries, SAY lines keyed by card ID). The Thai bullets live in `src/notes-app.js` and `src/deck-app.js` (`THAI_Q`, `THAI_CONCEPT`, `THAI_SEC`; keep both copies in step). `src/thai-explain.js` holds the full Thai explanation of every concept card (both decks and the PDF). `src/tutor-notes.js` holds the tutor-only notes.

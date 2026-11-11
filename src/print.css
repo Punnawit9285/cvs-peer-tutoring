@@ -125,3 +125,5 @@ table.toc td:first-child { white-space: normal; }
 /* a table too wide to sit beside its figure (see unclip() in print.js): one column, table full width, figure under it */
 .cfit .tstack.tstack { grid-template-columns: minmax(0, 1fr); }
 .cfit .tstack .scan img, .cfit .tstack .scan.tall img { max-height: 300px; }
+.xtx { margin: 0 0 4px; padding-left: 1.15em; display: grid; gap: 3px; line-height: 1.55; font-family: "IBM Plex Sans Thai", var(--f-body); }
+.xtx li { break-inside: avoid; }

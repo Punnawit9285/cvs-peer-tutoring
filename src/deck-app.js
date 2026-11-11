@@ -1115,7 +1115,7 @@
   function thxHtml(it, open) {
     var tx = window.THAI_EXPLAIN && window.THAI_EXPLAIN[it.id];
     if (!tx || !tx.length) return '';
-    return '<details class="thx"' + (open ? ' open' : '') + '><summary><span class="thx-h">Explanation</span><span class="thx-s">ภาษาไทย &#183; click or press L</span></summary><div class="thx-body">' + tx.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div></details>';
+    return '<details class="thx"' + (open ? ' open' : '') + '><summary><span class="thx-h">Explanation</span><span class="thx-s">ภาษาไทย &#183; click or press L</span></summary><ul class="thx-body">' + tx.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ul></details>';
   }
   function renderC(it) {
     var kp = THAI_CONCEPT[it.id];

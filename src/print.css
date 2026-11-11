@@ -121,3 +121,7 @@ table.toc td:first-child { white-space: normal; }
 .bksec { margin-top: 10px; }
 .part + .bksec { margin-top: 18px; }
 .xkp { margin: 2px 0 6px; padding: 5px 10px 5px 1.6em; background: var(--ven-soft); border-left: 3px solid var(--ven); border-radius: 6px; line-height: 1.5; font-family: "IBM Plex Sans Thai", var(--f-body); break-inside: avoid; }
+
+/* a table too wide to sit beside its figure (see unclip() in print.js): one column, table full width, figure under it */
+.cfit .tstack.tstack { grid-template-columns: minmax(0, 1fr); }
+.cfit .tstack .scan img, .cfit .tstack .scan.tall img { max-height: 300px; }

@@ -142,6 +142,7 @@ button, input { font: inherit; color: inherit; }
 .tbl thead th.dn { color: var(--ven); }
 .tbl.compact th, .tbl.compact td { padding: 4px 8px; }
 .dogtbl td:nth-child(2), .dogtbl td:nth-child(3), .dogtbl td:nth-child(4) { text-align: center; white-space: nowrap; }
+.dogtbl.txt4 td:nth-child(4) { text-align: left; white-space: normal; }  /* 4th column is a "Why" sentence, not a number */
 
 /* ---------- real figures cropped from the course material ---------- */
 .stack { display: grid; gap: 12px; align-content: start; min-width: 0; }

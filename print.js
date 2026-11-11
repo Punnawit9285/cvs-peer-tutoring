@@ -130,9 +130,29 @@ S.forEach(s => {
 const fitJs = `(function () {
   var PH = 0;
   function h(el) { return el.getBoundingClientRect().height; }
+  /* Blanks are fixed-width boxes that cannot wrap, so a table squeezed beside a figure can be wider than its column
+     (the scrolling wrapper then cuts it off on paper). Stack that grid (table full width, figure under it), then
+     shrink any table that is still too wide. The page records what was done for tools/pdf.sh to report. */
+  function wide(w) { return w.scrollWidth > w.clientWidth + 1; }
+  function unclip(page) {
+    var ws = page.querySelectorAll('.tblwrap'), i, g, nS = 0, minZ = 1, nC = 0;
+    for (i = 0; i < ws.length; i++) {
+      g = ws[i];
+      while (wide(ws[i]) && (g = g.parentElement.closest('.two, .cols2, .cols3, .figpair')) && page.contains(g)) { g.classList.add('tstack'); nS++; }
+    }
+    for (i = 0; i < ws.length; i++) if (wide(ws[i])) {
+      var z = Math.floor(ws[i].clientWidth / ws[i].scrollWidth * 1000) / 1000;
+      ws[i].style.zoom = z; minZ = Math.min(minZ, z);
+    }
+    for (i = 0; i < ws.length; i++) if (wide(ws[i])) nC++;
+    if (nS) page.setAttribute('data-tstack', nS);
+    if (minZ < 1) page.setAttribute('data-tscale', minZ.toFixed(3));
+    if (nC) page.setAttribute('data-tclip', nC);
+  }
   function fit(page) {
     var inner = page.firstElementChild, lo = 0.4, hi = 1;
     inner.style.zoom = 1;
+    unclip(page);
     if (h(page) <= PH) return 1;
     for (var i = 0; i < 10; i++) { var m = (lo + hi) / 2; inner.style.zoom = m; if (h(page) <= PH) lo = m; else hi = m; }
     inner.style.zoom = lo; return lo;

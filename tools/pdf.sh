@@ -23,6 +23,13 @@ node print.js "$TMP/pages.json"
 print student.pdf
 tools/pdftext student.pdf > "$TMP/final.txt"
 node tools/pages.js "$TMP/final.txt" --check "$TMP/pages.json"
+# tables must fit their column: list the concept pages where print.js stacked or shrank a table; fail if one is still cut off
+"$CHROME" --headless=new --disable-gpu --virtual-time-budget=15000 --dump-dom "file://$PWD/dist/print.html" 2>/dev/null > "$TMP/dom.html"
+grep -q 'data-fitted="1"' "$TMP/dom.html" || { echo "print.html fit script did not run" >&2; exit 5; }
+perl -ne 'while (/<section class="cpage" ([^>]*)>/g) { my $a = $1; my ($id) = $a =~ /data-id="([^"]+)"/; my $r = "";
+  $r .= " stacked" if $a =~ /data-tstack/; $r .= " shrunk to $1" if $a =~ /data-tscale="([^"]+)"/; $r .= " STILL CUT OFF" if $a =~ /data-tclip/;
+  print "table too wide for its column, $id:$r\n" if $r }' "$TMP/dom.html"
+if grep -q 'data-tclip="' "$TMP/dom.html"; then echo "a table is still cut off in print.html" >&2; exit 5; fi
 # the PDF must embed the real fonts, not system fallbacks
 for f in BaiJamjuree IBMPlexSans IBMPlexSansThai IBMPlexMono; do
   strings -n 6 student.pdf | grep -q "/BaseFont */[A-Z]*+$f" || { echo "font $f not embedded: web fonts failed to load" >&2; exit 4; }

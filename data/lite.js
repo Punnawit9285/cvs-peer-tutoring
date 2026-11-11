@@ -23,6 +23,7 @@
       }
     }
     blocks.forEach(function (b) {
+      b = b.replace(/<(?![A-Za-z\/!])/g, '&lt;');  /* a bare < (as in "< 80") is text, not a tag */
       var k = b.slice(0, 2), t = b.slice(2);
       if (k === '- ') { if (tb) flush(); (ul = ul || []).push('<li>' + inl(t) + '</li>'); return; }
       if (b[0] === '|') { if (ul) flush(); (tb = tb || []).push(b.replace(/^\|\s*|\s*\|\s*$/g, '').split(/\s*\|\s*/)); return; }
@@ -46,7 +47,8 @@
     var it = byId[id];
     if (!it || it.t !== 'c') throw new Error('short(): no concept ' + id);
     var F = [], X = [];
-    String(it.html).replace(/<figure\b[\s\S]*?<\/figure>/g, function (m) { F.push(m); return m; });
+    /* figures in document order; a collapsed <details> that holds a figure (answers, extra slides) is kept whole */
+    String(it.html).replace(/<details\b[\s\S]*?<\/details>|<figure\b[\s\S]*?<\/figure>/g, function (m) { if (/^<figure/.test(m) || /<figure\b/.test(m)) F.push(m); return m; });
     String(it.html).replace(/<div class="flowx"[^>]*><\/div>/g, function (m) { X.push(m); return m; });
     if (opt && opt.drop) F = F.filter(function (f, i) { return opt.drop.indexOf(i + 1) < 0; });
     it.html = render(blocks, F, X);

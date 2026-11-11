@@ -29,7 +29,7 @@ const plain = h => String(h).replace(/<span class="cz">[\s\S]*?<\/span>/g, ' ').
 const clipped = [];
 CVS.sections.forEach(s => s.items.filter(it => it.t === 'c').forEach(it => {
   /* the end of the text and the start of every figure caption must be on the page (text extraction order varies) */
-  const h = String(it.html), an = x => x.replace(/[^A-Za-z0-9]/g, '');
+  const h = String(it.html).replace(/<details\b[\s\S]*?<\/details>/g, ' '), an = x => x.replace(/[^A-Za-z0-9]/g, '');  /* collapsed parts don't print */
   const marks = [an(plain(h.replace(/<figure\b[\s\S]*?<\/figure>/g, ' '))).slice(-14)]
     .concat((h.match(/<figcaption[\s\S]*?<\/figcaption>/g) || []).map(c => an(plain(c)).slice(0, 14)));
   const pgT = an((lines.find(l => l.n === out['k-' + it.id]) || {}).t || '');
